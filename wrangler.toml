@@ -1,5 +1,6 @@
 name = "ordo-sales-site"
 compatibility_date = "2026-01-15"
+pages_build_output_dir = "dist"
 
 [vars]
 PUBLIC_SITE_NAME = "ORDO"
