@@ -1,0 +1,119 @@
+---
+import "@/styles/theme.css";
+import { getLocalStore } from "../lib/local-store";
+
+const store = getLocalStore?.() ?? {};
+const site = store.site ?? {};
+const orderEmail = site.orderEmail ?? "orders@ordoinc.com";
+
+const { title = "ORDO", lang = "zh", showOrder = true } = Astro.props;
+const pathname = Astro.url?.pathname ?? "";
+
+const homeHref = lang === "en" ? "/en" : "/zh";
+const productsHref = lang === "en" ? "/en/products" : "/zh/products";
+const ordoHref = lang === "en" ? "/en/ordo" : "/zh/ordo"; // 关于
+const updatesHref = lang === "en" ? "/en/updates" : "/zh/updates";
+const evidenceHref = lang === "en" ? "/en/evidence" : "/zh/evidence";
+const contactHref = lang === "en" ? "/en/contact" : "/zh/contact";
+const shopHref = lang === "en" ? "/en/shop" : "/zh/shop";
+const orderHref = shopHref;
+
+const langHref =
+  lang === "en"
+    ? pathname.startsWith("/en")
+      ? pathname.replace(/^\/en(?=\/|$)/, "/zh")
+      : "/zh"
+    : pathname.startsWith("/zh")
+      ? pathname.replace(/^\/zh(?=\/|$)/, "/en")
+      : "/en";
+
+const isActive = (href: string) => {
+  if (!href) return false;
+  if (href === "/en" || href === "/zh") return pathname === href || pathname === `${href}/`;
+  return pathname === href || pathname.startsWith(`${href}/`);
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content="ORDO 设计并制造用于判断的物理器具。" />
+  </head>
+  <body>
+    <div class="site">
+      <header class="nav">
+        <div class="nav-inner">
+          <a class="nav-brand" href={homeHref} aria-label="Home">
+            <span class="brand-pill" aria-hidden="true">
+              <span class="brand-word">ORDO</span>
+            </span>
+            <span class="sr-only">ORDO</span>
+          </a>
+
+          <nav class="nav-links" aria-label="Primary">
+            <a class={`nav-link ${isActive(homeHref) ? "is-active" : ""}`.trim()} href={homeHref}>
+              {lang === "en" ? "Home" : "首页"}
+            </a>
+
+            <a class={`nav-link ${isActive(productsHref) ? "is-active" : ""}`.trim()} href={productsHref}>
+              {lang === "en" ? "Products" : "产品"}
+            </a>
+
+            <a class={`nav-link ${isActive(ordoHref) ? "is-active" : ""}`.trim()} href={ordoHref}>
+              {lang === "en" ? "About" : "关于"}
+            </a>
+
+            <a class={`nav-link ${isActive(updatesHref) ? "is-active" : ""}`.trim()} href={updatesHref}>
+              {lang === "en" ? "Updates" : "更新"}
+            </a>
+
+            <a class={`nav-link ${isActive(evidenceHref) ? "is-active" : ""}`.trim()} href={evidenceHref}>
+              {lang === "en" ? "Evidence" : "证据"}
+            </a>
+
+            <a class={`nav-link ${isActive(contactHref) ? "is-active" : ""}`.trim()} href={contactHref}>
+              {lang === "en" ? "Contact" : "联系"}
+            </a>
+          </nav>
+
+          <div class="nav-cta">
+            {showOrder && (
+              <a class="nav-btn primary" href={orderHref}>
+                {lang === "en" ? "Shop" : "商店"}</a>
+            )}
+            <a class="nav-btn" href={langHref}>{lang === "en" ? "中文" : "EN"}</a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <slot />
+      </main>
+
+      <footer class="site-footer" aria-label="Footer">
+        <div class="footer-inner">
+          <div class="footer-left">
+            <div class="footer-brand">ORDO</div>
+            <div class="footer-meta">
+              <span class="footer-copy">© 2026 ORDO. All rights reserved.</span>
+              <span class="footer-tagline">
+                {lang === "en" ? "Physical instruments for judgment." : "用于判断的物理器具"}
+              </span>
+            </div>
+          </div>
+
+          <nav class="footer-links" aria-label="Legal">
+            <a href={lang === "en" ? "/en/privacy" : "/zh/privacy"}>{lang === "en" ? "Privacy" : "隐私"}</a>
+            <a href={lang === "en" ? "/en/terms" : "/zh/terms"}>{lang === "en" ? "Terms" : "条款"}</a>
+            <a href={lang === "en" ? "/en/cookies" : "/zh/cookies"}>{lang === "en" ? "Cookies" : "Cookies"}</a>
+            <a href={lang === "en" ? "/en/sitemap" : "/zh/sitemap"}>{lang === "en" ? "Sitemap" : "Sitemap"}</a>
+            <a href={`mailto:${orderEmail}`}>{lang === "en" ? "Contact" : "联系"}</a>
+          </nav>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

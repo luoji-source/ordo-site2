@@ -1,0 +1,288 @@
+---
+import Base from '@/layouts/Base.astro';
+import { getLocalStore } from "../../../lib/local-store";
+
+const store = getLocalStore?.() ?? {};
+const site = store.site ?? {};
+const productsRaw = Array.isArray(store.products) ? store.products : [];
+
+function safeText(v, fb = "") {
+  return typeof v === "string" && v.trim().length ? v : fb;
+}
+function safeBool(v, fb = false) {
+  return typeof v === "boolean" ? v : fb;
+}
+function num(v, fb) {
+  const n = Number(v);
+  return Number.isFinite(n) && n > 0 ? n : fb;
+}
+function toArray(v) {
+  if (!v) return [];
+  return Array.isArray(v) ? v : [v];
+}
+function pickMedia(p) {
+  const img = p?.image;
+  const media = p?.media;
+  const arr = toArray(img).length ? toArray(img) : toArray(media);
+  return arr[0] ?? null;
+}
+function mediaMeta(m, fbW, fbH, fbLabel, fbRatio = "4:3") {
+  const w = num(m?.displayW, fbW);
+  const h = num(m?.displayH, fbH);
+  const label = safeText(m?.label || m?.alt, fbLabel);
+  const ratio = safeText(m?.ratio, fbRatio);
+  return { w, h, label, ratio };
+}
+function pickNameZh(p) {
+  return safeText(p?.name?.zh, safeText(p?.nameZh, safeText(p?.titleZh, "未命名产品")));
+}
+function pickSubtitleZh(p) {
+  const a = safeText(p?.line1?.zh, "");
+  const b = safeText(p?.line2?.zh, "");
+  const c = safeText(p?.subtitleZh, "");
+  return [a, b, c].filter(Boolean).join(" · ");
+}
+function pickVersion(p) {
+  return safeText(p?.version, "—");
+}
+function pickPriceText(p) {
+  const pt = p?.priceText;
+  if (typeof pt === "string") return pt;
+  return safeText(pt?.zh, "");
+}
+function pickBuyHref(p) {
+  return safeText(p?.buyHref, "/zh#buy");
+}
+function pickInquiryHref(p) {
+  return safeText(p?.inquiryHref, "/zh/support");
+}
+function normalizeStatus(p) {
+  const s = safeText(p?.status, "").toLowerCase();
+  if (["available", "upcoming", "planned", "archived"].includes(s)) return s;
+  return "planned";
+}
+
+const products = productsRaw
+  .map((p) => {
+    const nameZh = pickNameZh(p);
+    const subtitleZh = pickSubtitleZh(p);
+    const status = normalizeStatus(p);
+    const media = pickMedia(p);
+    const meta = mediaMeta(typeof media === "object" ? media : null, 640, 480, "产品图片位置（占位）", "4:3");
+    return {
+      status,
+      nameZh,
+      subtitleZh,
+      version: pickVersion(p),
+      priceText: pickPriceText(p),
+      buyHref: pickBuyHref(p),
+      inquiryHref: pickInquiryHref(p),
+      ph: meta,
+      note: safeText(p?.note?.zh, safeText(p?.note, "")),
+    };
+  })
+  .filter((p) => p.status !== "archived");
+
+const brand = safeText(site.brand, "ORDO");
+
+const groups = {
+  available: products.filter((p) => p.status === "available"),
+  upcoming: products.filter((p) => p.status === "upcoming"),
+  planned: products.filter((p) => p.status === "planned"),
+};
+
+const counts = {
+  all: products.length,
+  available: groups.available.length,
+  upcoming: groups.upcoming.length,
+  planned: groups.planned.length,
+};
+---
+
+<Base lang="zh" title="ORDO · 产品">
+<section class="hero">
+        <div class="container">
+          <div class="eyebrow">ORDO · 产品目录</div>
+          <h1 class="h1">产品目录</h1>
+          <p class="lead">本页为全量选择与购买入口。首页仅显示推荐位，会按计划轮换。</p>
+
+          <div class="stats">
+            <div class="stat"><div class="k">总数</div><div class="v">{counts.all}</div></div>
+            <div class="stat"><div class="k">在售</div><div class="v">{counts.available}</div></div>
+            <div class="stat"><div class="k">预告</div><div class="v">{counts.upcoming}</div></div>
+            <div class="stat"><div class="k">规划</div><div class="v">{counts.planned}</div></div>
+          </div>
+
+          <div class="controls">
+            <div class="search">
+              <label class="sr" for="q">搜索产品</label>
+              <input id="q" class="input" type="search" placeholder="搜索：名称 / 版本 / 关键词" autocomplete="off" />
+            </div>
+
+            <div class="filters" role="group" aria-label="状态筛选">
+              <button class="chip is-on" data-filter="all" type="button">全部</button>
+              <button class="chip" data-filter="available" type="button">在售</button>
+              <button class="chip" data-filter="upcoming" type="button">预告</button>
+              <button class="chip" data-filter="planned" type="button">规划中</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 在售 -->
+      <section class="section" id="available">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">在售</h2>
+            <div class="mini">可下单购买</div>
+          </div>
+          <div class="section-note">在售器具已经完整成立。未来产品不会替代它们。</div>
+
+          <div class="grid">
+            {groups.available.length ? (
+              groups.available.map((p) => (
+                <article class="card" data-item data-status={p.status}
+                  data-text={`${p.nameZh} ${p.subtitleZh} ${p.version} ${p.priceText} ${p.note}`.toLowerCase()}>
+                  <div class="card-head">
+                    <div class="card-title nowrap" title={p.nameZh}>{p.nameZh}</div>
+                    <div class="badge">在售</div>
+                  </div>
+
+                  {p.subtitleZh ? <div class="sub">{p.subtitleZh}</div> : null}
+
+                  <div class="ph-fit ruler" role="img" aria-label="产品图片占位">
+                    <div class="ph-inner">
+                      <div class="ph-top">
+                        <span class="tag">图片位置</span>
+                        <span class="dim">参考：{p.ph.w}×{p.ph.h}px</span>
+                      </div>
+                      <div class="ph-mid">
+                        <div class="ph-title">{p.ph.label}</div>
+                        <div class="ph-sub">{p.version !== "—" ? `版本 ${p.version}` : "版本 —"}</div>
+                      </div>
+                      <div class="ph-bottom">
+                        <span class="muted">{p.priceText ? p.priceText : "价格信息待更新"}</span>
+                        <span class="muted">{p.ph.ratio}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-foot">
+                    <a class="btn primary" href={p.buyHref}>下单</a>
+                    <a class="btn" href={p.inquiryHref}>询问</a>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div class="empty">暂无在售产品</div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <!-- 预告 -->
+      <section class="section" id="upcoming">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">预告</h2>
+            <div class="mini">预告阶段不开放下单，仅开放邮件关注与询问</div>
+          </div>
+
+          <div class="grid">
+            {groups.upcoming.length ? (
+              groups.upcoming.map((p) => (
+                <article class="card" data-item data-status={p.status}
+                  data-text={`${p.nameZh} ${p.subtitleZh} ${p.version} ${p.note}`.toLowerCase()}>
+                  <div class="card-head">
+                    <div class="card-title nowrap" title={p.nameZh}>{p.nameZh}</div>
+                    <div class="badge ghost">预告</div>
+                  </div>
+
+                  {p.subtitleZh ? <div class="sub">{p.subtitleZh}</div> : null}
+
+                  <div class="ph-fit ruler" role="img" aria-label="产品图片占位">
+                    <div class="ph-inner">
+                      <div class="ph-top">
+                        <span class="tag">图片位置</span>
+                        <span class="dim">参考：{p.ph.w}×{p.ph.h}px</span>
+                      </div>
+                      <div class="ph-mid">
+                        <div class="ph-title">{p.ph.label}</div>
+                        <div class="ph-sub">{p.version !== "—" ? `版本 ${p.version}` : "版本 —"}</div>
+                      </div>
+                      <div class="ph-bottom">
+                        <span class="muted">{p.note ? p.note : "预告阶段"}</span>
+                        <span class="muted">{p.ph.ratio}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card-foot">
+                    <a class="btn" href={p.inquiryHref}>邮件关注 / 询问</a>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div class="empty">暂无预告产品</div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <!-- 规划中 -->
+      <section class="section" id="planned">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">规划中</h2>
+            <div class="mini">范围声明；可展开查看卡片信息</div>
+          </div>
+
+          <div class="planned">
+            {groups.planned.length ? (
+              groups.planned.map((p) => (
+                <details class="pl-item" data-item data-status={p.status}
+                  data-text={`${p.nameZh} ${p.subtitleZh} ${p.version} ${p.note}`.toLowerCase()}>
+                  <summary class="pl-sum">
+                    <span class="pl-name nowrap" title={p.nameZh}>{p.nameZh}</span>
+                    <span class="pl-meta">{p.subtitleZh ? p.subtitleZh : "规划中"}</span>
+                    <span class="pl-chip">规划</span>
+                  </summary>
+
+                  <div class="pl-body">
+                    <div class="ph-fit ph-mini ruler" role="img" aria-label="规划产品图片占位">
+                      <div class="ph-inner">
+                        <div class="ph-top">
+                          <span class="tag">图片位置</span>
+                          <span class="dim">参考：{p.ph.w}×{p.ph.h}px</span>
+                        </div>
+                        <div class="ph-mid">
+                          <div class="ph-title">{p.ph.label}</div>
+                          <div class="ph-sub">{p.version !== "—" ? `版本 ${p.version}` : "版本 —"}</div>
+                        </div>
+                        <div class="ph-bottom">
+                          <span class="muted">{p.ph.ratio}</span>
+                          <span class="muted">规划中</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {p.note ? <p class="p">{p.note}</p> : null}
+
+                    <div class="pl-actions">
+                      <a class="btn" href={p.inquiryHref}>邮件关注 / 询问</a>
+                    </div>
+                  </div>
+                </details>
+              ))
+            ) : (
+              <div class="empty">暂无规划中产品</div>
+            )}
+          </div>
+
+          <div class="footnote">
+            以上产品仍处于规划或研发阶段。发布时间以验证进度为准，而非营销节奏。
+          </div>
+        </div>
+      </section>
+
+</Base>

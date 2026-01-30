@@ -1,0 +1,107 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base lang="en" title="About | ORDO">
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">ABOUT ORDO</div>
+      <h1 class="h1">About ORDO</h1>
+      <p class="lead">
+        ORDO designs and manufactures instruments that follow RESPECTA.
+        We externalize key states as <strong>verifiable facts</strong>: position, structure, version, and delivery.
+        No reminders, no scoring — just repeatable certainty left on the instrument.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="compare">
+        <div class="col">
+          <h2 class="h2">What we do</h2>
+          <ul class="list">
+            <li>Design and build instruments meant to <strong>last</strong></li>
+            <li>Make critical states <strong>visible as facts</strong></li>
+            <li>Publish materials, structure, versions, and delivery records</li>
+            <li>Let products be tested over time</li>
+          </ul>
+        </div>
+
+        <div class="col mutedCol">
+          <h2 class="h2">What we do not do</h2>
+          <ul class="list">
+            <li>No monitoring. No behavior logging.</li>
+            <li>No scoring. No check-ins. No reminders. No interventions.</li>
+            <li>No “management system” disguised as a product</li>
+            <li>No slogans in place of verifiable facts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="compare duo">
+        <div class="col">
+          <h2 class="h2">Product continuum</h2>
+          <p class="p">
+            ORDO products are not isolated items. They belong to a restrained continuum:
+            <strong>Reading → Marking → Sliding → Responsibility</strong>.
+          </p>
+          <p class="p muted">
+            No grand narratives. No timeline storytelling.
+            We keep it readable: you can sense continuity without being persuaded.
+          </p>
+        </div>
+
+        <div class="col mutedCol">
+          <h2 class="h2">Standards followed</h2>
+          <p class="p">
+            RESPECTA is the ethics and structure standard we follow.
+            It requires restraint in structure, materials, and use — and respects independent judgment.
+          </p>
+          <p class="p">
+            ORDO makes the instruments; RESPECTA constrains how they can legitimately stand.
+            Learn more: <a class="inlineLink" href="https://respecta.org.cn" target="_blank" rel="noopener">respecta.org.cn</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contactSection">
+    <div class="container narrow">
+      <h2 class="h2">Contact</h2>
+      <p class="p muted">
+        If you have specific questions about products, manufacturing, or ordering, leave a message here.
+        We reply within <strong>24–48 hours</strong>, with <strong>no automated sales replies</strong>.
+        You can also check <a class="inlineLink" href="/en/updates">Updates</a> for version and delivery records.
+      </p>
+
+      <form class="contactForm" method="post" action="/api/message">
+        <div class="row">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" required />
+          </label>
+        </div>
+
+        <label>
+          <span>Message</span>
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+
+        <input type="hidden" name="publish" value="true" />
+        <button type="submit" class="btnPrimary">Send</button>
+      </form>
+    </div>
+  </section>
+
+  
+</Base>

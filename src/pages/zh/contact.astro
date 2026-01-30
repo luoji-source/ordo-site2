@@ -1,0 +1,196 @@
+---
+import Base from "@/layouts/Base.astro";
+
+/**
+ * 联系页说明：
+ * - 对外展示的是“形式邮箱地址”（用于公开口径）。
+ * - 实际收件邮箱请在下方 REAL_* 常量里替换。
+ */
+const DISPLAY_PROCUREMENT = "procurement@ordoinc.com";
+const DISPLAY_PARTNERSHIP  = "partner@ordoinc.com";
+const DISPLAY_MEDIA        = "media@ordoinc.com";
+
+// ✅ 请替换为真实收件邮箱（不会在页面上展示为文字）
+const REAL_PROCUREMENT = "replace-with-real-inbox@yourmail.com";
+const REAL_PARTNERSHIP = "replace-with-real-inbox@yourmail.com";
+const REAL_MEDIA = "replace-with-real-inbox@yourmail.com";
+
+const FACTORY_ADDRESS = "中国 广东省惠州市秋长工业园";
+---
+
+<Base lang="zh" title="联系 · ORDO">
+  <section class="page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">联系</h1>
+        <p class="lead">
+          本页仅用于组织采购、合作与媒体联络。我们以邮件方式确认与回复。
+        </p>
+      </header>
+
+      <div class="grid">
+        <section class="card" aria-label="邮箱">
+          <h2 class="h2">邮箱</h2>
+          <p class="sub">
+            以下为对外公开的形式地址（用于口径与识别）：<br/>
+            组织采购：<a class="mail" href={`mailto:${REAL_PROCUREMENT}`}>{DISPLAY_PROCUREMENT}</a><br/>
+            合作对接：<a class="mail" href={`mailto:${REAL_PARTNERSHIP}`}>{DISPLAY_PARTNERSHIP}</a><br/>
+            媒体联络：<a class="mail" href={`mailto:${REAL_MEDIA}`}>{DISPLAY_MEDIA}</a>
+          </p>
+        </section>
+
+        <section class="card" aria-label="工厂地址">
+          <h2 class="h2">工厂地址</h2>
+          <p class="sub">{FACTORY_ADDRESS}</p>
+        </section>
+      </div>
+
+      <section class="card" aria-label="在线联系">
+        <h2 class="h2">在线联系</h2>
+        <p class="sub">填写后将生成邮件并调用你的邮件客户端发送（你可在发送前再次核对）。</p>
+
+        <form class="form" data-contact-form>
+          <div class="row2">
+            <label class="field">
+              <span>姓名</span>
+              <input name="name" type="text" autocomplete="name" placeholder="你的称呼" required />
+            </label>
+            <label class="field">
+              <span>邮箱</span>
+              <input name="email" type="email" autocomplete="email" placeholder="name@domain.com" required />
+            </label>
+          </div>
+
+          <div class="row2">
+            <label class="field">
+              <span>联系类型</span>
+              <select name="type" required>
+                <option value="procurement">组织采购</option>
+                <option value="partnership">合作对接</option>
+                <option value="media">媒体联络</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>主题</span>
+              <input name="subject" type="text" placeholder="一句话说明来意" required />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>留言</span>
+            <textarea name="message" rows="6" placeholder="请描述需求、时间点与关键信息。" required></textarea>
+          </label>
+
+          <div class="actions">
+            <button class="btn" type="submit">生成邮件</button>
+          </div>
+
+          <p class="hint">提示：页面展示的邮箱为形式地址；点击/表单发送将使用真实收件邮箱。</p>
+        </form>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const form = document.querySelector("[data-contact-form]");
+      if (!form) return;
+
+      const realMap = {
+        procurement: "__REAL_PROCUREMENT__",
+        partnership: "__REAL_PARTNERSHIP__",
+        media: "__REAL_MEDIA__",
+      };
+
+      // Replace placeholders at runtime via string injection (keeps real inbox out of visible text nodes)
+      const REAL_PROCUREMENT = JSON.stringify(REAL_PROCUREMENT);
+      const REAL_PARTNERSHIP = JSON.stringify(REAL_PARTNERSHIP);
+      const REAL_MEDIA = JSON.stringify(REAL_MEDIA);
+
+      realMap.procurement = REAL_PROCUREMENT;
+      realMap.partnership = REAL_PARTNERSHIP;
+      realMap.media = REAL_MEDIA;
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const name = (fd.get("name") || "").toString().trim();
+        const email = (fd.get("email") || "").toString().trim();
+        const type = (fd.get("type") || "procurement").toString();
+        const subject = (fd.get("subject") || "").toString().trim();
+        const message = (fd.get("message") || "").toString().trim();
+
+        const to = realMap[type] || REAL_PROCUREMENT;
+
+        const lines = [
+          "类型: " + (type === "procurement" ? "组织采购" : type === "partnership" ? "合作对接" : "媒体联络"),
+          "姓名: " + name,
+          "邮箱: " + email,
+          "",
+          message
+        ];
+
+        const mailSubject = encodeURIComponent("ORDO 联系 | " + subject);
+        const body = encodeURIComponent(lines.join("\n"));
+        window.location.href = `mailto:${to}?subject=${mailSubject}&body=${body}`;
+      });
+    })();
+  </script>
+
+  <style>
+    .page{ padding:18px 0 48px; }
+    .container{ max-width: 980px; margin:0 auto; padding:0 18px; }
+    .h1{ margin: 8px 0 0; font-size: 42px; line-height: 1.08; letter-spacing: -0.02em; }
+    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; max-width: 72ch; }
+
+    .grid{ margin-top: 14px; display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+
+    .card{
+      border-radius: 18px;
+      border: 1px solid rgba(220,235,240,0.10);
+      background: rgba(10,22,26,0.10);
+      padding: 18px;
+    }
+    .h2{ margin:0 0 10px; font-size: 18px; color: rgba(220,235,240,.92); }
+    .sub{ margin:0; color: rgba(220,235,240,.70); line-height: 1.75; }
+    .mail{ color: rgba(220,235,240,.86); text-decoration: none; border-bottom: 1px solid rgba(220,235,240,0.12); }
+
+    .form{ margin-top: 12px; display: grid; gap: 12px; }
+    .row2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .field{ display:grid; gap: 6px; }
+    .field span{ font-size: 12px; color: rgba(220,235,240,.62); }
+    input, textarea, select{
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(220,235,240,0.14);
+      background: rgba(10,22,26,0.10);
+      color: rgba(220,235,240,0.88);
+      padding: 10px 12px;
+      outline: none;
+    }
+    select{ appearance: none; }
+    input:focus, textarea:focus, select:focus{ border-color: rgba(120,210,210,0.55); }
+
+    .actions{ display:flex; gap: 10px; flex-wrap: wrap; align-items:center; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 9px 14px; border-radius: 999px;
+      border: 1px solid rgba(220,235,240,0.14);
+      color: rgba(220,235,240,0.88);
+      text-decoration:none;
+      background: rgba(10,22,26,0.10);
+      transition: border-color .2s ease, background .2s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn:hover{ border-color: rgba(220,235,240,0.24); background: rgba(10,22,26,0.14); }
+    .hint{ margin: 0; color: rgba(220,235,240,.56); font-size: 12px; line-height: 1.65; }
+
+    @media (max-width: 820px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px){
+      .row2{ grid-template-columns: 1fr; }
+    }
+  </style>
+</Base>

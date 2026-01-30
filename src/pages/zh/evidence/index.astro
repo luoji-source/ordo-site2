@@ -1,0 +1,199 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base lang="zh" title="证据 · ORDO">
+  <section class="page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">证据</h1>
+        <p class="lead">
+          这里呈现的是可被核对的事实材料，用于帮助你自行判断：产品是否真实存在、是否进入可重复制造与交付流程。
+        </p>
+      </header>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="h2">材料</h2>
+          <p class="sublead">展示可见纹理与表面处理的事实；不做“材料神话”。</p>
+        </div>
+
+        <div class="feature">
+          <figure class="media">
+            <img
+              src="/images/evidence/materials/carbon-fiber-3k-weave.png"
+              alt="碳纤维 3K 编织布（结构织纹近景）"
+              loading="lazy"
+            />
+            <figcaption>3K 编织布：可见纹理来自织物本体，而非印刷或贴皮。</figcaption>
+          </figure>
+
+          <div class="copy">
+            <div class="k">碳纤维（当前主线）</div>
+            <p class="p">
+              当前产品线以碳纤维复合材料为主体，用于保持触觉与外观语言的一致性，并支撑长期桌面留存的使用方式。
+            </p>
+            <ul class="list">
+              <li>公开材料类型与可公开的批次范围</li>
+              <li>公开表面处理与外观一致性的原则</li>
+              <li>公开与结构相关的材料约束（夹层、接触面）</li>
+            </ul>
+            <p class="note">
+              材料不是信仰：若未来场景需要耐热、亲肤、抗污或食品级材料，将以范式一致为优先。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="h2">过程与验收</h2>
+          <p class="sublead">用过程照片与交付记录证明：被加工出来、被检查过、进入交付链路。</p>
+        </div>
+
+        <div class="grid">
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">创建过程</div>
+              <div class="mini">加工中 / 设备与环境</div>
+            </div>
+            <img class="img" src="/images/evidence/process-cnc.jpg" alt="创建过程：CNC 加工碳纤维板材" loading="lazy" />
+            <figcaption class="cap">用于核对：被加工出来，而非渲染出来。</figcaption>
+          </figure>
+
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">交付记录</div>
+              <div class="mini">批次 / 包装 / 码放</div>
+            </div>
+            <img class="img" src="/images/evidence/delivery-batch.jpg" alt="交付记录：批量包装与码放" loading="lazy" />
+            <figcaption class="cap">用于核对：可重复制造并进入交付流程。</figcaption>
+          </figure>
+
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">工艺验收</div>
+              <div class="mini">测量 / 检验 / 复核</div>
+            </div>
+            <img class="img" src="/images/evidence/inspection-qc.jpg" alt="工艺验收：尺寸测量与质检记录" loading="lazy" />
+            <figcaption class="cap">用于核对：结构与一致性被检查，而不是“做完就算”。</figcaption>
+          </figure>
+
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">耐久性与保养</div>
+              <div class="mini">使用痕迹 / 表面表现</div>
+            </div>
+            <img class="img" src="/images/evidence/longevity-surface.jpg" alt="耐久性与保养：碳纤维表面表现（水滴）" loading="lazy" />
+            <figcaption class="cap">用于核对：长期使用的边界与维护可行性。</figcaption>
+          </figure>
+        </div>
+
+        <p class="footnote">
+          Evidence 页只提供事实，以便你做判断；不是为了说服你购买。
+        </p>
+      </section>
+    </div>
+  </section>
+
+  <style>
+    .page{ padding: 18px 0 44px; }
+    .container{ max-width: 1120px; margin: 0 auto; padding: 0 18px; }
+
+    .hero{ padding-top: 10px; }
+    .h1{ margin: 8px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.02em; }
+    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; max-width: 86ch; }
+
+    .section{ margin-top: 14px; }
+    .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap: 12px; flex-wrap: wrap; }
+    .h2{ margin: 0; font-size: 18px; letter-spacing: 0.02em; color: rgba(220,235,240,0.92); }
+    .sublead{ margin: 6px 0 0; color: rgba(220,235,240,0.66); line-height: 1.7; max-width: 90ch; }
+
+    .divider{ height: 1px; background: rgba(220,235,240,0.08); margin: 16px 0; }
+
+    .feature{
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .media{
+      margin:0;
+      border-radius: 22px;
+      border: 1px solid rgba(220,235,240,0.12);
+      overflow: hidden;
+      background: rgba(10,22,26,0.10);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
+      display:grid;
+      grid-template-rows: 1fr auto;
+      min-height: 320px;
+    }
+    .media img{ width:100%; height:100%; object-fit: cover; display:block; }
+    .media figcaption{
+      padding: 10px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.0));
+      color: rgba(220,235,240,0.88);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .copy{
+      border-radius: 22px;
+      border: 1px solid rgba(220,235,240,0.12);
+      background: radial-gradient(120% 120% at 20% 0%,
+        rgba(48, 92, 110, 0.24) 0%,
+        rgba(14, 26, 30, 0.58) 44%,
+        rgba(10, 16, 18, 0.36) 100%);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 18px;
+    }
+    .k{ font-weight: 800; color: rgba(220,235,240,0.92); letter-spacing: 0.08em; font-size: 12px; }
+    .p{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; }
+    .list{ margin: 12px 0 0; padding-left: 18px; color: rgba(220,235,240,.72); line-height: 1.75; }
+    .list li{ margin: 6px 0; }
+    .note{ margin: 12px 0 0; color: rgba(220,235,240,.60); font-size: 12px; line-height: 1.65; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .card{
+      margin:0;
+      border-radius: 18px;
+      border: 1px solid rgba(220,235,240,0.10);
+      background: radial-gradient(120% 120% at 20% 0%,
+        rgba(48, 92, 110, 0.22) 0%,
+        rgba(14, 26, 30, 0.55) 45%,
+        rgba(10, 16, 18, 0.34) 100%);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.06);
+      overflow: hidden;
+      display:grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 260px;
+    }
+    .card-head{ padding: 12px 12px 10px; }
+    .mini{ margin-top: 6px; font-size: 12px; color: rgba(220,235,240,.60); }
+    .img{ width:100%; height: 148px; object-fit: cover; display:block; border-top: 1px solid rgba(220,235,240,0.06); border-bottom: 1px solid rgba(220,235,240,0.06); }
+    .cap{ padding: 10px 12px 12px; color: rgba(220,235,240,.70); font-size: 12px; line-height: 1.65; }
+
+    .footnote{ margin: 12px 0 0; color: rgba(220,235,240,.56); font-size: 12px; line-height: 1.65; }
+
+    @media (max-width: 1100px){
+      .feature{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 680px){
+      .h1{ font-size: 36px; }
+      .grid{ grid-template-columns: 1fr; }
+      .media{ min-height: 280px; }
+      .img{ height: 180px; }
+    }
+  </style>
+</Base>

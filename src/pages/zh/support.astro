@@ -1,0 +1,38 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base lang="zh" title="页面已迁移 · ORDO">
+  <section class="page-shell">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Notice</div>
+        <h1 class="h1">支持页面已迁移</h1>
+        <p class="lead">支持相关入口已并入“联系”页；证据材料请前往“证据”。</p>
+      </div>
+
+      <div class="actions">
+        <a class="btn" href="/zh/contact">前往联系</a>
+        <a class="btn ghost" href="/zh/evidence">前往证据</a>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .page-shell{ padding: 22px 0 44px; }
+    .container{ max-width: 1120px; margin: 0 auto; padding: 0 18px; }
+    .eyebrow{ font-size: 11px; letter-spacing: .14em; color: rgba(220,235,240,.56); }
+    .h1{ margin: 10px 0 0; font-size: 36px; line-height: 1.1; }
+    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; max-width: 84ch; }
+    .actions{ margin-top: 14px; display:flex; gap: 10px; flex-wrap: wrap; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 9px 14px; border-radius: 999px;
+      border: 1px solid rgba(220,235,240,0.14);
+      color: rgba(220,235,240,0.88);
+      text-decoration:none;
+      background: rgba(10,22,26,0.10);
+    }
+    .btn.ghost{ background: transparent; border-color: rgba(220,235,240,0.10); color: rgba(220,235,240,0.76); }
+  </style>
+</Base>

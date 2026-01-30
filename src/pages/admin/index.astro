@@ -1,0 +1,15 @@
+---
+import Base from '@/layouts/Base.astro';
+import AdminApp from '@/components/admin/AdminApp.tsx';
+---
+<Base lang="en" title="Admin | ORDO">
+  <section style="margin-top:18px">
+    <div class="card">
+      <h1 style="margin:0 0 6px">Admin</h1>
+      <p class="muted" style="margin:0">This route should be protected by Cloudflare Access.</p>
+    </div>
+  </section>
+  <section style="margin-top:14px">
+    <AdminApp client:only="react" />
+  </section>
+</Base>

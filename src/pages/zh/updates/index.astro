@@ -1,0 +1,611 @@
+---
+import Base from '@/layouts/Base.astro';
+import { getLocalStore } from "../../../lib/local-store";
+
+const store = getLocalStore?.() ?? {};
+const brand = store?.site?.brand ?? "ORDO";
+
+/**
+ * Updates（中文）= 版本与制造事实日志
+ * 当前阶段：静态页面（不接 D1）。
+ * 说明：当尚无可公开的版本/制造/交付事实时，页面将保持空状态，但结构固定，可长期追加。
+ */
+
+
+// 版本索引（公开事实条目；没有事实就保持为空）
+const versionIndex = [
+  {
+    "title": "ORDO Mark · v1.0",
+    "date": "2026-—（替换）",
+    "status": "Active",
+    "tags": [
+      "结构",
+      "材料",
+      "滑感"
+    ],
+    "purchaseNote": "当前下单将获得此版本或后续已验证的新版本。",
+    "sections": {
+      "change": [
+        "确认滑道结构与止位方式",
+        "确认碳纤维复合结构为主体材料",
+        "完成首批量产结构定型"
+      ],
+      "reason": [
+        "用于验证日常阅读频率下：结构稳定性、误触情况，以及外观与触觉一致性。"
+      ],
+      "verification": [
+        "连续滑动测试（人工重复操作）",
+        "不同纸张厚度下的夹持稳定性测试",
+        "桌面日常使用场景下的表面耐磨观察"
+      ],
+      "material": [
+        "碳纤维复合材料（可见织纹）",
+        "表面不使用遮盖型涂层，保留材料本体特性"
+      ],
+      "quality": [
+        "滑动起止清晰",
+        "无自发滑动或松脱",
+        "外观织纹差异在可接受范围内"
+      ],
+      "delivery": [
+        "首批量产完成",
+        "进入正常交付流程"
+      ]
+    }
+  },
+  {
+    "title": "ORDO Mark · v1.1",
+    "date": "2026-—（替换）",
+    "status": "Active",
+    "tags": [
+      "一致性",
+      "滑感"
+    ],
+    "purchaseNote": "当前下单将获得此版本或后续已验证的新版本。",
+    "sections": {
+      "change": [
+        "调整滑道内部接触面处理方式",
+        "微调止位阻尼区间",
+        "减少不同个体间的滑感差异"
+      ],
+      "reason": [
+        "在 v1.0 使用中观察到不同批次间阻尼存在轻微差异，需要提升一致性。"
+      ],
+      "verification": [
+        "多件对比滑动测试",
+        "不同手指力度下触感反馈比对",
+        "连续使用后的阻尼变化观察"
+      ],
+      "material": [
+        "主体材料保持不变",
+        "内部接触区域处理方式调整（不影响外观）"
+      ],
+      "quality": [
+        "滑动稳定",
+        "止位清晰",
+        "无异响或卡滞"
+      ],
+      "delivery": [
+        "新版本开始替换后续批次",
+        "不影响已完成订单交付"
+      ]
+    }
+  },
+  {
+    "title": "ORDO Mark · Pro（预告）",
+    "date": "2026-—（替换）",
+    "status": "Prototype",
+    "tags": [
+      "耐久",
+      "结构"
+    ],
+    "purchaseNote": "此条目为验证记录，不开放下单。",
+    "sections": {
+      "change": [
+        "探索更高耐久的滑道结构方案",
+        "评估不同夹层组合对滑感的影响",
+        "观察长期高频使用下的结构变化"
+      ],
+      "reason": [
+        "Pro 版本用于验证：在更高使用频率与更长生命周期条件下，结构是否仍然成立。"
+      ],
+      "verification": [
+        "高频重复滑动测试",
+        "长时间静置后的手感变化观察",
+        "不同温湿度环境下的稳定性测试"
+      ],
+      "material": [
+        "仍以碳纤维为主体",
+        "夹层材料处于评估阶段"
+      ],
+      "quality": [
+        "尚未进入量产验收",
+        "当前仅用于结构可行性判断"
+      ],
+      "delivery": [
+        "无公开交付时间",
+        "是否发布取决于验证结果"
+      ]
+    }
+  },
+  {
+    "title": "ORDO Ruler · v0.9",
+    "date": "2026-—（替换）",
+    "status": "Pilot",
+    "tags": [
+      "尺寸",
+      "边缘"
+    ],
+    "purchaseNote": "内部试产验证中，不开放下单。",
+    "sections": {
+      "change": [
+        "验证线性碳纤维结构在测量器具中的稳定性",
+        "测试不同边缘处理方式的手感与安全性"
+      ],
+      "reason": [
+        "线性器具对边缘一致性要求更高，需要在保持材料语言一致的前提下避免影响使用安全。"
+      ],
+      "verification": [
+        "尺寸稳定性测试",
+        "边缘触感测试",
+        "桌面与随身携带场景观察"
+      ],
+      "material": [
+        "碳纤维复合材料",
+        "表面处理方式处于对比阶段"
+      ],
+      "quality": [
+        "是否存在毛边",
+        "是否影响测量与书写辅助的稳定感"
+      ],
+      "delivery": [
+        "仅内部试产",
+        "未进入对外销售"
+      ]
+    }
+  },
+  {
+    "title": "ORDO Ruler · v1.0",
+    "date": "2026-—（替换）",
+    "status": "Active",
+    "tags": [
+      "外观",
+      "手感"
+    ],
+    "purchaseNote": "当前下单将获得此版本或后续已验证的新版本。",
+    "sections": {
+      "change": [
+        "确认边缘处理方案",
+        "固定尺寸与比例",
+        "与 Mark 系列保持材料与触觉语言一致"
+      ],
+      "reason": [
+        "确保该器具在视觉、触感与使用逻辑上属于同一器具体系。"
+      ],
+      "verification": [
+        "实际书写/标记辅助使用",
+        "桌面长期放置观察",
+        "与 Mark 系列并置的一致性检查"
+      ],
+      "material": [
+        "碳纤维复合材料",
+        "表面处理方案已固定"
+      ],
+      "quality": [
+        "边缘安全",
+        "表面耐污与指纹可控"
+      ],
+      "delivery": [
+        "准备进入交付流程"
+      ]
+    }
+  },
+  {
+    "title": "Boundary Marker · v0.1",
+    "date": "2026-—（替换）",
+    "status": "Prototype",
+    "tags": [
+      "边界",
+      "状态"
+    ],
+    "purchaseNote": "概念验证阶段，不承诺发布时间。",
+    "sections": {
+      "change": [
+        "验证“开始 / 结束”边界是否可被器具外显",
+        "测试最小结构是否足以表达状态切换"
+      ],
+      "reason": [
+        "验证在不引入提醒、计时或评估的前提下，仅通过器具完成边界确认。"
+      ],
+      "verification": [
+        "不同使用者对边界含义的理解一致性",
+        "状态切换是否清晰、是否可被共同承认"
+      ],
+      "material": [
+        "材料未定",
+        "是否继续使用碳纤维取决于场景验证结果"
+      ],
+      "quality": [
+        "当前仅判断“是否成立”",
+        "不做耐久或外观验收"
+      ],
+      "delivery": [
+        "不设发布时间",
+        "可能终止，也可能进入下一阶段"
+      ]
+    }
+  }
+];
+
+// 条目模板（示例：仅结构，不代表已发布事实）
+const versionTemplate = {
+  title: "（模板）版本条目结构",
+  meta: {
+    version: "—",
+    date: "—",
+    status: "模板",
+    tags: ["材料", "验收"],
+  },
+  sections: {
+    change: ["（最多 3 条）这次改了什么"],
+    reason: ["（工程理由）为什么要改"],
+    verification: ["（可复现方法）如何验证"],
+    material: ["（可公开信息）材料批次 / 表面处理"],
+    quality: ["（事实）抽检项：通过 / 未通过 / 返工"],
+    delivery: ["（事实）交付节点与范围"],
+  },
+};
+
+// 验收公开规则（固定框架）
+const qcRules = [
+  {
+    item: "外观一致性",
+    desc: "纹理 / 光泽 / 边缘处理的一致性（同批次、跨批次）",
+  },
+  {
+    item: "机构可靠性",
+    desc: "滑动行程、止位清晰、误触概率（以复现条件描述）",
+  },
+  {
+    item: "耐久性",
+    desc: "重复操作次数测试（用区间描述，不夸张）",
+  },
+  {
+    item: "手感一致性",
+    desc: "阻尼、声音、回弹（若存在），以对比与偏差描述",
+  },
+  {
+    item: "装配一致性",
+    desc: "公差控制、松紧与偏磨（以检查项与结果描述）",
+  },
+];
+
+// 路线图快照（只展示允许开发的部分）
+const roadmap = [
+  { title: "现在（Phase I）", desc: "S1 / S3" },
+  { title: "下一阶段（Phase II 解锁后）", desc: "S4 / S5" },
+  { title: "更后（Later）", desc: "S6 / S7 → S8" },
+];
+
+// 制造笔记（短、硬、可验证；没有事实就为空）
+const manufacturingNotes = [];
+
+// 归档维度（静态占位：后续可接筛选逻辑）
+const archiveDims = {
+  products: ["连续事实标定器 · 阅读场景", "碳纤维滑道尺", "家庭责任板"],
+  types: ["材料", "机构", "验收", "包装"],
+  status: ["原型", "试产", "在售"],
+};
+---
+
+<Base lang="zh" title="ORDO · 更新">
+<!-- 页面头部（固定） -->
+      <section class="hero">
+        <div class="container">
+          <div class="eyebrow">版本与制造事实日志</div>
+          <h1 class="h1">更新</h1>
+          <p class="lead">我们只发布可核对的事实：版本、材料、工艺、验收与交付。</p>
+
+          <div class="heroRules">
+            <ul class="ruleList">
+              <li>不发布“打卡 / 榜单 / 评分”类内容。</li>
+              <li>不追踪用户行为，不用数据诱导正确路径。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1) 本页范围与规则 -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">本页范围</h2>
+            <div class="muted miniText">面向所有产品的版本与交付事实账本</div>
+          </div>
+
+          <div class="log-card">
+            <p class="p">
+              Updates 记录三类可核对事实：<strong>版本更新</strong>、<strong>制造进度</strong>与<strong>交付事实</strong>。它不是新闻，也不做促销。
+            </p>
+
+            <div class="tplTags" style="margin-top: 10px;">
+              <span class="badge">版本更新</span>
+              <span class="badge">制造进度</span>
+              <span class="badge">交付事实</span>
+            </div>
+
+            <ul class="ruleList" style="margin-top: 14px;">
+              <li>每条记录都标注所属产品与版本，便于追溯与复核。</li>
+              <li>图片与近景只作为条目证据出现，不作为封面定义。</li>
+              <li>细则与承诺以规则页为准，页面提供入口以便长期更新。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2) 版本索引（主骨架） -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">版本索引</h2>
+            <div class="muted miniText">每条记录 = 一次可核对的版本事实</div>
+          </div>
+
+          {versionIndex.length === 0 ? (
+            <div class="log-card ghost">
+              <div class="emptyTitle">暂无公开版本条目</div>
+              <div class="emptyNote">当存在可公开且可核对的事实时，将以条目形式追加。</div>
+              <details class="tpl">
+                <summary>查看条目模板（仅结构示例）</summary>
+                <div class="tplBody">
+                  <div class="tplMeta">
+                    <span class="tplKey">版本</span>
+                    <span class="tplVal">{versionTemplate.meta.version}</span>
+                    <span class="tplKey">日期</span>
+                    <span class="tplVal">{versionTemplate.meta.date}</span>
+                    <span class="tplKey">状态</span>
+                    <span class="tplVal">{versionTemplate.meta.status}</span>
+                  </div>
+                  <div class="tplTags">
+                    {versionTemplate.meta.tags.map((t) => (
+                      <span class="badge">{t}</span>
+                    ))}
+                  </div>
+
+                  <div class="tplGrid">
+                    <div class="tplCol">
+                      <div class="tplHead">变更</div>
+                      <ul class="tplList">
+                        {versionTemplate.sections.change.map((x) => (
+                          <li>{x}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="tplCol">
+                      <div class="tplHead">原因</div>
+                      <ul class="tplList">
+                        {versionTemplate.sections.reason.map((x) => (
+                          <li>{x}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="tplCol">
+                      <div class="tplHead">验证</div>
+                      <ul class="tplList">
+                        {versionTemplate.sections.verification.map((x) => (
+                          <li>{x}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="tplCol">
+                      <div class="tplHead">材料</div>
+                      <ul class="tplList">
+                        {versionTemplate.sections.material.map((x) => (
+                          <li>{x}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="tplCol">
+                      <div class="tplHead">验收</div>
+                      <ul class="tplList">
+                        {versionTemplate.sections.quality.map((x) => (
+                          <li>{x}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="tplCol">
+                      <div class="tplHead">交付</div>
+                      <ul class="tplList">
+                        {versionTemplate.sections.delivery.map((x) => (
+                          <li>{x}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          ) : (
+            versionIndex.map((v) => (
+              <details class="log-card">
+                <summary class="vHead">
+                  <span class="vTitle">{v.title}</span>
+                  <span class="vMeta">
+                    <span class="muted">{v.date}</span>
+                    <span class="sep">·</span>
+                    <span class="badge">{v.status}</span>
+                  </span>
+                </summary>
+                
+                <div class="vBody">
+                  <div class="vTags">
+                    {v.tags?.slice(0, 6).map((t) => (
+                      <span class="badge">{t}</span>
+                    ))}
+                  </div>
+
+                  <div class="vGrid">
+                    <div class="vCol">
+                      <div class="vHead2">变更</div>
+                      <ul class="vList">{v.sections.change.map((x) => <li>{x}</li>)}</ul>
+                    </div>
+                    <div class="vCol">
+                      <div class="vHead2">原因</div>
+                      <ul class="vList">{v.sections.reason.map((x) => <li>{x}</li>)}</ul>
+                    </div>
+                    <div class="vCol">
+                      <div class="vHead2">验证</div>
+                      <ul class="vList">{v.sections.verification.map((x) => <li>{x}</li>)}</ul>
+                    </div>
+                    <div class="vCol">
+                      <div class="vHead2">材料</div>
+                      <ul class="vList">{v.sections.material.map((x) => <li>{x}</li>)}</ul>
+                    </div>
+                    <div class="vCol">
+                      <div class="vHead2">验收</div>
+                      <ul class="vList">{v.sections.quality.map((x) => <li>{x}</li>)}</ul>
+                    </div>
+                    <div class="vCol">
+                      <div class="vHead2">交付</div>
+                      <ul class="vList">{v.sections.delivery.map((x) => <li>{x}</li>)}</ul>
+                    </div>
+                  </div>
+
+                  <div class="purchaseNote">{v.purchaseNote}</div>
+                </div>
+
+              </details>
+            ))
+          )}
+        </div>
+      </section>
+
+      <!-- 3) 验收公开规则 -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">验收公开规则</h2>
+            <div class="muted miniText">固定框架；版本条目只引用变化项</div>
+          </div>
+
+          <div class="log-card">
+            <table class="qcTable">
+              <thead>
+                <tr>
+                  <th>项目</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                {qcRules.map((r) => (
+                  <tr>
+                    <td class="qcItem">{r.item}</td>
+                    <td class="qcDesc">{r.desc}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div class="qcNote muted">
+              不进行用户排名，不进行行为评价；不以“谁更自律”为目标。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4) 路线图快照 -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">路线图快照</h2>
+            <div class="muted miniText">发布以验证进度为准，不以营销节奏为准</div>
+          </div>
+
+          <div class="roadGrid">
+            {roadmap.map((r) => (
+              <div class="log-card road">
+                <div class="roadTitle">{r.title}</div>
+                <div class="roadDesc">{r.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 5) 制造笔记 -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">制造笔记</h2>
+            <div class="muted miniText">短、硬、可验证</div>
+          </div>
+
+          {manufacturingNotes.length === 0 ? (
+            <div class="log-card ghost">
+              <div class="emptyTitle">暂无公开笔记</div>
+              <div class="emptyNote">将以固定格式按月或双周追加。</div>
+              <div class="noteTpl">
+                <div class="noteTplRow"><span class="badge">本期完成</span><span class="muted">打样 / 试产 / 返工 / 包装确认</span></div>
+                <div class="noteTplRow"><span class="badge">本期发现</span><span class="muted">一致性问题（例如边缘处理差异）</span></div>
+                <div class="noteTplRow"><span class="badge">本期处理</span><span class="muted">改工艺 / 改治具 / 改验收项</span></div>
+                <div class="noteTplRow"><span class="badge">下期计划</span><span class="muted">小批试产 / 新结构验证</span></div>
+              </div>
+            </div>
+          ) : (
+            manufacturingNotes.map((n) => (
+              <div class="log-card">
+                <div class="log-head">
+                  <span class="log-date">{n.date}</span>
+                  <span class="log-title">{n.title}</span>
+                </div>
+                <ul class="log-list">
+                  {n.items.map((i) => (
+                    <li>{i}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
+      <!-- 6) 归档 -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2 class="h2">归档</h2>
+            <div class="muted miniText">后续可接入筛选与检索</div>
+          </div>
+
+          <div class="log-card">
+            <div class="archiveBlock">
+              <div class="archiveHead">按产品</div>
+              <div class="chipRow">
+                {archiveDims.products.map((x) => (
+                  <span class="chip">{x}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="archiveBlock">
+              <div class="archiveHead">按类型</div>
+              <div class="chipRow">
+                {archiveDims.types.map((x) => (
+                  <span class="chip">{x}</span>
+                ))}
+              </div>
+            </div>
+
+            <div class="archiveBlock">
+              <div class="archiveHead">按状态</div>
+              <div class="chipRow">
+                {archiveDims.status.map((x) => (
+                  <span class="chip">{x}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+</Base>

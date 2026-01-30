@@ -1,0 +1,73 @@
+---
+import Base from '@/layouts/Base.astro';
+import ImagePlaceholder from '@/components/ImagePlaceholder.astro';
+import { marked } from 'marked';
+import { local } from '@/lib/local-store';
+
+const { slug } = Astro.params;
+let product: any;
+let media: any[] = [];
+if (import.meta.env.DEV) {
+  product = local.products.en.find((p) => p.slug === slug);
+  media = [];
+} else {
+  const res = await fetch(new URL(`/api/public/product/${slug}?lang=en`, Astro.url));
+  const json = await res.json().catch(() => ({ ok: false }));
+  product = json?.data?.product;
+  media = json?.data?.media ?? [];
+}
+if (!product) throw new Error('Product not found');
+const bodyHtml = marked.parse(product.body_md || '');
+---
+<Base lang="en" title={`${product.name} | ORDO`}>
+  <section style="margin-top:18px">
+    <div class="card">
+      <div class="muted">{product.version} · {product.batch}</div>
+      <h1 style="margin:10px 0 6px">{product.name}</h1>
+      <p class="muted" style="margin:0">{product.summary}</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <a class="btn primary" href={`mailto:hello@ordo.example?subject=Order%20${encodeURIComponent(product.name)}`}>Email to order</a>
+        <a class="btn" href="/en/evidence">Evidence</a>
+      </div>
+    </div>
+  </section>
+
+  {media.length > 0 ? (
+    <section style="margin-top:14px" class="grid">
+      {media.map((m) => (
+        <div class="card col6">
+          <img
+            src={`/cdn/media/${m.r2_key}`}
+            alt={m.alt || product.name}
+            style="width:100%;border-radius:12px;border:1px solid var(--line)"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </section>
+  ) : (
+    <section style="margin-top:14px" class="grid">
+      <div class="card col12">
+        <ImagePlaceholder width={1200} height={800} label="Product image 1200×800" />
+      </div>
+    </section>
+  )}
+
+  <section style="margin-top:14px">
+    <div class="card">
+      <div set:html={bodyHtml} />
+    </div>
+  </section>
+
+  <section style="margin-top:14px">
+    <div class="card">
+      <h2 style="margin:0 0 8px">Do / Do Not</h2>
+      <ul class="muted" style="margin:0;padding-left:18px">
+        <li>No monitoring</li>
+        <li>No behavior logging</li>
+        <li>No scoring</li>
+        <li>No reminders, no interventions</li>
+      </ul>
+    </div>
+  </section>
+</Base>

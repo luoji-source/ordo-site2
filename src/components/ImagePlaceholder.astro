@@ -1,0 +1,58 @@
+---
+export interface Props {
+  /** intrinsic image width */
+  width: number;
+  /** intrinsic image height */
+  height: number;
+  alt?: string;
+  /** Optional label shown inside placeholder */
+  label?: string;
+  class?: string;
+}
+
+const { width, height, alt = '', label, class: className = '' } = Astro.props;
+const ratio = `${width} / ${height}`;
+const text = label ?? `${width}×${height}`;
+---
+
+<figure class={`ph ${className}`.trim()} style={`aspect-ratio:${ratio};`} aria-label={alt}>
+  <div class="ph__inner">
+    <div class="ph__icon" aria-hidden="true">▦</div>
+    <div class="ph__text">{text}</div>
+  </div>
+</figure>
+
+<style>
+  .ph {
+    width: 100%;
+    margin: 0;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background:
+      radial-gradient(1200px 500px at 20% 20%, rgba(255,255,255,0.10), rgba(0,0,0,0)),
+      linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0));
+    overflow: hidden;
+  }
+  .ph__inner {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    user-select: none;
+  }
+  .ph__icon {
+    font-size: 22px;
+    line-height: 1;
+    opacity: 0.7;
+  }
+  .ph__text {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

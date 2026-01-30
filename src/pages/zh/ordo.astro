@@ -1,0 +1,184 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base lang="zh" title="ORDO · ORDO">
+  <section class="page-shell">
+    <div class="container">
+      <div class="section-head">
+        <h1 class="h1">ORDO</h1>
+      </div>
+
+      <div class="company-grid">
+        <main class="company-main">
+          <p class="company-lead">
+            ORDO 设计并制造器具（Instruments），用于人在阅读、工作与判断时，面对中断、切换与长期跨度，保持位置、边界与连续性。
+          </p>
+
+          <div class="prose">
+            <p>
+              我们关注的不是提高效率或替人决策，而是在人必须亲自承担判断的场合，提供一个稳定、可信、不会干扰人的物理参照点。
+              ORDO 的器具不记录你、不评价你，也不提醒你该做什么；它们只负责把关键事实留在现实世界中。
+            </p>
+
+            <div class="callout" aria-label="器具三件事">
+              <div class="callout-title">器具只负责三件事</div>
+              <div class="callout-lines" role="list">
+                <span role="listitem">你现在在哪里</span>
+                <span role="listitem">你从哪里离开</span>
+                <span role="listitem">你将从哪里继续</span>
+              </div>
+            </div>
+
+            <p>
+              当时间被拉长、任务被打断、注意力反复切换时，人仍能回到自己的判断位置。
+            </p>
+            <ul>
+              <li>中断之后：回到原来的位置，不丢连续性。</li>
+              <li>切换之间：保留边界，减少“重建上下文”。</li>
+              <li>长期跨度：让事实经得起时间，而不是依赖记忆。</li>
+            </ul>
+
+            <h2>标准与边界</h2>
+            <p>
+              ORDO 制造的器具遵循 RESPECTA（值得被尊敬的规则与器具标准）。
+            </p>
+            <p>
+              ORDO 不提供监控、评分、排名或强提醒。器具不应驱动你做决定，只应在你需要时提供可靠参照。
+            </p>
+            <div class="quote" aria-label="器具行为准则">
+              器具应当在你不在场时保持沉默，在你回来时仍然准确。
+            </div>
+          </div>
+        </main>
+
+        <aside class="company-aside">
+
+          <div class="card">
+            <div class="eyebrow">标准与边界</div>
+            <div class="h3" style="margin:10px 0 8px">ORDO 负责制造，RESPECTA 负责判断</div>
+            <div class="muted">
+              RESPECTA 为独立标准站点。此链接仅用于阅读标准文本，不构成对任何产品的自动背书。
+            </div>
+            <a class="btn" href="https://respecta.org.cn" target="_blank" rel="noopener noreferrer" style="margin-top:14px">
+              阅读 RESPECTA ↗
+            </a>
+          </div>
+
+          <div class="card company-note">
+            <div class="eyebrow">制造者责任</div>
+            <div class="muted">设计 / 制造 / 交付与售后</div>
+            <div class="muted" style="margin-top:10px">我们公开版本与制造记录，用于“核对事实”，而不是“影响决定”。</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .section-head{
+      display:block;
+    }
+    .section-head .h1{justify-self:start; text-align:left;}
+
+    .company-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 360px;
+      gap:clamp(24px,4vw,56px);
+      align-items:start;
+      margin-top:clamp(16px,2vw,22px);
+    }
+    .company-main{max-width:72ch;}
+    .company-lead{
+      font-size:clamp(16px,1.35vw,18px);
+      line-height:1.85;
+      color:rgba(220,235,240,0.90);
+      margin:0 0 18px;
+    }
+    .prose{
+      color:rgba(220,235,240,0.78);
+      line-height:1.9;
+    }
+    .prose p{margin:0 0 14px;}
+    .prose ul{margin:0 0 14px 1.2em; padding:0;}
+    .prose li{margin:0 0 8px;}
+    .prose h2{
+      margin:22px 0 10px;
+      font-size:13px;
+      letter-spacing:0.12em;
+      text-transform:none;
+      color:rgba(220,235,240,0.70);
+    }
+    .prose strong{color:rgba(240,252,255,0.92); font-weight:600;}
+
+    .callout{
+      margin:14px 0 18px;
+      padding:14px 14px 12px;
+      border:1px solid rgba(220,235,240,0.12);
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(10,22,26,0.22), rgba(10,22,26,0.10));
+      box-shadow:0 10px 40px rgba(0,0,0,0.24);
+    }
+    .callout-title{
+      font-size:12px;
+      letter-spacing:0.12em;
+      text-transform:none;
+      color:rgba(220,235,240,0.60);
+      margin-bottom:10px;
+    }
+    .callout-lines{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+      color:rgba(240,252,255,0.92);
+    }
+    .callout-lines span{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid rgba(220,235,240,0.08);
+      border-radius:14px;
+      background:rgba(10,22,26,0.10);
+      font-weight:600;
+      user-select:none;
+    }
+    .callout-lines span::before{
+      content:"";
+      width:6px;
+      height:6px;
+      border-radius:999px;
+      background:rgba(220,235,240,0.55);
+      flex:0 0 auto;
+    }
+
+
+    .quote{
+      margin:14px 0 8px;
+      padding:12px 14px;
+      border-left:2px solid rgba(220,235,240,0.22);
+      background:rgba(10,22,26,0.08);
+      border-radius:12px;
+      color:rgba(240,252,255,0.92);
+      font-weight:600;
+    }
+    .company-aside{position:relative;}
+    .company-note{margin-top:16px;}
+
+    /* 降低侧栏入口的“抢眼程度”，让阅读更沉浸 */
+    .company-aside .btn{
+      padding:10px 12px;
+      box-shadow:none;
+      border-color:rgba(220,235,240,0.10);
+      background:rgba(10,22,26,0.10);
+    }
+
+    @media (max-width: 960px){
+      .callout-lines{grid-template-columns:1fr;}
+    }
+    @media (max-width: 960px){
+      .company-grid{grid-template-columns:1fr;}
+      .company-main{max-width:unset;}
+    }
+  </style>
+</Base>

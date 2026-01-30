@@ -1,0 +1,444 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base lang="zh" title="更新 · ORDO">
+  <section class="page-shell">
+    <div class="container">
+      <header class="updates-hero">
+        <h1 class="h1">更新</h1>
+        <p class="lead">我们公开版本与制造记录，用于“核对事实”，而不是“影响决定”。</p>
+        <p class="intro">
+          ORDO 的更新遵循一个简单原则：<b>把可核对的变化留在现实里</b>。我们记录“发生了什么、何时发生、影响哪些边界”，
+          但不会把更新写成对标式卖点或营销口号。是否更新、如何更新、是否成立，始终由你判断。
+        </p>
+
+        <div class="jump">
+          <span class="kicker">快速跳转：</span>
+          <a class="chip" href="#policy">更新口径</a>
+          <a class="chip" href="#types">更新类型</a>
+          <a class="chip" href="#changelog">更新记录</a>
+          <a class="chip" href="#compat">兼容与替换</a>
+          <a class="chip" href="#subscribe">订阅</a>
+          <a class="chip" href="#faq">常见问题</a>
+        </div>
+      </header>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Policy -->
+      <section class="section" id="policy">
+        <h2>更新口径</h2>
+        <p class="sublead">
+          更新页只回答三件事：<b>变了什么</b>、<b>影响哪些边界</b>、<b>如何核对</b>。其余部分不写，以免把判断偷走。
+        </p>
+
+        <div class="policy-grid">
+          <article class="card">
+            <div class="pill">01 · 事实</div>
+            <h3 class="card-title">只记录可核对变化</h3>
+            <p class="card-desc">结构、材料、制造、交付、版本口径、已知限制与修复，均可被核对。</p>
+            <ul class="bullets">
+              <li>不给“更好/更强”式描述，给变更点与影响面</li>
+              <li>每条更新都有版本号/日期/适用范围</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="pill">02 · 边界</div>
+            <h3 class="card-title">把影响写成边界</h3>
+            <p class="card-desc">更新不等于升级建议。我们只说明：哪些旧用法应停止、哪些新限制应知晓。</p>
+            <ul class="bullets">
+              <li>强调“何时不该用”与“何时要核对”</li>
+              <li>避免用更新驱动购买或替换</li>
+            </ul>
+          </article>
+
+          <article class="card">
+            <div class="pill">03 · 追溯</div>
+            <h3 class="card-title">记录用于回到同一判断位置</h3>
+            <p class="card-desc">当你跨天/跨周/跨团队协作时，版本记录帮助你回到同一事实底座。</p>
+            <ul class="bullets">
+              <li>支持按产品家族 / 批次 / 时间检索</li>
+              <li>修复与替换会形成记录编号</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="note card">
+          <div class="note-title">阅读方式建议</div>
+          <div class="note-grid">
+            <div class="note-item"><span class="badge">A</span> 先看“影响边界”再看“细节描述”</div>
+            <div class="note-item"><span class="badge">B</span> 只对与你的器具版本相关的条目负责</div>
+            <div class="note-item"><span class="badge">C</span> 不把更新当作替你做决定的理由</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Types -->
+      <section class="section" id="types">
+        <h2>更新类型</h2>
+        <p class="sublead">用同一套分类，让不同家族的变化在一眼内可比较——但不提供可对标参数。</p>
+
+        <div class="types-grid">
+          <article class="card">
+            <h3 class="card-title">版本更新</h3>
+            <p class="card-desc">对外发布的版本口径变化（编号、适用范围、已知限制）。</p>
+            <ul class="bullets">
+              <li>编号：主版本 / 次版本 / 修订</li>
+              <li>适用范围：哪些批次/交付时间段</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card-title">制造变更</h3>
+            <p class="card-desc">不改变判断范式，但可能影响耐用、手感、稳定等边界体验。</p>
+            <ul class="bullets">
+              <li>只写“变更点与验证口径”</li>
+              <li>不写可复制的工艺细节</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card-title">已知问题与修复</h3>
+            <p class="card-desc">把“限制”写清楚，避免误用；把“修复”写成可核对事实。</p>
+            <ul class="bullets">
+              <li>影响：哪些场景会出问题</li>
+              <li>处理：修复/替换/说明</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card-title">文档与边界</h3>
+            <p class="card-desc">标准文本、使用边界、交接口径的更新。</p>
+            <ul class="bullets">
+              <li>用于阅读与核对，不构成自动背书</li>
+              <li>变更以“边界”表达</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Changelog -->
+      <section class="section" id="changelog">
+        <h2>更新记录</h2>
+        <p class="sublead">
+          这是一个“可核对的目录”。条目内容采用最小化写法：一句话变更 + 影响边界 + 适用范围。
+        </p>
+
+        <div class="filters card">
+          <div class="filters-title">筛选（占位）</div>
+          <div class="filters-row">
+            <span class="filter">产品家族</span>
+            <span class="filter">时间</span>
+            <span class="filter">类型</span>
+            <span class="filter">批次</span>
+          </div>
+          <div class="filters-hint">（此处可后续接入真实筛选控件与数据源）</div>
+        </div>
+
+        <div class="log">
+          <!-- Example items: keep generic; replace with real data later -->
+          <article class="log-item card">
+            <div class="log-meta">
+              <span class="tag">版本更新</span>
+              <span class="meta">v1.2.0 · 2026-01-xx</span>
+              <span class="meta">适用：某家族 · 批次区间（占位）</span>
+            </div>
+            <h3 class="log-title">边界说明更新：交接口径更清晰</h3>
+            <p class="log-desc">影响边界：减少反复确认；不改变你的判断，只改变你核对事实的方式。</p>
+          </article>
+
+          <article class="log-item card">
+            <div class="log-meta">
+              <span class="tag">已知问题与修复</span>
+              <span class="meta">v1.1.3 · 2026-01-xx</span>
+              <span class="meta">适用：某批次（占位）</span>
+            </div>
+            <h3 class="log-title">已知限制：特定环境下稳定性偏差（占位）</h3>
+            <p class="log-desc">影响边界：在该环境中请先核对；处理：提供修复/替换路径（以工单核对为准）。</p>
+          </article>
+
+          <article class="log-item card">
+            <div class="log-meta">
+              <span class="tag">制造变更</span>
+              <span class="meta">v1.1.0 · 2025-12-xx</span>
+              <span class="meta">适用：交付时间段（占位）</span>
+            </div>
+            <h3 class="log-title">制造记录：一致性验证口径调整（占位）</h3>
+            <p class="log-desc">影响边界：便于组织对账与追溯；不提供可对标工艺细节。</p>
+          </article>
+        </div>
+
+        <div class="cta-row">
+          <a class="cta" href="/zh/support#contact">提交核对请求</a>
+          <a class="cta ghost" href="#subscribe">订阅更新</a>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Compatibility -->
+      <section class="section" id="compat">
+        <h2>兼容与替换</h2>
+        <p class="sublead">我们不会把“替换”写成营销建议。这里只给事实口径：何时兼容、何时需要替换、如何核对。</p>
+
+        <div class="two-col">
+          <article class="card">
+            <h3 class="card-title">兼容规则（口径）</h3>
+            <ul class="bullets">
+              <li>同一主版本内：优先保持使用方式一致</li>
+              <li>跨主版本：以“边界变化”决定是否调整用法</li>
+              <li>制造变更：只影响使用边界时才会标注</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card-title">何时建议核对</h3>
+            <ul class="bullets">
+              <li>你发现器具不再像可靠参照（偏差/松动/不稳定）</li>
+              <li>组织交接出现反复确认与误解</li>
+              <li>版本记录提示该批次存在已知限制</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="quote card">
+          更新不是结论；更新只是让你更容易回到同一事实底座。
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- Subscribe -->
+      <section class="section" id="subscribe">
+        <h2>订阅</h2>
+        <p class="sublead">
+          订阅的目的是“知道变化存在”，而不是被变化驱动。我们默认低频、低噪声。
+        </p>
+
+        <div class="subscribe-grid">
+          <article class="card">
+            <h3 class="card-title">更新节奏（建议）</h3>
+            <ul class="bullets">
+              <li>默认：每月汇总（低噪声）</li>
+              <li>例外：已知问题与修复（按需通知）</li>
+              <li>组织采购：按批次交付节点推送</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="card-title">订阅方式（占位）</h3>
+            <ul class="bullets">
+              <li>Email：updates@ordo.example</li>
+              <li>RSS：/updates.xml（占位）</li>
+              <li>组织：按采购账号绑定</li>
+            </ul>
+            <p class="small">（可后续接入真实订阅系统）</p>
+          </article>
+          <article class="card">
+            <h3 class="card-title">你会收到什么</h3>
+            <ul class="bullets">
+              <li>一句话变更摘要</li>
+              <li>影响边界与适用范围</li>
+              <li>核对入口（如需要）</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="redline card">
+          <div class="redline-title">范式红线</div>
+          <div class="redline-body">
+            ORDO 的更新不以制造焦虑、驱动替换、诱导对标为目的。我们公开记录，只为核对事实。
+            <br />
+            判断仍归你。
+          </div>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <!-- FAQ -->
+      <section class="section" id="faq">
+        <h2>常见问题</h2>
+        <div class="faq-grid">
+          <article class="card faq">
+            <h3 class="q">为什么有些条目写得很“克制”？</h3>
+            <p class="a">因为更新页不是营销页。我们只写你需要核对的事实与边界，不写可对标的参数与叙事。</p>
+          </article>
+          <article class="card faq">
+            <h3 class="q">我如何确认自己属于哪个版本/批次？</h3>
+            <p class="a">以交付事实与标识口径为准。若你无法核对，可在支持页提交核对请求。</p>
+          </article>
+          <article class="card faq">
+            <h3 class="q">看到“制造变更”是不是就该更换？</h3>
+            <p class="a">不是。制造变更默认不构成替换建议。只有当它改变使用边界，才会明确提示。</p>
+          </article>
+          <article class="card faq">
+            <h3 class="q">更新会改变 ORDO 的判断范式吗？</h3>
+            <p class="a">范式不以更新驱动。更新只修复事实与边界表达，不替你做判断。</p>
+          </article>
+          <article class="card faq">
+            <h3 class="q">为什么你们公开“已知问题”？</h3>
+            <p class="a">为了避免误用与误判。隐藏限制只会把风险推给使用者。</p>
+          </article>
+          <article class="card faq">
+            <h3 class="q">我想看更细的技术细节可以吗？</h3>
+            <p class="a">支持页可以发起核对与说明请求。对外公开部分会遵循“可核对但不可对标”的边界。</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="footer-cta">
+        <a class="cta" href="/zh/support#contact">需要核对或修复？去支持</a>
+        <a class="cta ghost" href="/zh/products">查看产品体系</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-shell{ padding: 18px 0 34px; }
+  .container{ max-width: 104ch; margin: 0 auto; padding: 0 18px; }
+
+  .updates-hero{ padding: 16px 0 0; }
+  .h1{ font-size: 44px; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .lead{ margin: 10px 0 0; font-size: 16px; color: rgba(220,235,240,0.74); }
+  .intro{ margin: 14px 0 0; max-width: 80ch; color: rgba(220,235,240,0.72); line-height: 1.75; }
+
+  .kicker{ margin-top: 12px; font-size: 11px; letter-spacing: 0.12em; color: rgba(220,235,240,0.52); }
+  .jump{ display:flex; flex-wrap:wrap; gap: 10px; align-items:center; margin-top: 14px; }
+
+  .chip{
+    display:inline-flex; align-items:center; gap: 8px;
+    padding: 8px 12px; border-radius: 999px;
+    border: 1px solid rgba(220,235,240,0.10);
+    color: rgba(220,235,240,0.76); text-decoration: none;
+    background: rgba(10,22,26,0.06);
+    transition: border-color .2s ease, background .2s ease;
+  }
+  .chip:hover{ border-color: rgba(220,235,240,0.22); background: rgba(10,22,26,0.10); }
+  .chip:focus-visible{ outline: 2px solid rgba(220,235,240,0.22); outline-offset: 2px; }
+
+  .divider{ height: 1px; background: rgba(220,235,240,0.08); margin: 14px 0; }
+
+  .section{ margin-top: 12px; }
+  .section h2{ margin: 0 0 10px; font-size: 18px; letter-spacing: 0.02em; color: rgba(220,235,240,0.92); }
+  .sublead{ margin: 0 0 14px; color: rgba(220,235,240,0.70); line-height: 1.7; max-width: 86ch; }
+
+  .card{
+    border-radius: 18px;
+    border: 1px solid rgba(220,235,240,0.10);
+    background: radial-gradient(120% 120% at 20% 0%,
+        rgba(48, 92, 110, 0.22) 0%,
+        rgba(14, 26, 30, 0.55) 45%,
+        rgba(10, 16, 18, 0.34) 100%);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.06);
+    padding: 20px;
+  }
+
+  .card-title{ margin: 0; font-size: 18px; color: rgba(220,235,240,0.92); }
+  .card-desc{ margin: 8px 0 12px; color: rgba(220,235,240,0.68); line-height: 1.7; }
+
+  .bullets{ margin: 0; padding-left: 18px; color: rgba(220,235,240,0.76); line-height: 1.7; }
+  .bullets li{ margin: 6px 0; }
+
+  .policy-grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 12px; }
+
+  .pill{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 6px 10px; border-radius: 999px;
+    border: 1px solid rgba(220,235,240,0.12);
+    color: rgba(220,235,240,0.78);
+    background: rgba(10,22,26,0.06);
+    font-size: 12px; width: fit-content; margin-bottom: 10px;
+  }
+
+  .note{ margin-top: 14px; padding: 16px 18px; }
+  .note-title{ font-size: 13px; color: rgba(220,235,240,0.86); letter-spacing: 0.02em; margin-bottom: 10px; }
+  .note-grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+  .note-item{ display:flex; align-items:center; gap: 10px; color: rgba(220,235,240,0.74); }
+  .badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width: 30px; height: 22px; border-radius: 999px;
+    border: 1px solid rgba(220,235,240,0.12);
+    color: rgba(220,235,240,0.82);
+    background: rgba(10,22,26,0.06);
+    font-size: 12px;
+  }
+
+  .types-grid{ display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-top: 12px; }
+
+  .filters{ padding: 16px 18px; margin-top: 10px; }
+  .filters-title{ font-size: 12px; letter-spacing: 0.12em; color: rgba(220,235,240,0.56); margin-bottom: 10px; }
+  .filters-row{ display:flex; flex-wrap:wrap; gap: 10px; }
+  .filter{
+    display:inline-flex; align-items:center;
+    padding: 8px 12px; border-radius: 999px;
+    border: 1px solid rgba(220,235,240,0.10);
+    color: rgba(220,235,240,0.72);
+    background: rgba(10,22,26,0.06);
+    font-size: 12px;
+  }
+  .filters-hint{ margin-top: 10px; font-size: 12px; color: rgba(220,235,240,0.55); line-height: 1.6; }
+
+  .log{ display:grid; gap: 12px; margin-top: 12px; }
+  .log-item{ padding: 18px; }
+  .log-meta{ display:flex; flex-wrap:wrap; gap: 10px; align-items:center; margin-bottom: 10px; }
+  .tag{
+    display:inline-flex; align-items:center;
+    padding: 6px 10px; border-radius: 999px;
+    border: 1px solid rgba(220,235,240,0.12);
+    color: rgba(220,235,240,0.78);
+    background: rgba(10,22,26,0.06);
+    font-size: 12px;
+  }
+  .meta{ font-size: 12px; color: rgba(220,235,240,0.60); letter-spacing: 0.02em; }
+  .log-title{ margin: 0; font-size: 16px; color: rgba(220,235,240,0.92); }
+  .log-desc{ margin: 10px 0 0; color: rgba(220,235,240,0.70); line-height: 1.7; }
+
+  .cta-row{ display:flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .cta{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding: 8px 12px; border-radius: 999px;
+    border: 1px solid rgba(220,235,240,0.14);
+    color: rgba(220,235,240,0.86);
+    text-decoration:none;
+    background: rgba(10,22,26,0.10);
+  }
+  .cta:hover{ border-color: rgba(220,235,240,0.22); }
+  .cta.ghost{ background: transparent; border-color: rgba(220,235,240,0.10); color: rgba(220,235,240,0.76); }
+
+  .two-col{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+
+  .quote{
+    margin-top: 14px;
+    border-left: 3px solid rgba(220,235,240,0.44);
+    padding: 16px 18px;
+    color: rgba(220,235,240,0.88);
+    font-weight: 600;
+  }
+
+  .subscribe-grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 12px; }
+
+  .redline{
+    margin-top: 14px;
+    padding: 16px 18px;
+    border-left: 3px solid rgba(220,235,240,0.44);
+  }
+  .redline-title{ font-size: 12px; letter-spacing: 0.12em; color: rgba(220,235,240,0.60); margin-bottom: 10px; }
+  .redline-body{ color: rgba(220,235,240,0.88); line-height: 1.75; font-weight: 600; }
+
+  .faq-grid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+  .q{ margin: 0; font-size: 14px; color: rgba(220,235,240,0.90); }
+  .a{ margin: 10px 0 0; color: rgba(220,235,240,0.70); line-height: 1.7; }
+
+  .small{ margin: 10px 0 0; font-size: 12px; color: rgba(220,235,240,0.60); line-height: 1.6; }
+
+  .footer-cta{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+
+  @media (max-width: 960px){
+    .policy-grid, .types-grid, .two-col, .subscribe-grid, .faq-grid, .note-grid{ grid-template-columns: 1fr; }
+    .updates-hero{ padding-top: 10px; }
+    .h1{ font-size: 36px; }
+  }
+</style>

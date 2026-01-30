@@ -1,0 +1,191 @@
+---
+import Base from "@/layouts/Base.astro";
+
+/**
+ * Notes:
+ * - The emails shown on the page are "display / formal addresses".
+ * - Replace REAL_* with the actual inbox addresses (not shown as plain text).
+ */
+const DISPLAY_PROCUREMENT = "procurement@ordoinc.com";
+const DISPLAY_PARTNERSHIP  = "partner@ordoinc.com";
+const DISPLAY_MEDIA        = "media@ordoinc.com";
+
+const REAL_PROCUREMENT = "replace-with-real-inbox@yourmail.com";
+const REAL_PARTNERSHIP = "replace-with-real-inbox@yourmail.com";
+const REAL_MEDIA = "replace-with-real-inbox@yourmail.com";
+
+const FACTORY_ADDRESS = "Qiuchang Industrial Park, Huizhou, Guangdong, China";
+---
+
+<Base lang="en" title="Contact · ORDO">
+  <section class="page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">Contact</h1>
+        <p class="lead">
+          This page is for organizational procurement, partnerships, and media inquiries only.
+          We confirm and reply via email.
+        </p>
+      </header>
+
+      <div class="grid">
+        <section class="card" aria-label="Email">
+          <h2 class="h2">Email</h2>
+          <p class="sub">
+            The following are public display addresses (for identification):<br/>
+            Procurement: <a class="mail" href={`mailto:${REAL_PROCUREMENT}`}>{DISPLAY_PROCUREMENT}</a><br/>
+            Partnerships: <a class="mail" href={`mailto:${REAL_PARTNERSHIP}`}>{DISPLAY_PARTNERSHIP}</a><br/>
+            Media: <a class="mail" href={`mailto:${REAL_MEDIA}`}>{DISPLAY_MEDIA}</a>
+          </p>
+        </section>
+
+        <section class="card" aria-label="Factory address">
+          <h2 class="h2">Factory address</h2>
+          <p class="sub">{FACTORY_ADDRESS}</p>
+        </section>
+      </div>
+
+      <section class="card" aria-label="Online contact">
+        <h2 class="h2">Online contact</h2>
+        <p class="sub">This composes an email and opens your mail client (review before sending).</p>
+
+        <form class="form" data-contact-form>
+          <div class="row2">
+            <label class="field">
+              <span>Name</span>
+              <input name="name" type="text" autocomplete="name" placeholder="Your name" required />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" placeholder="name@domain.com" required />
+            </label>
+          </div>
+
+          <div class="row2">
+            <label class="field">
+              <span>Inquiry type</span>
+              <select name="type" required>
+                <option value="procurement">Procurement</option>
+                <option value="partnership">Partnerships</option>
+                <option value="media">Media</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Subject</span>
+              <input name="subject" type="text" placeholder="One-line summary" required />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Message</span>
+            <textarea name="message" rows="6" placeholder="Context, timeline, and key points." required></textarea>
+          </label>
+
+          <div class="actions">
+            <button class="btn" type="submit">Compose email</button>
+          </div>
+
+          <p class="hint">Tip: Display addresses are for public reference; sending uses the real inbox.</p>
+        </form>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const form = document.querySelector("[data-contact-form]");
+      if (!form) return;
+
+      const realMap = {
+        procurement: JSON.stringify(REAL_PROCUREMENT),
+        partnership: JSON.stringify(REAL_PARTNERSHIP),
+        media: JSON.stringify(REAL_MEDIA),
+      };
+
+      // JSON.stringify returns a string literal; parse it back.
+      Object.keys(realMap).forEach(k => { realMap[k] = JSON.parse(realMap[k]); });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const name = (fd.get("name") || "").toString().trim();
+        const email = (fd.get("email") || "").toString().trim();
+        const type = (fd.get("type") || "procurement").toString();
+        const subject = (fd.get("subject") || "").toString().trim();
+        const message = (fd.get("message") || "").toString().trim();
+
+        const to = realMap[type] || realMap.procurement;
+
+        const typeLabel = type === "procurement" ? "Procurement" : type === "partnership" ? "Partnerships" : "Media";
+        const lines = [
+          "Type: " + typeLabel,
+          "Name: " + name,
+          "Email: " + email,
+          "",
+          message
+        ];
+
+        const mailSubject = encodeURIComponent("ORDO Contact | " + subject);
+        const body = encodeURIComponent(lines.join("\n"));
+        window.location.href = `mailto:${to}?subject=${mailSubject}&body=${body}`;
+      });
+    })();
+  </script>
+
+  <style>
+    .page{ padding:18px 0 48px; }
+    .container{ max-width: 980px; margin:0 auto; padding:0 18px; }
+    .h1{ margin: 8px 0 0; font-size: 42px; line-height: 1.08; letter-spacing: -0.02em; }
+    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; max-width: 72ch; }
+
+    .grid{ margin-top: 14px; display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+
+    .card{
+      border-radius: 18px;
+      border: 1px solid rgba(220,235,240,0.10);
+      background: rgba(10,22,26,0.10);
+      padding: 18px;
+    }
+    .h2{ margin:0 0 10px; font-size: 18px; color: rgba(220,235,240,.92); }
+    .sub{ margin:0; color: rgba(220,235,240,.70); line-height: 1.75; }
+    .mail{ color: rgba(220,235,240,.86); text-decoration: none; border-bottom: 1px solid rgba(220,235,240,0.12); }
+
+    .form{ margin-top: 12px; display: grid; gap: 12px; }
+    .row2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .field{ display:grid; gap: 6px; }
+    .field span{ font-size: 12px; color: rgba(220,235,240,.62); }
+    input, textarea, select{
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(220,235,240,0.14);
+      background: rgba(10,22,26,0.10);
+      color: rgba(220,235,240,0.88);
+      padding: 10px 12px;
+      outline: none;
+    }
+    select{ appearance: none; }
+    input:focus, textarea:focus, select:focus{ border-color: rgba(120,210,210,0.55); }
+
+    .actions{ display:flex; gap: 10px; flex-wrap: wrap; align-items:center; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 9px 14px; border-radius: 999px;
+      border: 1px solid rgba(220,235,240,0.14);
+      color: rgba(220,235,240,0.88);
+      text-decoration:none;
+      background: rgba(10,22,26,0.10);
+      transition: border-color .2s ease, background .2s ease;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .btn:hover{ border-color: rgba(220,235,240,0.24); background: rgba(10,22,26,0.14); }
+    .hint{ margin: 0; color: rgba(220,235,240,.56); font-size: 12px; line-height: 1.65; }
+
+    @media (max-width: 820px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px){
+      .row2{ grid-template-columns: 1fr; }
+    }
+  </style>
+</Base>

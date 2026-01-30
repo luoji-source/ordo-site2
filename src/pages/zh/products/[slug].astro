@@ -1,0 +1,67 @@
+---
+import Base from '@/layouts/Base.astro';
+import ImagePlaceholder from '@/components/ImagePlaceholder.astro';
+import { marked } from 'marked';
+import { local } from '@/lib/local-store';
+
+const { slug } = Astro.params;
+let product: any;
+let media: any[] = [];
+if (import.meta.env.DEV) {
+  const p = local.products.zh.find((x) => x.slug === slug);
+  product = p;
+  media = [];
+} else {
+  const res = await fetch(new URL(`/api/public/product/${slug}?lang=zh`, Astro.url));
+  const json = await res.json().catch(() => ({ ok: false }));
+  product = json?.data?.product;
+  media = json?.data?.media ?? [];
+}
+if (!product) throw new Error('Product not found');
+const bodyHtml = marked.parse(product.body_md || '');
+---
+<Base lang="zh" title={`${product.name} | ORDO`}>
+  <section style="margin-top:18px">
+    <div class="card">
+      <div class="muted">{product.version} · {product.batch}</div>
+      <h1 style="margin:10px 0 6px">{product.name}</h1>
+      <p class="muted" style="margin:0">{product.summary}</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+        <a class="btn primary" href={`mailto:hello@ordo.example?subject=Order%20${encodeURIComponent(product.name)}`}>邮件下单</a>
+        <a class="btn" href="/zh/evidence">查看 Evidence</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="margin-top:14px" class="grid">
+    {media.length > 0 ? (
+      media.map((m) => (
+        <div class="card col6">
+          <img src={`/cdn/media/${m.r2_key}`} alt={m.alt || product.name} style="width:100%;border-radius:12px;border:1px solid var(--line)" loading="lazy" />
+        </div>
+      ))
+    ) : (
+      <div class="card col12">
+        <ImagePlaceholder width={1200} height={800} label="Product image" />
+      </div>
+    )}
+  </section>
+
+  <section style="margin-top:14px">
+    <div class="card">
+      <div set:html={bodyHtml} />
+    </div>
+  </section>
+
+  <section style="margin-top:14px">
+    <div class="card">
+      <h2 style="margin:0 0 8px">Do / Do Not</h2>
+      <ul class="muted" style="margin:0;padding-left:18px">
+        <li>不监控</li>
+        <li>不记录行为</li>
+        <li>不评分</li>
+        <li>不提醒不干预</li>
+      </ul>
+    </div>
+  </section>
+</Base>

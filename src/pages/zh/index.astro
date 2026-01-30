@@ -1,0 +1,46 @@
+---
+import Base from "@/layouts/Base.astro";
+import { getLocalStore } from "../../lib/local-store";
+
+const store = getLocalStore?.() ?? {};
+const site = store.site ?? {};
+const brand = (site.brand ?? "ORDO").toString();
+---
+
+<Base lang="zh" title={`${brand} · 首页`}>
+  <!-- Brand Home: judgement-first. Minimal, one-screen message + direct paths to Shop / System. -->
+
+  <section class="home-hero" aria-label="品牌宣示">
+    <div class="container hero-shell">
+      <div class="hero-copy">
+        <div class="eyebrow">{brand}</div>
+        <h1 class="home-h1" aria-label="ORDO 设计并制造用于判断的物理器具">
+          <span class="home-h1-line">ORDO 设计并制造</span>
+          <span class="home-h1-line">用于判断的物理器具</span>
+        </h1>
+
+        <h2 class="home-lead">
+          用于人在被打断之后，<br />
+          能清楚地回到自己的位置，继续判断与行动。
+        </h2>
+
+        <p class="home-body">
+          我们不提醒、不记录、不替你决定，<br />
+          只把已经发生的事实，留在器具上。
+        </p>
+
+        <div class="cta-row">
+          <a class="btn primary" href="/zh/products">了解器具</a>
+          <a class="btn outline" href="/zh/shop">进入商店</a>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <figure class="hero-figure">
+          <img src="/images/home/slide-structure-960.png" width="960" height="720" alt="器具细节（结构与刻度）" loading="eager" decoding="async" />
+          <figcaption>阅读定位器 · 实物示例</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+</Base>

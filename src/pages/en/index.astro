@@ -1,0 +1,217 @@
+---
+import Base from '../../layouts/Base.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import { local, type PublicPageContent } from '../../lib/local-store';
+
+let content: PublicPageContent;
+if (import.meta.env.DEV) {
+  // Local-first: in local dev we don't rely on Cloudflare D1/R2 bindings.
+  // The local store is the source of truth for preview.
+  content = local.home.en;
+} else {
+  const res = await fetch(`/api/public/page/home?lang=en`);
+  if (!res.ok) throw new Error(`Failed to load home content: ${res.status}`);
+  content = (await res.json()) as PublicPageContent;
+}
+
+const hero = content.hero;
+const ctas = content.ctas || [];
+const blocks = content.blocks || [];
+
+const byId = (id: string) => blocks.find((b) => b.id === id);
+const problem = byId('problem');
+const trust = byId('trust');
+const products = byId('products');
+const evidence = byId('evidence');
+const updates = byId('updates');
+const about = byId('about');
+---
+
+<Base title={`ORDO — ${hero.title}`} lang="en">
+  <section class="container hero" id="top">
+    <p class="kicker">{hero.kicker}</p>
+    <h1>{hero.title}</h1>
+    {hero.subtitle && <p class="subtitle">{hero.subtitle}</p>}
+
+    {ctas.length > 0 && (
+      <div class="ctaRow">
+        {ctas.map((c) => (
+          <a class={`btn ${c.variant === 'primary' ? 'primary' : ''}`} href={c.href}>
+            {c.label}
+          </a>
+        ))}
+      </div>
+    )}
+
+    <div class="heroMedia" aria-label="Hero image">
+      <picture>
+        <source
+          type="image/webp"
+          srcset="/images/hero-slider-bookmarks-960.webp 960w, /images/hero-slider-bookmarks-1200.webp 1200w, /images/hero-slider-bookmarks-1600.webp 1600w"
+          sizes="(max-width: 760px) 100vw, 1120px"
+        />
+        <img
+          src="/images/hero-slider-bookmarks-1200.png"
+          srcset="/images/hero-slider-bookmarks-960.png 960w, /images/hero-slider-bookmarks-1200.png 1200w, /images/hero-slider-bookmarks-1600.png 1600w"
+          sizes="(max-width: 760px) 100vw, 1120px"
+          width="1200"
+          height="900"
+          loading="eager"
+          decoding="async"
+          alt="CarboX slider bookmark set"
+        />
+      </picture>
+    </div>
+
+    <div class="heroGrid" aria-label="Hero modules">
+      <div class="heroCard">
+        <h2>Problem resonance</h2>
+        <p>
+          This is not a generic “brand story”. We keep a public thread of facts, materials and
+          methods so you can verify, compare and decide.
+        </p>
+      </div>
+      <div class="heroCard">
+        <h2>Trust</h2>
+        <p>Manufacturing / inspection / lifetime / after-sales — each claim has evidence.</p>
+      </div>
+      <div class="heroCard">
+        <h2>Products</h2>
+        <p>Start with the carbon-fiber “Slider Bookmark” (prototype), then expand.</p>
+      </div>
+    </div>
+  </section>
+
+  {problem && (
+    <section class="container section" id="problem">
+      <h2>{problem.title}</h2>
+      <div class="grid2">
+        <div>
+          {problem.body?.map((p) => (
+            <p>{p}</p>
+          ))}
+        </div>
+        <div class="mediaCol">
+          <ImagePlaceholder width={1200} height={800} label="Hero module image (1200×800)" />
+          <p class="caption">Placeholder, same aspect ratio as production images.</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {trust && (
+    <section class="container section" id="trust">
+      <h2>{trust.title}</h2>
+      {trust.body?.map((p) => (
+        <p>{p}</p>
+      ))}
+      <div class="chipRow">
+        <span class="chip">Material</span>
+        <span class="chip">Craft</span>
+        <span class="chip">Acceptance</span>
+        <span class="chip">Lifetime</span>
+        <span class="chip">After-sales</span>
+      </div>
+    </section>
+  )}
+
+  {products && (
+    <section class="container section" id="products">
+      <div class="sectionHead">
+        <h2>{products.title}</h2>
+        <a class="textLink" href="/en/products">View products →</a>
+      </div>
+      {products.body?.map((p) => (
+        <p>{p}</p>
+      ))}
+
+      <div class="productGrid">
+        <article class="productCard">
+          <ImagePlaceholder width={960} height={720} label="Product image (960×720)" />
+          <h3>Carbon-fiber Slider Bookmark</h3>
+          <p class="muted">A repeatable instrument for continuous fact calibration.</p>
+          <div class="meta">
+            <span>Prototype</span>
+            <span>Carbon fiber</span>
+            <span>Instrument</span>
+          </div>
+        </article>
+        <article class="productCard">
+          <ImagePlaceholder width={960} height={720} label="Product image (960×720)" />
+          <h3>Reading states system</h3>
+          <p class="muted">Wind / Fire / Thunder / Electric are states, not symbols.</p>
+          <div class="meta">
+            <span>System</span>
+            <span>Public spec</span>
+          </div>
+        </article>
+      </div>
+    </section>
+  )}
+
+  {evidence && (
+    <section class="container section" id="evidence">
+      <div class="sectionHead">
+        <h2>{evidence.title}</h2>
+        <a class="textLink" href="/en/evidence">Enter evidence →</a>
+      </div>
+      {evidence.body?.map((p) => (
+        <p>{p}</p>
+      ))}
+      <div class="grid2">
+        <div class="panel">
+          <h3>What you can verify</h3>
+          <ul>
+            <li>Bill of materials / supplier proof (where possible)</li>
+            <li>Workmanship & process logs</li>
+            <li>Acceptance criteria & inspection photos</li>
+            <li>Lifetime: cycles, wear, failure modes</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>What we never hide</h3>
+          <ul>
+            <li>Known limitations and edge cases</li>
+            <li>Version changes and reasons</li>
+            <li>After-sales policy and replacement rules</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {updates && (
+    <section class="container section" id="updates">
+      <div class="sectionHead">
+        <h2>{updates.title}</h2>
+        <a class="textLink" href="/en/updates">All updates →</a>
+      </div>
+      {updates.body?.map((p) => (
+        <p>{p}</p>
+      ))}
+      <div class="panel">
+        <p class="muted">
+          Keep updates short, factual and link to evidence. Every change should be traceable.
+        </p>
+      </div>
+    </section>
+  )}
+
+  {about && (
+    <section class="container section" id="about">
+      <div class="sectionHead">
+        <h2>{about.title}</h2>
+        <a class="textLink" href="/en/about">More →</a>
+      </div>
+      {about.body?.map((p) => (
+        <p>{p}</p>
+      ))}
+      <div class="ctaFooter">
+        <a class="btn primary" href="mailto:hello@ordo.example">Email for proposal</a>
+        <span class="muted">We reply within 24–48 hours. No automated sales replies.</span>
+      </div>
+    </section>
+  )}
+
+  
+</Base>
