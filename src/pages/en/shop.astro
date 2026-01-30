@@ -1,16 +1,240 @@
 ---
 import Base from "@/layouts/Base.astro";
+
+const orderEmail = "order@ordoinc.com";
+const productName = "Continuous Marker · Reading";
+const series = "Wind / Fire / Thunder / Lightning";
+const form = "Rail type · Carbon fiber";
+const version = "v1.1";
+
+const orderHref = `mailto:${orderEmail}?subject=${encodeURIComponent(`ORDO Order / ${productName} ${version}`)}`;
+const contactHref = `mailto:${orderEmail}?subject=${encodeURIComponent("ORDO Inquiry / Shop")}`;
 ---
 
-<Base lang="en" title="ORDO · Shop">
-  <section class="page-shell">
+<Base lang="en" title="Shop · ORDO">
+  <section class="hero">
     <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Shop</div>
-        <h1 class="h1">Shop</h1>
-        <p class="lead">Bundles / Items / Delivery &amp; duties / Returns &amp; warranty.</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">ORDO · New Product</div>
+          <h1 class="h1 nowrap">{productName}</h1>
+
+          <div class="sub">A physical marker to locate your current position while reading.</div>
+          <div class="micro">Not decoration. No data collection. No reminders.</div>
+
+          <div class="spec">
+            <div class="spec-row"><span class="k">Series</span><span class="v">{series}</span></div>
+            <div class="spec-row"><span class="k">Form</span><span class="v">{form}</span></div>
+            <div class="spec-row"><span class="k">Version</span><span class="v">{version}</span></div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn primary" href={orderHref}>Order</a>
+            <a class="btn" href={contactHref}>Inquiry</a>
+          </div>
+
+          <div class="order-hint">Email your name / address / quantity (default: 1 set).</div>
+        </div>
+
+        <div class="hero-media">
+          <div class="ph-fit ruler" role="img" aria-label="Hero image placeholder">
+            <div class="ph-inner">
+              <div class="ph-top">
+                <span class="tag">Hero / 4 items</span>
+                <span class="dim">1100×825</span>
+              </div>
+              <div class="ph-mid">
+                <div class="ph-title">Hero placeholder</div>
+                <div class="ph-sub">{productName}</div>
+              </div>
+              <div class="ph-bottom">
+                <span class="muted">{version}</span>
+                <span class="muted">4:3</span>
+              </div>
+            </div>
+          </div>
+          <div class="media-note">Keep the hero aligned with the copy; 4:3 ratio.</div>
+        </div>
       </div>
-      <div class="muted">(Placeholder — sales content will move here.)</div>
     </div>
   </section>
+
+  <section class="catalog">
+    <div class="container">
+      <div class="catalog-head">
+        <h2 class="h2b">All products</h2>
+        <div class="catalog-note">8 slots: 2 previews + 6 planned. We disclose boundaries and verification, not benchmarkable specs.</div>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="thumb">01</div>
+          <div class="card-top">
+            <h3 class="title">Preview product A</h3>
+            <span class="badge presale">Preview</span>
+          </div>
+          <p class="text">Node transparency. Public boundaries only.</p>
+          <div class="card-actions">
+            <a class="btn" href={contactHref}>Inquiry</a>
+            <a class="btn ghost" href={contactHref}>Register interest</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb">02</div>
+          <div class="card-top">
+            <h3 class="title">Preview product B</h3>
+            <span class="badge presale">Preview</span>
+          </div>
+          <p class="text">No benchmarkable parameters on public pages.</p>
+          <div class="card-actions">
+            <a class="btn" href={contactHref}>Inquiry</a>
+            <a class="btn ghost" href={contactHref}>Register interest</a>
+          </div>
+        </article>
+
+        {Array.from({ length: 6 }).map((_, idx) => (
+          <article class="card">
+            <div class="thumb">{String(idx + 3).padStart(2, "0")}</div>
+            <div class="card-top">
+              <h3 class="title">Planned product {idx + 1}</h3>
+              <span class="badge plan">Planned</span>
+            </div>
+            <p class="text">Problem, boundary, verification. No implementation details.</p>
+            <div class="card-actions">
+              <a class="btn" href={contactHref}>Inquiry</a>
+              <a class="btn ghost" href={contactHref}>Partnership</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    .hero { padding: 26px 0 18px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(480px, 1fr) minmax(520px, 1fr);
+      gap: 24px; align-items: start; }
+    @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; } }
+
+    .eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
+    .h1 { font-size: clamp(28px, 3.1vw, 42px); line-height: 1.14; margin: 12px 0 10px; letter-spacing: -0.02em; }
+    .nowrap { white-space: nowrap; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; scrollbar-width: thin; }
+    .sub { font-size: 15px; opacity: .88; line-height: 1.7; max-width: 70ch; }
+    .micro { margin-top: 10px; font-size: 13px; opacity: .72; line-height: 1.7; max-width: 70ch; }
+
+    .spec { margin-top: 16px; border-radius: 18px; border: 1px solid rgba(220,235,240,.10); background: rgba(10,22,26,.12); overflow: hidden; }
+    .spec-row { display: grid; grid-template-columns: 84px 1fr; gap: 14px; padding: 11px 14px; border-top: 1px solid rgba(220,235,240,.08); }
+    .spec-row:first-child { border-top: none; }
+    .k { font-size: 12px; opacity: .65; letter-spacing: .08em; text-transform: uppercase; }
+    .v { font-size: 14px; opacity: .92; }
+
+    .cta-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 14px; border-radius: 999px;
+      border: 1px solid rgba(220,235,240,0.14);
+      color: rgba(220,235,240,0.88);
+      text-decoration:none;
+      background: rgba(10,22,26,0.10);
+      transition: border-color .2s ease, background .2s ease;
+      white-space: nowrap;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn:hover{ border-color: rgba(220,235,240,0.24); background: rgba(10,22,26,0.14); }
+    .btn.primary { background: rgba(120,210,210,.16); border-color: rgba(120,210,210,.45); }
+    .btn.ghost{ background: transparent; border-color: rgba(220,235,240,0.10); color: rgba(220,235,240,0.76); }
+
+    .order-hint { margin-top: 10px; font-size: 13px; opacity: .72; }
+
+    .ph-fit{
+      border-radius: 22px;
+      border: 1px solid rgba(220,235,240,0.12);
+      overflow: hidden;
+      background: rgba(10,22,26,0.10);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
+      min-height: 320px;
+    }
+    .ph-inner{ height: 100%; padding: 14px; display:flex; flex-direction: column; justify-content: space-between; }
+    .ph-top{ display:flex; justify-content: space-between; gap: 10px; align-items:center; }
+    .tag{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(220,235,240,0.12);
+      color: rgba(220,235,240,0.82);
+      background: rgba(10,22,26,0.06);
+      font-size: 12px;
+      width: fit-content;
+    }
+    .dim{ color: rgba(220,235,240,0.55); font-size: 12px; }
+    .ph-title{ color: rgba(220,235,240,0.90); font-weight: 800; letter-spacing: 0.02em; }
+    .ph-sub{ color: rgba(220,235,240,0.66); margin-top: 6px; }
+    .ph-bottom{ display:flex; justify-content: space-between; gap: 10px; }
+    .muted{ color: rgba(220,235,240,0.56); font-size: 12px; }
+    .media-note{ margin-top: 10px; color: rgba(220,235,240,0.56); font-size: 12px; line-height: 1.6; }
+
+    .catalog{ padding: 18px 0 44px; }
+    .catalog-head{ border-top: 1px solid rgba(220,235,240,0.08); padding-top: 18px; }
+    .h2b{ margin: 0; font-size: 18px; letter-spacing: 0.02em; color: rgba(220,235,240,0.92); }
+    .catalog-note{ margin-top: 8px; color: rgba(220,235,240,0.66); line-height: 1.7; max-width: 92ch; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .card{
+      border-radius: 18px;
+      border: 1px solid rgba(220,235,240,0.10);
+      background: radial-gradient(120% 120% at 20% 0%,
+        rgba(48, 92, 110, 0.22) 0%,
+        rgba(14, 26, 30, 0.55) 45%,
+        rgba(10, 16, 18, 0.34) 100%);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 14px;
+      display:flex;
+      flex-direction: column;
+      min-height: 230px;
+    }
+    .thumb{
+      height: 96px;
+      border-radius: 14px;
+      border: 1px solid rgba(220,235,240,0.10);
+      background: linear-gradient(135deg, rgba(48,92,110,0.34), rgba(10,16,18,0.08));
+      display:flex; align-items:center; justify-content:center;
+      color: rgba(220,235,240,0.70);
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      margin-bottom: 12px;
+    }
+    .card-top{ display:flex; justify-content:space-between; gap: 10px; align-items:flex-start; }
+    .title{ margin: 0; font-size: 14px; color: rgba(220,235,240,0.92); line-height: 1.4; }
+    .badge{
+      font-size: 12px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(220,235,240,0.12);
+      background: rgba(10,22,26,0.06);
+      color: rgba(220,235,240,0.74);
+      white-space: nowrap;
+    }
+    .badge.presale{ border-color: rgba(255,210,120,0.22); }
+    .badge.plan{ border-color: rgba(220,235,240,0.12); opacity: .9; }
+    .text{ margin: 10px 0 0; color: rgba(220,235,240,0.66); line-height: 1.65; font-size: 13px; }
+    .card-actions{ display:flex; gap: 10px; margin-top: auto; flex-wrap: wrap; padding-top: 12px; }
+
+    @media (max-width: 1100px){
+      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero-grid{ grid-template-columns: 1fr; }
+      .hero-media{ margin-top: 18px; }
+    }
+    @media (max-width: 680px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+  </style>
 </Base>
