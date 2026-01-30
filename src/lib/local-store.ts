@@ -1,285 +1,97 @@
-// src/lib/local-store.ts
-// 本地数据层（Astro dev/preview）
-// 统一产品状态：available / upcoming / planned / archived
+// Local store (used for development and for environments without Cloudflare D1 bindings).
+// This file is bundled by Vite/Astro, so keep it runtime-safe for Cloudflare Workers.
+//
+// Data source: repo-root/.localdata/db.json (compiled into this file for portability).
+//
+// NOTE:
+// - Public API routes expect DB-like shapes (e.g. `content_json` is a string).
+// - `local` below provides convenient parsed content for DEV-rendered pages.
 
-export type ProductStatus =
-  | "available"   // 在售（可下单）
-  | "upcoming"    // 预告（不下单：仅关注/询问）
-  | "planned"     // 规划中（关注/询问）
-  | "archived";   // 归档（默认不展示）
+export type Lang = "en" | "zh";
 
-export type ProductMedia = {
-  label?: string;
-  alt?: string;
-  ratio?: "4:3" | "16:9" | string;
-  displayW?: number;
-  displayH?: number;
-};
+// Home page content is currently a simple string map.
+// Keep it flexible so adding/removing fields won't break builds.
+export type PublicPageContent = Record<string, string>;
 
-export type ProductName = {
-  zh?: string;
-  en?: string;
-};
-
-export type ProductPack = {
-  titleZh?: string;
-  includesZh?: string[];
-};
-
-export type Product = {
-  id?: string;
-  slug?: string;
-
-  name?: ProductName;
-
-  version?: string;
-  status?: ProductStatus;
-
-  // 首页推荐位：主推/预告（产品页全量目录）
-  homeSlot?: "primary" | "preview" | null;
-
-  // 推荐候选（未来可做自动轮换）
-  homeEligible?: boolean;
-  featureRank?: number;
-  featureWindow?: string;
-
-  line1?: { zh?: string; en?: string };
-  line2?: { zh?: string; en?: string };
-
-  priceText?: { zh?: string; en?: string } | string;
-
-  buyHref?: string;
-  inquiryHref?: string;
-
-  image?: ProductMedia | ProductMedia[];
-  media?: ProductMedia | ProductMedia[];
-
-  heroSetMedia?: ProductMedia;
-
-  pack?: ProductPack;
-
-  note?: { zh?: string; en?: string } | string;
+export type SiteConfig = {
+  brand: string;
+  localeDefault: Lang;
+  orderEmail?: string;
 };
 
 export type LocalStore = {
-  site: {
-    brand: string;
-    localeDefault: "zh";
-  };
-  homeRotation?: {
-    manual?: boolean;
-    strategy?: "rank" | "window" | "random";
-  };
-  products: Product[];
+  site: SiteConfig;
+  products: any[];
+  updates: any[];
+  pages: any[];
+  media: any[];
+};
+
+// Seed data (generated from .localdata/db.json)
+const db = {
+  products: [{"id": "prd-001", "slug": "sample-product", "lang": "zh", "name": "示例产品", "status": "在售", "version": "v1", "batch": "A", "summary": "用于验证本地管理后台与前台展示。", "body_md": "## 产品说明\n\n这里是示例产品详情（Markdown）。\n", "price_text": "询价", "cta_mode": "contact", "is_published": 1, "sort_order": 1, "updated_at": "2026-01-19T07:51:19.834Z"}, {"id": "prd-001-en", "slug": "sample-product", "lang": "en", "name": "Sample Product", "status": "Available", "version": "v1", "batch": "A", "summary": "A sample item to validate local admin + storefront.", "body_md": "## Description\n\nThis is sample product body (Markdown).\n", "price_text": "Contact for pricing", "cta_mode": "contact", "is_published": 1, "sort_order": 1, "updated_at": "2026-01-19T07:51:19.834Z"}],
+  updates: [{"id": "upd-001", "lang": "zh", "title": "网站本地开发模式已启用", "date": "2026-01-19", "product_id": null, "version": "v1", "batch": "A", "body_md": "本地开发使用 JSON 数据，不依赖 Cloudflare D1/R2。", "is_published": 1, "updated_at": "2026-01-19T07:51:19.834Z"}, {"id": "upd-001-en", "lang": "en", "title": "Local dev mode enabled", "date": "2026-01-19", "product_id": null, "version": "v1", "batch": "A", "body_md": "Local development uses a JSON store and does not require Cloudflare D1/R2.", "is_published": 1, "updated_at": "2026-01-19T07:51:19.834Z"}],
+  pages: [{"id": "page-home-zh", "slug": "home", "lang": "zh", "updated_at": "2026-01-19T07:51:19.834Z", "content_json": "{\n  \"heroTitle\": \"ORDO\",\n  \"heroSubtitle\": \"值得受尊敬的规则与器具。\",\n  \"ctaPrimaryText\": \"联系购买\",\n  \"ctaPrimaryHref\": \"/contact\",\n  \"blocks\": [\n    {\n      \"type\": \"text\",\n      \"title\": \"销售网站（本地开发模式）\",\n      \"body\": \"当前为本地 JSON 数据模式：可在管理页编辑内容并自动写入 .localdata/db.json。\"\n    }\n  ]\n}"}, {"id": "page-home-en", "slug": "home", "lang": "en", "updated_at": "2026-01-19T07:51:19.834Z", "content_json": "{\n  \"heroTitle\": \"ORDO\",\n  \"heroSubtitle\": \"Rules and instruments worthy of respect.\",\n  \"ctaPrimaryText\": \"Contact\",\n  \"ctaPrimaryHref\": \"/contact\",\n  \"blocks\": [\n    {\n      \"type\": \"text\",\n      \"title\": \"Local Development Mode\",\n      \"body\": \"This project is running with a local JSON store. Use the Admin page to edit content; data is saved to .localdata/db.json.\"\n    }\n  ]\n}"}],
+  media: [],
+} as const;
+
+// Some pages/components expect a `site` config even in DEV mode.
+const site: SiteConfig = {
+  brand: "ORDO",
+  localeDefault: "en",
+  // Optional. Base.astro has a fallback if this is missing.
+  orderEmail: "orders@ordoinc.com",
 };
 
 export function getLocalStore(): LocalStore {
   return {
-    site: {
-      brand: "ORDO",
-      localeDefault: "zh",
-    },
-
-    homeRotation: {
-      manual: true,
-      strategy: "rank",
-    },
-
-    products: [
-      // =========================
-      // 在售（主卖产品）
-      // =========================
-      {
-        id: "cfm-reading-v1-1",
-        slug: "continuous-fact-marker-reading-scenario-v1-1",
-
-        name: {
-          zh: "阅读定位器",
-          en: "Reading Locator",
-        },
-
-        version: "v1.1",
-        status: "available",
-
-        homeSlot: "primary",
-        homeEligible: true,
-        featureRank: 1,
-        featureWindow: "2026-01",
-
-        line1: { zh: "风火雷电系列", en: "Wind · Fire · Thunder · Lightning" },
-        line2: { zh: "滑道式 · 碳纤维", en: "Slide · Carbon Fiber" },
-
-        priceText: { zh: "", en: "" },
-
-        buyHref: "/zh#buy",
-        inquiryHref: "/zh/support",
-
-        heroSetMedia: {
-          label: "主卖产品主图（占位）",
-          ratio: "4:3",
-          displayW: 1100,
-          displayH: 825,
-        },
-
-        media: [
-          { label: "产品图（占位）", ratio: "4:3", displayW: 640, displayH: 480 },
-        ],
-
-        pack: {
-          titleZh: "套装（四枚）",
-          includesZh: ["阅读定位器 × 4（风 / 火 / 雷 / 电）"],
-        },
-
-        note: { zh: "用于标定阅读过程中“当前停留位置”的实体器具。", en: "" },
-      },
-
-      // =========================
-      // 预告（不下单：仅关注/询问）
-      // =========================
-      {
-        id: "preview-01",
-        slug: "preview-01",
-        name: { zh: "预告产品 01", en: "" },
-        version: "—",
-        status: "upcoming",
-
-        homeSlot: "preview",
-        homeEligible: true,
-        featureRank: 10,
-
-        line1: { zh: "预告阶段", en: "" },
-        line2: { zh: "信息逐步公开", en: "" },
-
-        inquiryHref: "/zh/support",
-
-        media: [
-          { label: "预告产品图（占位）", ratio: "4:3", displayW: 640, displayH: 480 },
-        ],
-
-        note: "预告阶段不开放下单。",
-      },
-      {
-        id: "preview-02",
-        slug: "preview-02",
-        name: { zh: "预告产品 02", en: "" },
-        version: "—",
-        status: "upcoming",
-
-        homeSlot: "preview",
-        homeEligible: true,
-        featureRank: 11,
-
-        line1: { zh: "预告阶段", en: "" },
-        line2: { zh: "信息逐步公开", en: "" },
-
-        inquiryHref: "/zh/support",
-
-        media: [
-          { label: "预告产品图（占位）", ratio: "4:3", displayW: 640, displayH: 480 },
-        ],
-
-        note: "预告阶段不开放下单。",
-      },
-
-      // =========================
-      // 规划中（8 个）
-      // =========================
-      {
-        id: "planned-start-end-boundary-marker",
-        slug: "start-end-boundary-marker",
-        name: { zh: "开始 / 结束边界标定器", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 100,
-        inquiryHref: "/zh/support",
-        media: [{ label: "产品示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "标定一项活动是否已经开始或结束。建立清晰边界，不计时、不提醒、不评估效率。适用场景：工作、阅读、创作、任务切换",
-      },
-      {
-        id: "planned-responsibility-state-marker",
-        slug: "responsibility-state-marker",
-        name: { zh: "责任履行状态标定器", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 101,
-        inquiryHref: "/zh/support",
-        media: [{ label: "产品示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "将责任是否已履行外显为可被承认的事实。减少重复确认，而非监督行为。适用场景：家庭责任、照护事项、维护任务",
-      },
-      {
-        id: "planned-turn-handover-marker",
-        slug: "turn-handover-marker",
-        name: { zh: "轮值与交接标定器", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 102,
-        inquiryHref: "/zh/support",
-        media: [{ label: "产品示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "明确当前轮值与交接是否完成。降低多人协作中的责任模糊。适用场景：家庭轮值、小团队协作",
-      },
-      {
-        id: "planned-process-node-marker",
-        slug: "process-node-marker",
-        name: { zh: "流程关键节点标定器", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 103,
-        inquiryHref: "/zh/support",
-        media: [{ label: "产品示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "将流程中的关键节点外显为事实状态。显示进度，不进行评分或评价。适用场景：服务流程、检查节点、现场操作",
-      },
-      {
-        id: "planned-trace-anchor",
-        slug: "trace-anchor",
-        name: { zh: "回溯锚定器", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 104,
-        inquiryHref: "/zh/support",
-        media: [{ label: "产品示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "标定上一次被确认的位置或状态。提供低成本回溯入口，不记录历史。适用场景：维护周期、学习进度、项目阶段",
-      },
-      {
-        id: "planned-repeat-count-marker",
-        slug: "repeat-count-marker",
-        name: { zh: "重复次数标定器", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 105,
-        inquiryHref: "/zh/support",
-        media: [{ label: "产品示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "将已完成的重复次数外显为事实。支持持续执行，不设目标、不作判断。适用场景：训练、练习、康复、学习重复任务",
-      },
-      {
-        id: "planned-parameter-recall-marker",
-        slug: "parameter-recall-marker",
-        name: { zh: "参数复现标定器", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 106,
-        inquiryHref: "/zh/support",
-        media: [{ label: "产品示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "保留关键参数位置，便于复现经验。不计算最优解，不提供建议。适用场景：咖啡、烘焙、创作、实验操作",
-      },
-      {
-        id: "planned-scene-rule-kit",
-        slug: "scene-rule-kit",
-        name: { zh: "场景规则包（器具组合）", en: "" },
-        version: "—",
-        status: "planned",
-        homeEligible: true,
-        featureRank: 107,
-        inquiryHref: "/zh/support",
-        media: [{ label: "组合示意图（占位）", ratio: "4:3", displayW: 900, displayH: 675 }],
-        note: "将多个标定器组合为可部署的场景系统。只提供事实层，不形成管理或监控系统。适用场景：照护场景、课堂流程、小型组织或工作室",
-      },
-    ],
+    site,
+    products: Array.isArray(db.products) ? [...db.products] : [],
+    updates: Array.isArray(db.updates) ? [...db.updates] : [],
+    pages: Array.isArray(db.pages) ? [...db.pages] : [],
+    media: Array.isArray(db.media) ? [...db.media] : [],
   };
 }
+
+// In the "no Cloudflare runtime" branch we seed from the bundled local JSON.
+// If you later want to generate/overwrite data, implement it here.
+let _seeded = false;
+export async function seedIfEmpty(): Promise<void> {
+  if (_seeded) return;
+  _seeded = true;
+  // no-op: we already have bundled seed data
+}
+
+// DB-like row (matches what the public API expects).
+export type PublicPageRow = {
+  id: string;
+  slug: string;
+  lang: Lang;
+  updated_at: string;
+  content_json: string;
+};
+
+export async function getPage(slug: string, lang: Lang): Promise<PublicPageRow | null> {
+  const pages = Array.isArray(db.pages) ? db.pages : [];
+  const row = (pages as any[]).find((p) => p?.slug === slug && p?.lang === lang);
+  return (row ?? null) as PublicPageRow | null;
+}
+
+// Convenience data for DEV-rendered pages (parsed content_json).
+const homeEnRow = (db.pages as any[]).find((p) => p?.slug === "home" && p?.lang === "en");
+const homeZhRow = (db.pages as any[]).find((p) => p?.slug === "home" && p?.lang === "zh");
+
+export const local = {
+  home: {
+    en: (homeEnRow?.content_json ? (JSON.parse(homeEnRow.content_json) as PublicPageContent) : {}),
+    zh: (homeZhRow?.content_json ? (JSON.parse(homeZhRow.content_json) as PublicPageContent) : {}),
+  },
+  products: {
+    en: (db.products as any[]).filter((p) => p?.lang === "en"),
+    zh: (db.products as any[]).filter((p) => p?.lang === "zh"),
+  },
+  updates: {
+    en: (db.updates as any[]).filter((u) => u?.lang === "en"),
+    zh: (db.updates as any[]).filter((u) => u?.lang === "zh"),
+  },
+} as const;

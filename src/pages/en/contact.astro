@@ -187,5 +187,59 @@ const FACTORY_ADDRESS = "Qiuchang Industrial Park, Huizhou, Guangdong, China";
     @media (max-width: 680px){
       .row2{ grid-template-columns: 1fr; }
     }
-  </style>
+  
+
+/* --- Form redesign: higher contrast + clearer background --- */
+[data-contact-form]{
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(220,235,240,0.14);
+  background: rgba(8, 14, 16, 0.62);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.form{ margin-top: 0; gap: 14px; }
+.field span{
+  font-size: 12px;
+  letter-spacing: .06em;
+  color: rgba(220,235,240,.72);
+}
+input, textarea, select{
+  border-radius: 14px;
+  border: 1px solid rgba(220,235,240,0.18);
+  background: rgba(6, 10, 11, 0.72);
+  color: rgba(235,245,248,0.92);
+  padding: 12px 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+}
+input::placeholder, textarea::placeholder{
+  color: rgba(220,235,240,0.45);
+}
+input:focus, textarea:focus, select:focus{
+  border-color: rgba(120,210,210,0.70);
+  box-shadow: 0 0 0 4px rgba(120,210,210,0.14), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+textarea{ resize: vertical; min-height: 140px; }
+.actions{ padding-top: 2px; }
+.btn{
+  padding: 10px 16px;
+  border-color: rgba(220,235,240,0.18);
+  background: rgba(10,22,26,0.18);
+}
+.btn:hover{
+  border-color: rgba(220,235,240,0.28);
+  background: rgba(10,22,26,0.26);
+}
+.hint{
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(220,235,240,0.10);
+  background: rgba(10,22,26,0.22);
+  color: rgba(220,235,240,.62);
+}
+.row2{ gap: 14px; }
+
+</style>
 </Base>
