@@ -7,25 +7,33 @@ export const GET: APIRoute = async (ctx) => {
   const url = new URL(ctx.request.url);
   const lang = url.searchParams.get('lang') || 'zh';
 
+  if (!slug) return notFound('Missing slug');
+
   if (!hasCloudflareRuntime(ctx)) {
     await seedIfEmpty();
-    const product = await getProductBySlug(lang as any, slug || '');
-    if (!product || !product.is_published) return notFound('Product not found');
-    const media = await listProductMedia(product.id);
+    const product = await getProductBySlug(lang as any, slug);
+    if (!product) return notFound('Product not found');
+    const mediaRows = await listProductMedia(product.id);
+    const media = (mediaRows ?? []).map((m: any) => ({ ...m, url: '/' + String(m.r2_key || '').replace(/^\/+/, '') }));
     return ok({ product, media });
   }
 
-  const product = await db(ctx)
-    .prepare(`SELECT * FROM products WHERE slug = ? AND lang = ? AND is_published = 1`)
-    .bind(slug, lang)
+  const row = await db(ctx)
+    .prepare(
+      `SELECT id, slug, lang, name, status, version, batch, summary, body_md, price_text, cta_mode, cta_value, is_published, sort_order, updated_at
+       FROM products WHERE lang = ? AND slug = ? LIMIT 1`
+    )
+    .bind(lang, slug)
     .first();
 
-  if (!product) return notFound('Product not found');
+  if (!row) return notFound('Product not found');
 
-  const media = await db(ctx)
-    .prepare(`SELECT id, type, r2_key, alt, sort_order FROM product_media WHERE product_id = ? ORDER BY sort_order ASC`)
-    .bind((product as any).id)
+  const mediaRows = await db(ctx)
+    .prepare(`SELECT id, product_id, type, r2_key, alt, sort_order, updated_at FROM product_media WHERE product_id = ? ORDER BY sort_order ASC`)
+    .bind((row as any).id)
     .all();
 
-  return ok({ product, media: media.results ?? [] });
+  const media = (mediaRows.results ?? []).map((m: any) => ({ ...m, url: '/' + String(m.r2_key || '').replace(/^\/+/, '') }));
+
+  return ok({ product: row, media });
 };

@@ -28,6 +28,15 @@ type Update = {
   is_published: number;
 };
 
+type ProductMedia = {
+  id?: string;
+  type?: 'image' | string;
+  /** Plan A: static asset path under /public, e.g. media/products/xxx.jpg */
+  path: string;
+  alt?: string | null;
+  sort_order?: number;
+};
+
 async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
     headers: {
@@ -60,7 +69,7 @@ function TabButton({ active, onClick, children }: { active: boolean; onClick: ()
 }
 
 export default function AdminApp() {
-  const [tab, setTab] = useState<'products' | 'home' | 'updates' | 'media'>('products');
+  const [tab, setTab] = useState<'products' | 'home' | 'updates'>('products');
   const [lang, setLang] = useState<'zh' | 'en'>('zh');
 
   return (
@@ -69,7 +78,6 @@ export default function AdminApp() {
         <TabButton active={tab === 'products'} onClick={() => setTab('products')}>Products</TabButton>
         <TabButton active={tab === 'home'} onClick={() => setTab('home')}>Home</TabButton>
         <TabButton active={tab === 'updates'} onClick={() => setTab('updates')}>Updates</TabButton>
-        <TabButton active={tab === 'media'} onClick={() => setTab('media')}>Media</TabButton>
 
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'center' }}>
           <span style={{ color: '#a6a8ad' }}>Lang</span>
@@ -83,7 +91,6 @@ export default function AdminApp() {
       {tab === 'products' && <ProductsTab lang={lang} />}
       {tab === 'home' && <HomeTab lang={lang} />}
       {tab === 'updates' && <UpdatesTab lang={lang} />}
-      {tab === 'media' && <MediaTab lang={lang} />}
     </div>
   );
 }
@@ -139,6 +146,7 @@ function Card({ children }: { children: React.ReactNode }) {
 function ProductsTab({ lang }: { lang: 'zh' | 'en' }) {
   const [list, setList] = useState<Product[]>([]);
   const [selected, setSelected] = useState<Product | null>(null);
+  const [media, setMedia] = useState<ProductMedia[]>([]);
   const [error, setError] = useState<string>('');
   const [busy, setBusy] = useState<boolean>(false);
 
@@ -163,6 +171,34 @@ function ProductsTab({ lang }: { lang: 'zh' | 'en' }) {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang]);
+
+  useEffect(() => {
+    const run = async () => {
+      if (!selected?.id) {
+        setMedia([]);
+        return;
+      }
+      try {
+        const r = await api<{ product: Product; media: any[] }>(`/api/admin/products/${selected.id}`);
+        const items = Array.isArray(r.media) ? r.media : [];
+        // Plan A: media rows store static path in `r2_key` (legacy column name).
+        setMedia(
+          items.map((m) => ({
+            id: m.id,
+            type: m.type || 'image',
+            path: String(m.r2_key || m.path || ''),
+            alt: m.alt ?? null,
+            sort_order: Number(m.sort_order ?? 100),
+          }))
+        );
+      } catch (e: any) {
+        // keep product editor usable even if media fails
+        setMedia([]);
+      }
+    };
+    run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected?.id]);
 
   const create = async () => {
     setBusy(true);
@@ -203,7 +239,12 @@ function ProductsTab({ lang }: { lang: 'zh' | 'en' }) {
         method: 'PUT',
         body: JSON.stringify({
           ...selected,
-          is_published: Number(selected.is_published) ? 1 : 0
+          is_published: Number(selected.is_published) ? 1 : 0,
+          media: (media || []).map((m) => ({
+            path: (m.path || '').trim(),
+            alt: m.alt ?? null,
+            sort_order: Number(m.sort_order ?? 100),
+          })).filter((m) => Boolean(m.path))
         })
       });
       await load();
@@ -228,6 +269,21 @@ function ProductsTab({ lang }: { lang: 'zh' | 'en' }) {
     } finally {
       setBusy(false);
     }
+  };
+
+  const addImage = () => {
+    setMedia([
+      ...(media || []),
+      { path: 'media/products/your-image.jpg', alt: '', sort_order: 100 }
+    ]);
+  };
+
+  const updateImage = (idx: number, patch: Partial<ProductMedia>) => {
+    setMedia((prev) => prev.map((m, i) => (i === idx ? { ...m, ...patch } : m)));
+  };
+
+  const removeImage = (idx: number) => {
+    setMedia((prev) => prev.filter((_, i) => i !== idx));
   };
 
   return (
@@ -296,6 +352,37 @@ function ProductsTab({ lang }: { lang: 'zh' | 'en' }) {
 
             <Field label="Summary"><Textarea value={selected.summary} onChange={(e) => setSelected({ ...selected, summary: e.target.value })} /></Field>
             <Field label="Body (Markdown)"><Textarea value={selected.body_md} onChange={(e) => setSelected({ ...selected, body_md: e.target.value })} /></Field>
+
+            <div style={{ border: '1px solid #1c2430', borderRadius: 14, padding: 12 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                <div style={{ fontWeight: 600 }}>Images (static)</div>
+                <button onClick={addImage} disabled={busy} style={{ borderRadius: 999, padding: '8px 12px', border: '1px solid #1c2430', background: '#0f1318', color: '#e8e8ea', cursor: 'pointer' }}>+ Add</button>
+              </div>
+              <div style={{ color: '#a6a8ad', fontSize: 12, lineHeight: 1.4, marginBottom: 10 }}>
+                Plan A: no R2. Put image files under <code style={{ color: '#e8e8ea' }}>/public/media/</code> in your repo, then reference the path here, e.g. <code style={{ color: '#e8e8ea' }}>media/products/xxx.jpg</code>.
+              </div>
+              {media.length === 0 ? (
+                <div style={{ color: '#a6a8ad', fontSize: 12 }}>No images linked.</div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {media.map((m, idx) => (
+                    <div key={idx} style={{ display: 'grid', gridTemplateColumns: '96px 1fr 160px 72px', gap: 8, alignItems: 'center', border: '1px solid #1c2430', borderRadius: 12, padding: 8, background: '#0f1318' }}>
+                      <div style={{ width: 96, height: 64, borderRadius: 10, overflow: 'hidden', border: '1px solid #1c2430', background: '#0b0f14' }}>
+                        {m.path?.trim() ? (
+                          <img src={`/${m.path.replace(/^\/+/, '')}`} alt={m.alt || ''} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        ) : null}
+                      </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                        <Input value={m.path} onChange={(e) => updateImage(idx, { path: e.target.value })} placeholder="media/products/xxx.jpg" />
+                        <Input value={m.alt ?? ''} onChange={(e) => updateImage(idx, { alt: e.target.value })} placeholder="Alt text (optional)" />
+                      </div>
+                      <Input type="number" value={Number(m.sort_order ?? 100)} onChange={(e) => updateImage(idx, { sort_order: Number(e.target.value) })} />
+                      <button onClick={() => removeImage(idx)} disabled={busy} style={{ borderRadius: 999, padding: '8px 10px', border: '1px solid #1c2430', background: 'rgba(252,165,165,0.08)', color: '#e8e8ea', cursor: 'pointer' }}>Remove</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
             {error && <div style={{ color: '#fca5a5' }}>{error}</div>}
           </div>
@@ -533,74 +620,5 @@ function UpdatesTab({ lang }: { lang: 'zh' | 'en' }) {
         )}
       </Card>
     </div>
-  );
-}
-
-function MediaTab({ lang }: { lang: 'zh' | 'en' }) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [productId, setProductId] = useState<string>('');
-  const [file, setFile] = useState<File | null>(null);
-  const [alt, setAlt] = useState<string>('');
-  const [result, setResult] = useState<string>('');
-  const [error, setError] = useState<string>('');
-  const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    api<Product[]>(`/api/admin/products?lang=${lang}`)
-      .then((p) => setProducts(p))
-      .catch((e) => setError(e.message));
-  }, [lang]);
-
-  const upload = async () => {
-    setBusy(true);
-    setError('');
-    setResult('');
-    try {
-      if (!file) throw new Error('Select a file');
-      const form = new FormData();
-      form.append('file', file);
-      if (productId) form.append('productId', productId);
-      if (alt) form.append('alt', alt);
-      const res = await fetch('/api/admin/media/upload', { method: 'POST', body: form });
-      const j = await res.json();
-      if (!j?.ok) throw new Error(j?.error?.message || 'Upload failed');
-      setResult(j.data.publicUrl);
-    } catch (e: any) {
-      setError(e.message);
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  return (
-    <Card>
-      <div style={{ fontWeight: 600, marginBottom: 10 }}>Upload media to R2 (and optionally attach to a product)</div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-        <Field label="Attach to product (optional)">
-          <select value={productId} onChange={(e) => setProductId(e.target.value)} style={{ background: '#0f1318', color: '#e8e8ea', border: '1px solid #1c2430', borderRadius: 10, padding: '10px 12px' }}>
-            <option value="">(none)</option>
-            {products.map((p) => (
-              <option key={p.id} value={p.id}>{p.name}</option>
-            ))}
-          </select>
-        </Field>
-        <Field label="Alt">
-          <Input value={alt} onChange={(e) => setAlt(e.target.value)} />
-        </Field>
-      </div>
-
-      <div style={{ marginTop: 10, display: 'flex', gap: 8, alignItems: 'center' }}>
-        <input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-        <button onClick={upload} disabled={busy} style={{ borderRadius: 999, padding: '10px 14px', border: '1px solid #1c2430', background: 'rgba(110,231,183,0.08)', color: '#e8e8ea', cursor: 'pointer' }}>Upload</button>
-      </div>
-
-      {result && (
-        <div style={{ marginTop: 12 }}>
-          <div style={{ color: '#a6a8ad', fontSize: 12 }}>Public URL</div>
-          <div style={{ marginTop: 6 }}><a href={result} target="_blank" rel="noreferrer">{result}</a></div>
-        </div>
-      )}
-      {error && <div style={{ marginTop: 10, color: '#fca5a5' }}>{error}</div>}
-    </Card>
   );
 }

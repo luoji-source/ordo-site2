@@ -37,7 +37,7 @@ const bodyHtml = marked.parse(product.body_md || '');
     {media.length > 0 ? (
       media.map((m) => (
         <div class="card col6">
-          <img src={`/cdn/media/${m.r2_key}`} alt={m.alt || product.name} style="width:100%;border-radius:12px;border:1px solid var(--line)" loading="lazy" />
+          <img src={m.url || `/${m.r2_key}`} alt={m.alt || product.name} style="width:100%;border-radius:12px;border:1px solid var(--line)" loading="lazy" />
         </div>
       ))
     ) : (

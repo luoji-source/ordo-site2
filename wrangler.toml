@@ -5,16 +5,16 @@ pages_build_output_dir = "dist"
 [vars]
 PUBLIC_SITE_NAME = "ORDO"
 
-[[d1_databases]]
-binding = "DB"
-database_name = "ordo_site_db"
-database_id = "13e6038d-b12d-48a8-a242-0745f5bba278"
-
-[[r2_buckets]]
-binding = "MEDIA"
-bucket_name = "ordo-site-media"
-
+# Bindings are configured in Cloudflare Pages Dashboard (Settings → Bindings).
+# Plan A: no R2. Media is served as static assets from /public/media.
+#
+# Optional: local development with Wrangler (uncomment and fill)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "ordo_site_db"
+# database_id = "<YOUR_D1_DATABASE_ID>"
+#
 # Optional: KV cache
 # [[kv_namespaces]]
 # binding = "CACHE"
-# id = "REPLACE_WITH_YOUR_KV_ID"
+# id = "<YOUR_KV_ID>"

@@ -1,17 +1,31 @@
 import type { APIRoute } from 'astro';
-import { media, notFound } from '@/lib/db';
 
-export const GET: APIRoute = async (ctx) => {
-  const key = (ctx.params.key || '').replace(/^\/+/, '');
-  if (!key) return notFound('Missing key');
+/**
+ * Plan A: no R2.
+ *
+ * This route keeps backward compatibility for old URLs:
+ *   /cdn/media/<key>
+ *
+ * We now serve media as static assets under /public/media, so we simply
+ * redirect to the corresponding static path:
+ *   /<key>
+ *
+ * Example:
+ *   /cdn/media/media/abc.jpg  ->  /media/abc.jpg
+ */
+export const GET: APIRoute = async ({ params }) => {
+  const key = (params as any).key as string | undefined;
+  if (!key) return new Response('Not found', { status: 404 });
 
-  const obj = await media(ctx).get(key);
-  if (!obj) return notFound('Media not found');
+  // Basic sanitation: disallow path traversal
+  if (key.includes('..')) return new Response('Bad request', { status: 400 });
 
-  const headers = new Headers();
-  if (obj.httpMetadata?.contentType) headers.set('content-type', obj.httpMetadata.contentType);
-  if (obj.httpEtag) headers.set('etag', obj.httpEtag);
-  headers.set('cache-control', 'public, max-age=31536000, immutable');
-
-  return new Response(obj.body, { headers });
+  const location = `/${key.replace(/^\/+/, '')}`;
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: location,
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
+  });
 };
