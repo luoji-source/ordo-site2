@@ -22,6 +22,11 @@ function getEnv(locals: unknown, key: string): string {
   return typeof vProcess === 'string' ? vProcess : '';
 }
 
+function getEnvOptional(locals: unknown, key: string): string | undefined {
+  const v = getEnv(locals, key);
+  return v ? v : undefined;
+}
+
 function json(status: number, data: unknown) {
   return new Response(JSON.stringify(data), {
     status,
@@ -97,6 +102,8 @@ async function verifyTurnstile(secret: string, token: string, remoteip?: string)
 }
 
 async function sendMailChannels(args: {
+  resendKey?: string;
+
   to: string;
   cc?: string;
   bcc?: string;
@@ -105,6 +112,13 @@ async function sendMailChannels(args: {
   subject: string;
   contentText: string;
 }) {
+  // Preferred provider: Resend (recommended; MailChannels no longer works reliably without a paid account)
+  const resendKey = args.resendKey;
+  if (resendKey) {
+    return await sendViaResend(resendKey, args);
+  }
+
+  // Fallback: MailChannels (may require a paid plan; kept for compatibility)
   const payload = {
     personalizations: [
       {
@@ -113,7 +127,7 @@ async function sendMailChannels(args: {
         ...(args.bcc ? { bcc: [{ email: args.bcc }] } : {}),
       },
     ],
-    from: { email: args.from, name: 'ORDO Support' },
+    from: { email: args.from },
     ...(args.replyTo ? { reply_to: { email: args.replyTo } } : {}),
     subject: args.subject,
     content: [{ type: 'text/plain', value: args.contentText }],
@@ -121,12 +135,55 @@ async function sendMailChannels(args: {
 
   const resp = await fetch('https://api.mailchannels.net/tx/v1/send', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json;charset=UTF-8' },
     body: JSON.stringify(payload),
   });
 
-  const text = await resp.text().catch(() => '');
-  return { ok: resp.ok, status: resp.status, body: text };
+  const body = await resp.text().catch(() => '');
+  return { ok: resp.ok, status: resp.status, body };
+}
+
+async function sendViaResend(
+  apiKey: string,
+  args: {
+    to: string;
+    cc?: string;
+    bcc?: string;
+    from: string;
+    replyTo?: string;
+    subject: string;
+    contentText: string;
+  }
+) {
+  const payload: any = {
+    from: args.from,
+    to: [args.to],
+    subject: args.subject,
+    text: args.contentText,
+  };
+
+  if (args.cc) payload.cc = [args.cc];
+  if (args.bcc) payload.bcc = [args.bcc];
+  if (args.replyTo) payload.reply_to = args.replyTo;
+
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const bodyText = await resp.text().catch(() => '');
+  let body: any = bodyText;
+  try {
+    body = bodyText ? JSON.parse(bodyText) : null;
+  } catch {
+    // keep as text
+  }
+
+  return { ok: resp.ok, status: resp.status, body };
 }
 
 function buildTextEmail(params: {
@@ -246,8 +303,12 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
       ua,
     });
 
-    // NOTE: MailChannels requires a valid "from" domain with proper DNS (SPF/DKIM) for best delivery.
+    const resendKey = getEnvOptional(locals, 'RESEND_API_KEY');
+
+    // NOTE: If RESEND_API_KEY is set, we use Resend as the mail provider; otherwise we try MailChannels.
     const res = await sendMailChannels({
+      resendKey,
+
       to,
       cc: cc || undefined,
       bcc,
