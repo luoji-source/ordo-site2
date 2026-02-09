@@ -132,6 +132,60 @@ async function sendViaResend(opts: {
   }
 }
 
+async function sendViaMailChannels(opts: {
+  from: string;
+  to: string;
+  bcc?: string;
+  replyTo?: string;
+  subject: string;
+  text: string;
+}) {
+  // Cloudflare-compatible outbound email relay (no API key required).
+  // Docs: https://mailchannels.com/ (used widely with Cloudflare Workers)
+  const parseAddr = (s: string) => {
+    const m = String(s || '').match(/^(.*)<([^>]+)>\s*$/);
+    if (m) return { name: m[1].trim().replace(/^"|"$/g, ''), email: m[2].trim() };
+    return { name: '', email: String(s || '').trim() };
+  };
+
+  const from = parseAddr(opts.from);
+  const reply = opts.replyTo ? parseAddr(opts.replyTo) : null;
+
+  const payload: any = {
+    personalizations: [
+      {
+        to: [{ email: opts.to }],
+        ...(opts.bcc ? { bcc: [{ email: opts.bcc }] } : {}),
+      },
+    ],
+    from: {
+      email: from.email,
+      ...(from.name ? { name: from.name } : {}),
+    },
+    subject: opts.subject,
+    content: [{ type: 'text/plain', value: opts.text }],
+    ...(reply
+      ? {
+          reply_to: {
+            email: reply.email,
+            ...(reply.name ? { name: reply.name } : {}),
+          },
+        }
+      : {}),
+  };
+
+  const res = await fetch('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`MailChannels error: ${res.status} ${text}`);
+  }
+}
+
 export async function POST({ request, locals, clientAddress }: any) {
   const ip = (clientAddress || "unknown").toString();
   const ua = request.headers.get("user-agent") || "";
@@ -163,8 +217,10 @@ export async function POST({ request, locals, clientAddress }: any) {
   const subject = String(body?.subject ?? "").trim();
   const message = String(body?.message ?? "").trim();
   const consent = Boolean(body?.consent);
+  const locale = String(body?.locale ?? '').trim();
+  const source = String(body?.source ?? '').trim();
   const website = String(body?.website ?? "").trim();
-  const ts = Number(body?.ts ?? 0);
+  let ts = Number(body?.ts ?? 0);
   const turnstileToken = String(body?.turnstileToken ?? "").trim();
 
   // Honeypot
@@ -176,10 +232,14 @@ export async function POST({ request, locals, clientAddress }: any) {
     });
   }
 
-  // Time-gate: require a minimum time on page (3s) and a sane maximum (1h)
+  // Time-gate: require a minimum time on page and a sane maximum.
+  // The client is expected to pass a page-load timestamp (not submission time).
+  // Some clients may accidentally send seconds; normalize.
   if (ts) {
+    if (ts > 0 && ts < 1_000_000_000_000) ts = ts * 1000; // seconds -> ms
     const dt = nowMs() - ts;
-    if (dt < 3000 || dt > 60 * 60 * 1000) {
+    // Allow a longer window (users may leave the tab open) and be tolerant of clock skew.
+    if (dt < 300 || dt > 24 * 60 * 60 * 1000) {
       return new Response(JSON.stringify({ error: "Suspicious submission", code: "SUSPICIOUS" }), {
         status: 400,
         headers: { "content-type": "application/json" },
@@ -275,6 +335,8 @@ export async function POST({ request, locals, clientAddress }: any) {
   const text = [
     `RequestId: ${reqId}`,
     `Type: ${tLabel}`,
+    locale ? `Locale: ${locale}` : null,
+    source ? `Source: ${source}` : null,
     `Name: ${name}`,
     org ? `Organization: ${org}` : null,
     `Email: ${email}`,
@@ -300,10 +362,24 @@ export async function POST({ request, locals, clientAddress }: any) {
     media: getEnv(locals, "CONTACT_TO_MEDIA"),
   } as const;
   const to = toByType[type] || getEnv(locals, "CONTACT_NOTIFY_TO");
+  const bccByType = {
+    sales: getEnv(locals, "CONTACT_BCC_SALES"),
+    software: getEnv(locals, "CONTACT_BCC_SOFTWARE"),
+    support: getEnv(locals, "CONTACT_BCC_SUPPORT"),
+    procurement: getEnv(locals, "CONTACT_BCC_PROCUREMENT"),
+    partnership: getEnv(locals, "CONTACT_BCC_PARTNERSHIP"),
+    media: getEnv(locals, "CONTACT_BCC_MEDIA"),
+  } as const;
+  const bcc = bccByType[type] || getEnv(locals, "CONTACT_NOTIFY_BCC");
 
   try {
-    if (resendKey && to) {
-      await sendViaResend({ apiKey: resendKey, from, to, subject: subjectLine, text });
+    if (to) {
+      if (resendKey) {
+        await sendViaResend({ apiKey: resendKey, from, to, subject: subjectLine, text });
+      } else {
+        // Default: MailChannels relay (works on Cloudflare Workers/Pages).
+        await sendViaMailChannels({ from, to, bcc: bcc || undefined, replyTo: `${name} <${email}>`, subject: subjectLine, text });
+      }
     }
   } catch {
     // Don't expose provider failure details.

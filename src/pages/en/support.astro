@@ -132,6 +132,8 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
     const status = document.getElementById('status');
     const btn = document.getElementById('submitBtn');
     const website = document.getElementById('website');
+    // Used by server-side anti-bot time gate. Must be page-load time, not submit time.
+    const pageLoadedAt = Date.now();
     website.style.position = 'absolute';
     website.style.left = '-9999px';
     website.style.opacity = '0';
@@ -150,7 +152,7 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
       const payload = {
         locale: 'en',
         source: 'website',
-        ts: Date.now(),
+        ts: pageLoadedAt,
         website: String(fd.get('website') || ''),
         type: String(fd.get('type') || 'support'),
         name: String(fd.get('name') || ''),

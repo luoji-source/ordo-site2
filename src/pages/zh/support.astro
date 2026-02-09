@@ -131,6 +131,8 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
     const status = document.getElementById('status');
     const btn = document.getElementById('submitBtn');
     const website = document.getElementById('website');
+    // 用于服务端的防机器人时间阈值：必须是页面加载时间，而不是提交时间。
+    const pageLoadedAt = Date.now();
     // Honeypot should stay hidden.
     website.style.position = 'absolute';
     website.style.left = '-9999px';
@@ -150,7 +152,7 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
       const payload = {
         locale: 'zh',
         source: 'website',
-        ts: Date.now(),
+        ts: pageLoadedAt,
         website: String(fd.get('website') || ''),
         type: String(fd.get('type') || 'support'),
         name: String(fd.get('name') || ''),
