@@ -8,7 +8,7 @@ PUBLIC_SITE_NAME = "ORDO"
 [[d1_databases]]
 binding = "DB"
 database_name = "ordo_site_db"
-database_id = "REPLACE_WITH_YOUR_D1_ID"
+database_id = "13e6038d-b12d-48a8-a242-0745f5bba278"
 
 [[r2_buckets]]
 binding = "MEDIA"
