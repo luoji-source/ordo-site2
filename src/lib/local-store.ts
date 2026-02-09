@@ -138,7 +138,7 @@ export async function getPage(lang: Lang, slug: string): Promise<PublicPage | nu
 }
 
 /**
- * List products for storefront API.
+ *  List products for storefront API.
  */
 export async function listProducts(
   lang: Lang,
