@@ -99,6 +99,7 @@ async function verifyTurnstile(secret: string, token: string, remoteip?: string)
 async function sendMailChannels(args: {
   to: string;
   cc?: string;
+  bcc?: string;
   from: string;
   replyTo?: string;
   subject: string;
@@ -109,6 +110,7 @@ async function sendMailChannels(args: {
       {
         to: [{ email: args.to }],
         ...(args.cc ? { cc: [{ email: args.cc }] } : {}),
+        ...(args.bcc ? { bcc: [{ email: args.bcc }] } : {}),
       },
     ],
     from: { email: args.from, name: 'ORDO Support' },
@@ -181,7 +183,8 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
     const topic = String(body.topic ?? '').trim();
     const subject = String(body.subject ?? '').trim();
     const message = String(body.message ?? '').trim();
-    const agree = body.agree === true;
+    // Front-end may send `agree` (preferred) or legacy `consent`.
+    const agree = body.agree === true || body.consent === true;
     const turnstileToken = String(body.turnstileToken ?? '').trim();
 
     if (!agree) return json(400, { ok: false, error: 'agree_required' });
@@ -223,7 +226,9 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
     }
 
     const to = getEnv(locals, 'CONTACT_TO_SUPPORT') || 'haochiwang@163.com';
-    const cc = getEnv(locals, 'CONTACT_CC_SUPPORT') || 'haochiwang@163.com';
+    const cc = getEnv(locals, 'CONTACT_CC_SUPPORT') || '';
+    // Blind copy for internal forwarding/monitoring
+    const bcc = getEnv(locals, 'CONTACT_BCC_SUPPORT') || 'haochiwang@163.com';
     const from = getEnv(locals, 'CONTACT_FROM_EMAIL') || `support@${url.hostname}`;
 
     const mail = buildTextEmail({
@@ -243,9 +248,10 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
     // NOTE: MailChannels requires a valid "from" domain with proper DNS (SPF/DKIM) for best delivery.
     const res = await sendMailChannels({
       to,
-      cc,
+      cc: cc || undefined,
+      bcc,
       from,
-      replyTo: email,
+      replyTo: email || undefined,
       subject: `[ORDO] ${topic} — ${subject}`,
       contentText: mail,
     });

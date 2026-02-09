@@ -160,7 +160,8 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
         organization: String(fd.get('org') || ''),
         subject: String(fd.get('subject') || ''),
         message: String(fd.get('message') || ''),
-        consent: Boolean(fd.get('consent')),
+        // 服务端期望 `agree`（boolean）。表单里仍用 consent 作为勾选项的 name。
+        agree: fd.get('consent') === 'on',
       };
 
       try {
