@@ -71,22 +71,17 @@ function makeRequestId() {
 }
 
 async function sha256Hex(input: string) {
-  // Prefer Web Crypto if available
+  // Cloudflare Pages/Workers runtime does not support Node built-ins like `node:crypto`.
+  // Use Web Crypto, which is available in Workers and modern Node runtimes.
   const enc = new TextEncoder();
   // @ts-ignore
   const subtle = globalThis?.crypto?.subtle;
-  if (subtle) {
-    const buf = await subtle.digest("SHA-256", enc.encode(input));
-    const bytes = new Uint8Array(buf);
-    return Array.from(bytes)
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-  }
-
-  // Node fallback
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { createHash } = await import("node:crypto");
-  return createHash("sha256").update(input).digest("hex");
+  if (!subtle) throw new Error("Web Crypto is not available in this runtime");
+  const buf = await subtle.digest("SHA-256", enc.encode(input));
+  const bytes = new Uint8Array(buf);
+  return Array.from(bytes)
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 async function verifyTurnstile(opts: {
