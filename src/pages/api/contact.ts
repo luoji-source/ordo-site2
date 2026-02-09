@@ -1,396 +1,267 @@
+import type { APIRoute } from 'astro';
+
 export const prerender = false;
 
-type ContactType = "sales" | "software" | "support" | "procurement" | "partnership" | "media";
+type LocalsWithEnv = {
+  runtime?: { env?: Record<string, string | undefined> };
+  env?: Record<string, string | undefined>;
+};
 
-const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function getEnv(locals: unknown, key: string): string {
+  const l = (locals ?? {}) as LocalsWithEnv;
+  // Astro Cloudflare adapter provides env here
+  const vRuntime = l.runtime?.env?.[key];
+  if (typeof vRuntime === 'string') return vRuntime;
 
-// Best-effort in-memory protection (resets on restart/serverless cold start).
-// This is not a replacement for edge/WAF rate limiting, but stops most basic spam.
-const RATE_BY_IP: Map<string, number[]> = new Map();
-const RATE_BY_EMAIL: Map<string, number[]> = new Map();
-const FINGERPRINTS: Map<string, number> = new Map();
+  // Some runtimes (or future adapters) may expose env directly
+  const vDirect = l.env?.[key];
+  if (typeof vDirect === 'string') return vDirect;
 
-function getEnv(locals: any, key: string): string | undefined {
-  // Cloudflare adapter: locals.runtime.env
-  const cf = locals?.runtime?.env?.[key];
-  if (typeof cf === "string" && cf) return cf;
-
-  // Node adapter / general
-  // @ts-ignore
-  const v = import.meta?.env?.[key];
-  if (typeof v === "string" && v) return v;
-  return undefined;
+  // Node build/runtime fallback (local dev)
+  const vProcess = typeof process !== 'undefined' ? process.env?.[key] : undefined;
+  return typeof vProcess === 'string' ? vProcess : '';
 }
 
-function nowMs() {
-  return Date.now();
-}
-
-function pushWithinWindow(map: Map<string, number[]>, key: string, windowMs: number) {
-  const t = nowMs();
-  const arr = map.get(key) ?? [];
-  const filtered = arr.filter((x) => t - x < windowMs);
-  filtered.push(t);
-  map.set(key, filtered);
-  return filtered;
-}
-
-function rateLimit(map: Map<string, number[]>, key: string, limit: number, windowMs: number) {
-  const arr = pushWithinWindow(map, key, windowMs);
-  return arr.length <= limit;
-}
-
-function normalizeContactType(t: string): ContactType | null {
-  const v = (t || "").trim();
-  if (v === "sales" || v === "software" || v === "support" || v === "procurement" || v === "partnership" || v === "media") return v as ContactType;
-  return null;
-}
-
-function typeLabel(t: ContactType) {
-  return t === "sales"
-    ? "Sales"
-    : t === "software"
-      ? "Software"
-      : t === "support"
-        ? "Support"
-        : t === "procurement"
-          ? "Procurement"
-          : t === "partnership"
-            ? "Partnership"
-            : "Media";
-}
-
-function makeRequestId() {
-  // short, non-guessable enough for client UX (not a security token)
-  const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
-  const t = new Date();
-  const y = String(t.getUTCFullYear()).slice(-2);
-  const m = String(t.getUTCMonth() + 1).padStart(2, "0");
-  const d = String(t.getUTCDate()).padStart(2, "0");
-  return `C${y}${m}${d}-${rand}`;
-}
-
-async function sha256Hex(input: string) {
-  // Cloudflare Pages/Workers runtime does not support Node built-ins like `node:crypto`.
-  // Use Web Crypto, which is available in Workers and modern Node runtimes.
-  const enc = new TextEncoder();
-  // @ts-ignore
-  const subtle = globalThis?.crypto?.subtle;
-  if (!subtle) throw new Error("Web Crypto is not available in this runtime");
-  const buf = await subtle.digest("SHA-256", enc.encode(input));
-  const bytes = new Uint8Array(buf);
-  return Array.from(bytes)
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-async function verifyTurnstile(opts: {
-  secret: string;
-  token: string;
-  ip?: string;
-}): Promise<boolean> {
-  const form = new URLSearchParams();
-  form.set("secret", opts.secret);
-  form.set("response", opts.token);
-  if (opts.ip && opts.ip !== "unknown") form.set("remoteip", opts.ip);
-
-  const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "content-type": "application/x-www-form-urlencoded" },
-    body: form.toString(),
-  });
-
-  if (!r.ok) return false;
-  const j = await r.json().catch(() => ({}));
-  return Boolean(j?.success);
-}
-
-async function sendViaResend(opts: {
-  apiKey: string;
-  from: string;
-  to: string;
-  subject: string;
-  text: string;
-}) {
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
+function json(status: number, data: unknown) {
+  return new Response(JSON.stringify(data), {
+    status,
     headers: {
-      authorization: `Bearer ${opts.apiKey}`,
-      "content-type": "application/json",
+      'content-type': 'application/json; charset=utf-8',
+      'cache-control': 'no-store',
     },
-    body: JSON.stringify({
-      from: opts.from,
-      to: opts.to,
-      subject: opts.subject,
-      text: opts.text,
-    }),
   });
+}
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    throw new Error(`Resend error: ${res.status} ${text}`);
+function safeClientIp(headers: Headers): string {
+  const candidates = [
+    headers.get('cf-connecting-ip'),
+    headers.get('x-forwarded-for')?.split(',')[0]?.trim(),
+    headers.get('x-real-ip'),
+  ];
+  return (candidates.find(Boolean) ?? '').toString();
+}
+
+function nowIso() {
+  return new Date().toISOString();
+}
+
+function randomId(len = 16): string {
+  // Worker-safe random string (base32-ish)
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz234567';
+  const bytes = new Uint8Array(len);
+  // @ts-ignore - crypto exists in Workers
+  crypto.getRandomValues(bytes);
+  let out = '';
+  for (let i = 0; i < bytes.length; i++) out += alphabet[bytes[i] % alphabet.length];
+  return out;
+}
+
+async function sha256Hex(input: string): Promise<string | null> {
+  try {
+    // @ts-ignore - crypto exists in Workers
+    if (!crypto?.subtle) return null;
+    const enc = new TextEncoder();
+    // @ts-ignore
+    const buf = await crypto.subtle.digest('SHA-256', enc.encode(input));
+    return Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+  } catch {
+    return null;
   }
 }
 
-async function sendViaMailChannels(opts: {
-  from: string;
+function validateEmail(email: string): boolean {
+  // Simple, pragmatic validation
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+async function verifyTurnstile(secret: string, token: string, remoteip?: string) {
+  try {
+    const form = new URLSearchParams();
+    form.set('secret', secret);
+    form.set('response', token);
+    if (remoteip) form.set('remoteip', remoteip);
+
+    const resp = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: form,
+    });
+
+    const data = (await resp.json()) as { success?: boolean; [k: string]: unknown };
+    return { ok: !!data.success, raw: data };
+  } catch (e) {
+    return { ok: false, raw: { error: 'turnstile_verify_failed', detail: String(e) } };
+  }
+}
+
+async function sendMailChannels(args: {
   to: string;
-  bcc?: string;
+  cc?: string;
+  from: string;
   replyTo?: string;
   subject: string;
-  text: string;
+  contentText: string;
 }) {
-  // Cloudflare-compatible outbound email relay (no API key required).
-  // Docs: https://mailchannels.com/ (used widely with Cloudflare Workers)
-  const parseAddr = (s: string) => {
-    const m = String(s || '').match(/^(.*)<([^>]+)>\s*$/);
-    if (m) return { name: m[1].trim().replace(/^"|"$/g, ''), email: m[2].trim() };
-    return { name: '', email: String(s || '').trim() };
-  };
-
-  const from = parseAddr(opts.from);
-  const reply = opts.replyTo ? parseAddr(opts.replyTo) : null;
-
-  const payload: any = {
+  const payload = {
     personalizations: [
       {
-        to: [{ email: opts.to }],
-        ...(opts.bcc ? { bcc: [{ email: opts.bcc }] } : {}),
+        to: [{ email: args.to }],
+        ...(args.cc ? { cc: [{ email: args.cc }] } : {}),
       },
     ],
-    from: {
-      email: from.email,
-      ...(from.name ? { name: from.name } : {}),
-    },
-    subject: opts.subject,
-    content: [{ type: 'text/plain', value: opts.text }],
-    ...(reply
-      ? {
-          reply_to: {
-            email: reply.email,
-            ...(reply.name ? { name: reply.name } : {}),
-          },
-        }
-      : {}),
+    from: { email: args.from, name: 'ORDO Support' },
+    ...(args.replyTo ? { reply_to: { email: args.replyTo } } : {}),
+    subject: args.subject,
+    content: [{ type: 'text/plain', value: args.contentText }],
   };
 
-  const res = await fetch('https://api.mailchannels.net/tx/v1/send', {
+  const resp = await fetch('https://api.mailchannels.net/tx/v1/send', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(payload),
   });
 
-  if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`MailChannels error: ${res.status} ${text}`);
-  }
+  const text = await resp.text().catch(() => '');
+  return { ok: resp.ok, status: resp.status, body: text };
 }
 
-export async function POST({ request, locals, clientAddress }: any) {
-  const ip = (clientAddress || "unknown").toString();
-  const ua = request.headers.get("user-agent") || "";
-  const referer = request.headers.get("referer") || "";
-  const acceptLang = request.headers.get("accept-language") || "";
+function buildTextEmail(params: {
+  name: string;
+  email: string;
+  org?: string;
+  topic: string;
+  subject: string;
+  message: string;
+  lang: string;
+  page: string;
+  requestId: string;
+  ip: string;
+  ua: string;
+}) {
+  const lines = [
+    `ORDO Support Form (${params.lang})`,
+    `Time: ${nowIso()}`,
+    `Request ID: ${params.requestId}`,
+    `Page: ${params.page}`,
+    '',
+    `Name: ${params.name}`,
+    `Email: ${params.email}`,
+    `Organization: ${params.org ?? ''}`,
+    `Topic: ${params.topic}`,
+    `Subject: ${params.subject}`,
+    '',
+    'Message:',
+    params.message,
+    '',
+    '---',
+    `IP: ${params.ip}`,
+    `UA: ${params.ua}`,
+  ];
+  return lines.join('\n');
+}
 
-  // Limits: IP (per hour) + Email (per 10 min)
-  if (!rateLimit(RATE_BY_IP, ip, 8, 60 * 60 * 1000)) {
-    return new Response(JSON.stringify({ error: "Too many requests", code: "RATE_LIMIT" }), {
-      status: 429,
-      headers: { "content-type": "application/json" },
-    });
-  }
-
-  let body: any;
+export const POST: APIRoute = async ({ request, locals, url }) => {
+  // IMPORTANT: Never let an exception bubble up, or Cloudflare will show a 502 HTML page.
   try {
-    body = await request.json();
-  } catch {
-    return new Response(JSON.stringify({ error: "Invalid JSON" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
+    if (request.method !== 'POST') return json(405, { ok: false, error: 'method_not_allowed' });
 
-  const name = String(body?.name ?? "").trim();
-  const email = String(body?.email ?? "").trim();
-  const org = String(body?.organization ?? "").trim();
-  const type = normalizeContactType(String(body?.type ?? "procurement"));
-  const subject = String(body?.subject ?? "").trim();
-  const message = String(body?.message ?? "").trim();
-  const consent = Boolean(body?.consent);
-  const locale = String(body?.locale ?? '').trim();
-  const source = String(body?.source ?? '').trim();
-  const website = String(body?.website ?? "").trim();
-  let ts = Number(body?.ts ?? 0);
-  const turnstileToken = String(body?.turnstileToken ?? "").trim();
-
-  // Honeypot
-  if (website) {
-    // Do not reveal to bots.
-    return new Response(JSON.stringify({ ok: true }), {
-      status: 200,
-      headers: { "content-type": "application/json" },
-    });
-  }
-
-  // Time-gate: require a minimum time on page and a sane maximum.
-  // The client is expected to pass a page-load timestamp (not submission time).
-  // Some clients may accidentally send seconds; normalize.
-  if (ts) {
-    if (ts > 0 && ts < 1_000_000_000_000) ts = ts * 1000; // seconds -> ms
-    const dt = nowMs() - ts;
-    // Allow a longer window (users may leave the tab open) and be tolerant of clock skew.
-    if (dt < 300 || dt > 24 * 60 * 60 * 1000) {
-      return new Response(JSON.stringify({ error: "Suspicious submission", code: "SUSPICIOUS" }), {
-        status: 400,
-        headers: { "content-type": "application/json" },
-      });
+    const contentType = request.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      return json(415, { ok: false, error: 'unsupported_media_type' });
     }
-  }
 
-  // Optional Turnstile (only enforced when TURNSTILE_SECRET_KEY is set)
-  const turnstileSecret = getEnv(locals, "TURNSTILE_SECRET_KEY");
-  if (turnstileSecret) {
-    if (!turnstileToken) {
-      return new Response(JSON.stringify({ error: "Verification required", code: "TURNSTILE_REQUIRED" }), {
-        status: 400,
-        headers: { "content-type": "application/json" },
-      });
-    }
-    const ok = await verifyTurnstile({ secret: turnstileSecret, token: turnstileToken, ip });
-    if (!ok) {
-      return new Response(JSON.stringify({ error: "Verification failed", code: "TURNSTILE_FAILED" }), {
-        status: 400,
-        headers: { "content-type": "application/json" },
-      });
-    }
-  }
+    const body = (await request.json().catch(() => null)) as any;
+    if (!body) return json(400, { ok: false, error: 'invalid_json' });
 
-  // Validation
-  if (!type) {
-    return new Response(JSON.stringify({ error: "Invalid type", code: "INVALID_TYPE" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
-  if (name.length < 2 || name.length > 40) {
-    return new Response(JSON.stringify({ error: "Invalid name", code: "INVALID_NAME" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
-  if (!emailRe.test(email) || email.length > 120) {
-    return new Response(JSON.stringify({ error: "Invalid email", code: "INVALID_EMAIL" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
-  if (org && (org.length < 2 || org.length > 80)) {
-    return new Response(JSON.stringify({ error: "Invalid organization", code: "INVALID_ORG" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
-  if (subject.length < 4 || subject.length > 80) {
-    return new Response(JSON.stringify({ error: "Invalid subject", code: "INVALID_SUBJECT" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
-  if (message.length < 20 || message.length > 2000) {
-    return new Response(JSON.stringify({ error: "Invalid message", code: "INVALID_MESSAGE" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
-  if (!consent) {
-    return new Response(JSON.stringify({ error: "Consent required", code: "CONSENT_REQUIRED" }), {
-      status: 400,
-      headers: { "content-type": "application/json" },
-    });
-  }
+    const name = String(body.name ?? '').trim();
+    const email = String(body.email ?? '').trim();
+    const org = String(body.organization ?? '').trim();
+    const topic = String(body.topic ?? '').trim();
+    const subject = String(body.subject ?? '').trim();
+    const message = String(body.message ?? '').trim();
+    const agree = body.agree === true;
+    const turnstileToken = String(body.turnstileToken ?? '').trim();
 
-  // Email rate limit (per 10 min)
-  if (!rateLimit(RATE_BY_EMAIL, email.toLowerCase(), 3, 10 * 60 * 1000)) {
-    return new Response(JSON.stringify({ error: "Too many requests", code: "EMAIL_RATE_LIMIT" }), {
-      status: 429,
-      headers: { "content-type": "application/json" },
-    });
-  }
+    if (!agree) return json(400, { ok: false, error: 'agree_required' });
+    if (!name) return json(400, { ok: false, error: 'name_required' });
+    if (!email || !validateEmail(email)) return json(400, { ok: false, error: 'invalid_email' });
+    if (!topic) return json(400, { ok: false, error: 'topic_required' });
+    if (!subject) return json(400, { ok: false, error: 'subject_required' });
+    if (!message) return json(400, { ok: false, error: 'message_required' });
+    if (subject.length > 180) return json(400, { ok: false, error: 'subject_too_long' });
+    if (message.length > 5000) return json(400, { ok: false, error: 'message_too_long' });
 
-  // Fingerprint de-duplication (same email+subject+message within 10 min)
-  const fp = await sha256Hex(`${email.toLowerCase()}\n${subject.toLowerCase()}\n${message}`);
-  const prev = FINGERPRINTS.get(fp);
-  const t = nowMs();
-  if (prev && t - prev < 10 * 60 * 1000) {
-    return new Response(JSON.stringify({ error: "Duplicate submission", code: "DUPLICATE" }), {
-      status: 409,
-      headers: { "content-type": "application/json" },
-    });
-  }
-  FINGERPRINTS.set(fp, t);
+    const ip = safeClientIp(request.headers);
+    const ua = request.headers.get('user-agent') || '';
+    const acceptLang = request.headers.get('accept-language') || '';
+    const lang = url.pathname.startsWith('/zh') ? 'zh' : 'en';
+    const requestId = randomId(18);
 
-  const reqId = makeRequestId();
-  const tLabel = typeLabel(type);
-  const subjectLine = `ORDO Contact | ${tLabel} | ${subject} | ${reqId}`;
-  const text = [
-    `RequestId: ${reqId}`,
-    `Type: ${tLabel}`,
-    locale ? `Locale: ${locale}` : null,
-    source ? `Source: ${source}` : null,
-    `Name: ${name}`,
-    org ? `Organization: ${org}` : null,
-    `Email: ${email}`,
-    `IP: ${ip}`,
-    ua ? `UA: ${ua}` : null,
-    referer ? `Referer: ${referer}` : null,
-    acceptLang ? `Accept-Language: ${acceptLang}` : null,
-    "",
-    message,
-  ]
-    .filter(Boolean)
-    .join("\n");
+    // Anti-abuse: basic duplicate detection (best-effort, can be disabled by setting SUPPORT_FINGERPRINT_WINDOW_SEC=0)
+    const windowSec = Number(getEnv(locals, 'SUPPORT_FINGERPRINT_WINDOW_SEC') || '45');
+    const fpRaw = `${ip}|${ua}|${name.toLowerCase()}|${email.toLowerCase()}|${topic}|${subject.toLowerCase()}|${message.slice(0, 200).toLowerCase()}`;
+    const fp = await sha256Hex(fpRaw);
 
-  // Future-proof: send notification email when configured
-  const resendKey = getEnv(locals, "RESEND_API_KEY");
-  const from = getEnv(locals, "CONTACT_FROM") || "ORDO <no-reply@ordoinc.com>";
-  const toByType = {
-    sales: getEnv(locals, "CONTACT_TO_SALES"),
-    software: getEnv(locals, "CONTACT_TO_SOFTWARE"),
-    support: getEnv(locals, "CONTACT_TO_SUPPORT"),
-    procurement: getEnv(locals, "CONTACT_TO_PROCUREMENT"),
-    partnership: getEnv(locals, "CONTACT_TO_PARTNERSHIP"),
-    media: getEnv(locals, "CONTACT_TO_MEDIA"),
-  } as const;
-  const to = toByType[type] || getEnv(locals, "CONTACT_NOTIFY_TO");
-  const bccByType = {
-    sales: getEnv(locals, "CONTACT_BCC_SALES"),
-    software: getEnv(locals, "CONTACT_BCC_SOFTWARE"),
-    support: getEnv(locals, "CONTACT_BCC_SUPPORT"),
-    procurement: getEnv(locals, "CONTACT_BCC_PROCUREMENT"),
-    partnership: getEnv(locals, "CONTACT_BCC_PARTNERSHIP"),
-    media: getEnv(locals, "CONTACT_BCC_MEDIA"),
-  } as const;
-  const bcc = bccByType[type] || getEnv(locals, "CONTACT_NOTIFY_BCC");
-
-  try {
-    if (to) {
-      if (resendKey) {
-        await sendViaResend({ apiKey: resendKey, from, to, subject: subjectLine, text });
-      } else {
-        // Default: MailChannels relay (works on Cloudflare Workers/Pages).
-        await sendViaMailChannels({ from, to, bcc: bcc || undefined, replyTo: `${name} <${email}>`, subject: subjectLine, text });
+    if (windowSec > 0 && fp) {
+      // Store in a cookie-less in-memory map is not possible in Workers (stateless).
+      // So we only *check* for an incoming client-provided requestId (optional) as a soft gate.
+      // (Keeps code future-proof: if you later re-enable D1, this is where you'd write.)
+      const clientRid = request.headers.get('x-ordo-request-id') || '';
+      if (clientRid && clientRid === fp) {
+        return json(429, { ok: false, error: 'duplicate_submission' });
       }
     }
-  } catch {
-    // Don't expose provider failure details.
-    return new Response(JSON.stringify({ error: "Notification failed", code: "NOTIFY_FAILED" }), {
-      status: 502,
-      headers: { "content-type": "application/json" },
-    });
-  }
 
-  return new Response(JSON.stringify({ ok: true, requestId: reqId }), {
-    status: 200,
-    headers: { "content-type": "application/json" },
-  });
-}
+    // Turnstile verification (optional but recommended)
+    const turnstileSecret = getEnv(locals, 'TURNSTILE_SECRET_KEY');
+    if (turnstileSecret) {
+      if (!turnstileToken) return json(400, { ok: false, error: 'turnstile_required' });
+      const verify = await verifyTurnstile(turnstileSecret, turnstileToken, ip);
+      if (!verify.ok) return json(400, { ok: false, error: 'turnstile_failed', detail: verify.raw });
+    }
+
+    const to = getEnv(locals, 'CONTACT_TO_SUPPORT') || 'haochiwang@163.com';
+    const cc = getEnv(locals, 'CONTACT_CC_SUPPORT') || 'haochiwang@163.com';
+    const from = getEnv(locals, 'CONTACT_FROM_EMAIL') || `support@${url.hostname}`;
+
+    const mail = buildTextEmail({
+      name,
+      email,
+      org,
+      topic,
+      subject,
+      message,
+      lang: `${lang};${acceptLang}`,
+      page: url.href,
+      requestId,
+      ip,
+      ua,
+    });
+
+    // NOTE: MailChannels requires a valid "from" domain with proper DNS (SPF/DKIM) for best delivery.
+    const res = await sendMailChannels({
+      to,
+      cc,
+      from,
+      replyTo: email,
+      subject: `[ORDO] ${topic} — ${subject}`,
+      contentText: mail,
+    });
+
+    if (!res.ok) {
+      // Return a JSON error (do NOT throw) so the browser sees a controlled message.
+      return json(res.status >= 500 ? 502 : 400, {
+        ok: false,
+        error: 'mail_send_failed',
+        status: res.status,
+        detail: res.body?.slice(0, 2000),
+      });
+    }
+
+    return json(200, { ok: true, requestId });
+  } catch (e) {
+    return json(500, { ok: false, error: 'internal_error', detail: String(e) });
+  }
+};
