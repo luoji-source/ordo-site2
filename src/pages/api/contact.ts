@@ -180,7 +180,8 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
     const name = String(body.name ?? '').trim();
     const email = String(body.email ?? '').trim();
     const org = String(body.organization ?? '').trim();
-    const topic = String(body.topic ?? '').trim();
+    // Accept both `topic` (current) and `type` (legacy front-end select name)
+    const topic = String(body.topic ?? body.type ?? '').trim();
     const subject = String(body.subject ?? '').trim();
     const message = String(body.message ?? '').trim();
     // Front-end may send `agree` (preferred) or legacy `consent`.

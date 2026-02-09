@@ -155,6 +155,8 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
         ts: pageLoadedAt,
         website: String(fd.get('website') || ''),
         type: String(fd.get('type') || 'support'),
+        // Backward/forward compatible: backend may read `topic`.
+        topic: String(fd.get('type') || 'support'),
         name: String(fd.get('name') || ''),
         email: String(fd.get('email') || ''),
         organization: String(fd.get('org') || ''),
