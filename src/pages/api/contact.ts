@@ -320,11 +320,17 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
 
     if (!res.ok) {
       // Return a JSON error (do NOT throw) so the browser sees a controlled message.
+      // Note: res.body can be either a string (MailChannels) or an object (Resend JSON).
+      const detail =
+        typeof res.body === 'string'
+          ? res.body.slice(0, 2000)
+          : JSON.stringify(res.body ?? null).slice(0, 2000);
+
       return json(res.status >= 500 ? 502 : 400, {
         ok: false,
         error: 'mail_send_failed',
         status: res.status,
-        detail: res.body?.slice(0, 2000),
+        detail,
       });
     }
 
