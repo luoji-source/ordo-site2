@@ -314,7 +314,8 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
       bcc,
       from,
       replyTo: email || undefined,
-      subject: `[ORDO] ${topic} — ${subject}`,
+      // Include requestId in subject for easier triage/search.
+      subject: `[ORDO #${requestId}] ${topic} — ${subject}`,
       contentText: mail,
     });
 

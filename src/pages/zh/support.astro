@@ -138,9 +138,36 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
     website.style.left = '-9999px';
     website.style.opacity = '0';
 
-    function setStatus(text, ok) {
-      status.textContent = text;
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function setStatus(text, ok, requestId = '') {
       status.dataset.ok = ok ? '1' : '0';
+      if (!requestId) {
+        status.textContent = text;
+        return;
+      }
+
+      const rid = String(requestId);
+      status.innerHTML = `${escapeHtml(text)} <span class="reqid">(ID: <button type="button" class="copy-id" data-id="${escapeHtml(rid)}">${escapeHtml(rid)}</button>)</span>`;
+      const btn = status.querySelector('.copy-id');
+      if (btn) {
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(btn.getAttribute('data-id') || '');
+            btn.textContent = '已复制';
+            setTimeout(() => (btn.textContent = rid), 1200);
+          } catch (_) {
+            // ignore
+          }
+        }, { once: true });
+      }
     }
 
     form.addEventListener('submit', async (e) => {
@@ -180,7 +207,7 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
           return;
         }
 
-        setStatus('提交成功。我们将尽快回复。', true);
+        setStatus('提交成功。我们将尽快回复。', true, json?.requestId || '');
         form.reset();
       } catch (err) {
         setStatus('网络异常：未能提交。请稍后重试。', false);
@@ -274,6 +301,18 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
     .status{ font-size: 12px; color: rgba(220,235,240,0.66); }
     .status[data-ok="1"]{ color: rgba(120,255,210,0.78); }
     .status[data-ok="0"]{ color: rgba(255,180,180,0.88); }
+    .status .rid{ margin-left: 6px; opacity: 0.9; }
+    .status .copy-id{
+      appearance: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      color: inherit;
+      text-decoration: underline;
+      cursor: pointer;
+      font: inherit;
+    }
 
     .replyTime{ margin-top: 10px; color: rgba(220,235,240,0.62); font-size: 12px; line-height: 1.6; }
 

@@ -138,9 +138,36 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
     website.style.left = '-9999px';
     website.style.opacity = '0';
 
-    function setStatus(text, ok) {
-      status.textContent = text;
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function setStatus(text, ok, requestId = '') {
       status.dataset.ok = ok ? '1' : '0';
+      if (!requestId) {
+        status.textContent = text;
+        return;
+      }
+      const rid = String(requestId);
+      status.innerHTML = `${escapeHtml(text)} <span class="req-id">(ID: <button type="button" class="copy-id" data-id="${escapeHtml(rid)}">${escapeHtml(rid)}</button>)</span>`;
+      const copyBtn = status.querySelector('.copy-id');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(rid);
+            copyBtn.textContent = 'Copied';
+            setTimeout(() => (copyBtn.textContent = rid), 1200);
+          } catch {
+            // Fallback: select text for manual copy
+            window.prompt('Copy request ID:', rid);
+          }
+        });
+      }
     }
 
     form.addEventListener('submit', async (e) => {
@@ -180,8 +207,7 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
           return;
         }
 
-        const rid = json?.requestId ? ` (ID: ${json.requestId})` : '';
-        setStatus('Sent. We will reply by email.' + rid, true);
+        setStatus('Sent. We will reply by email.', true, json?.requestId || '');
         form.reset();
       } catch (err) {
         setStatus('Network error. Please try again.', false);
@@ -304,6 +330,18 @@ const presetType = typeWhitelist.includes(rawType) ? rawType : "support";
     .status{ font-size: 12px; color: rgba(220,235,240,0.66); }
     .status[data-ok="1"]{ color: rgba(120,255,210,0.78); }
     .status[data-ok="0"]{ color: rgba(255,160,160,0.78); }
+    .status .rid{ margin-left: 6px; opacity: 0.9; }
+    .status .copy-id{
+      appearance: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      color: inherit;
+      text-decoration: underline;
+      cursor: pointer;
+      font: inherit;
+    }
 
     .replyTime{ margin-top: 10px; color: rgba(220,235,240,0.62); font-size: 12px; line-height: 1.6; }
 
