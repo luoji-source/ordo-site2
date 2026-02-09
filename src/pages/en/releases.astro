@@ -1,0 +1,289 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const title = "Releases · ORDO";
+const description =
+  "Public, verifiable version facts for ORDO instruments (hardware) and software — changes, affected boundaries, and how to verify.";
+const keywords = [
+  "ORDO",
+  "releases",
+  "release log",
+  "version facts",
+  "hardware",
+  "software",
+  "verification",
+];
+
+const releases = [
+  {
+    id: "reading-locator-wftd-20260202",
+    kind: "Instrument (Hardware)",
+    date: "2026.02.02",
+    // Public naming: model / set as the title, series name as the subtitle
+    name: "ORDO Mark v1.0 — Standard set",
+    subtitle: "Line Pointer · Wind / Fire / Thunder / Electric",
+    summary:
+      "For reading and handoff scenes, it keeps the stop point / progress on a physical instrument—so when you return to the desk, you can verify and continue.",
+    highlights: [
+      "First production batch for four Editions",
+      "Mark Core rail + slider as visible progress",
+      "Public points: texture, scale, travel, damping, marks",
+    ],
+    facts: [
+      "First production batch: the four Editions (Wind / Fire / Thunder / Electric) enter manufacturing and delivery together.",
+      "Structural spec: Mark Core (same structural generation). A linear rail and slider turn progress from memory into a visible fact.",
+      "Public, verifiable points: carbon-fiber texture and rail slots, scale expression (0–100% segments), slider travel and damping range, and Edition marks.",
+    ],
+    boundaries: [
+      "The scale is for personal verification, not a measurement standard; differences caused by paper/binding are not guaranteed as uniformity.",
+      "Editions (Wind/Fire/Thunder/Electric) are differences in scale/visual language—not performance grades or priority of use.",
+      "Normal boundaries cover reasonable use; deformation from drops or compression requires separate assessment.",
+    ],
+    trace: [
+      "Search by Edition name in the Shop and compare the physical scale and slider travel.",
+      "To verify manufacturing and delivery facts, refer to the Manufacturing page’s public process and acceptance criteria.",
+      "If you see abnormal damping or scale wear, submit phenomenon, use scene, and (if available) package/engraving info via Support.",
+    ],
+    actions: [
+      { label: "Shop →", href: "/en/shop" },
+      { label: "Manufacturing & verification →", href: "/en/manufacturing" },
+    ],
+  },
+  {
+    id: "re-entry-20260203",
+    kind: "Software",
+    date: "2026.02.03",
+    name: "ORDO Return · Notion v1.0",
+    subtitle: "Re-Entry",
+    summary:
+      "After interruption, write “stop point / next step / context box” as verifiable facts—so you can return to the same judgment position via the shortest path.",
+    highlights: [
+      "Three-field record: Stop Point / Next Step / Context Box",
+      "Triggered writing only (no background tracking)",
+      "Facts that help you resume, not decisions",
+    ],
+    facts: [
+      "The core structure is fixed to three fields: Stop Point (where you stopped), Next Step (the first thing to do when you return), Context Box (a small set of links/files that restores context).",
+      "Triggered recording: writes only when you explicitly open/submit; no background tracking, and reminders are not the product foundation.",
+      "Consistent stance: never decide for you; it only keeps the facts you wrote inside your workflow so you can continue from the same position.",
+    ],
+    boundaries: [
+      "No reminders / no scoring / no forced pushes: the software does not drive you to decide; it only provides verifiable stop point / next step / materials.",
+      "Not a monitoring system: statistics and behavioral intervention are not default goals; it offers reference only when you need it.",
+      "Scope limit: this record covers the public boundary of this release, not future plans or internal implementation details.",
+    ],
+    trace: [
+      "From the Software page, enter Re-Entry and complete one record with the three fields—then read it back for verification.",
+      "Version and change facts follow Releases: what changed / which boundaries are affected / how to verify.",
+      "Issues and requests: on Support, choose Support/After-sales or Partnership, and submit a reproducible, factual description.",
+    ],
+    actions: [
+      { label: "Software →", href: "/en/software" },
+      { label: "Support →", href: "/en/support" },
+    ],
+  },
+];
+
+const firstHardwareId = releases.find((r) => r.kind.includes("Hardware"))?.id;
+const firstSoftwareId = releases.find((r) => r.kind === "Software" || r.kind.includes("Software"))?.id;
+---
+
+<Base title={title} description={description} keywords={keywords} lang="en">
+  <section class="page releases-page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">Releases</h1>
+        <p class="lead">Public, verifiable version facts for instruments (hardware) and software.</p>
+        <p class="desc">
+          Each entry has three blocks: <b>changes</b> · <b>affected boundaries</b> · <b>how to verify</b>.
+        </p>
+
+        <div class="jump">
+          <span class="label">Quick jumps:</span>
+          <a href="#log" class="pill">Release log</a>
+          {firstHardwareId && <a href={`#${firstHardwareId}`} class="pill">Hardware</a>}
+          {firstSoftwareId && <a href={`#${firstSoftwareId}`} class="pill">Software</a>}
+          <a href="#support" class="pill">Support</a>
+        </div>
+      </header>
+
+      <div class="divider"></div>
+
+      <section class="section" id="log">
+        <div class="log-head">
+          <div>
+            <h2 class="h2">Release log</h2>
+            <p class="sublead">Only verifiable items are listed here. For deeper verification, use Support.</p>
+          </div>
+
+          <div class="log-jump">
+            {firstHardwareId && <a href={`#${firstHardwareId}`} class="pill">Hardware →</a>}
+            {firstSoftwareId && <a href={`#${firstSoftwareId}`} class="pill">Software →</a>}
+            <a href="#support" class="pill">Support →</a>
+          </div>
+        </div>
+
+        <div class="release-list">
+          {releases.map((r) => (
+            <article class="card release-card" id={r.id}>
+              <header class="release-top">
+                <div class="release-meta">
+                  <span class="tag">{r.kind}</span>
+                  <span class="dot">·</span>
+                  <span class="date">{r.date}</span>
+                </div>
+                <h3 class="release-title">{r.name}</h3>
+                <div class="release-sub">{r.subtitle}</div>
+                <p class="release-summary">{r.summary}</p>
+
+                {r.highlights && (
+                  <div class="highlights">
+                    <div class="mini">Highlights</div>
+                    <div class="chips">
+                      {r.highlights.map((t) => (
+                        <span class="chip">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </header>
+
+              <div class="release-grid">
+                <section class="panel release-col">
+                  <div class="mini">Facts</div>
+                  <ul>
+                    {r.facts.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+                <section class="panel release-col">
+                  <div class="mini">Boundaries</div>
+                  <ul>
+                    {r.boundaries.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+                <section class="panel release-col">
+                  <div class="mini">Trace</div>
+                  <ul>
+                    {r.trace.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+              </div>
+
+              <div class="release-actions">
+                {r.actions.map((a) => (
+                  <a href={a.href} class="pill">{a.label}</a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section" id="support">
+        <div class="divider"></div>
+        <h2 class="h2">Support</h2>
+        <p class="sublead">For finer verification or anomaly reports, start a conversation via Support.</p>
+        <a href="/en/support" class="pill">Support →</a>
+      </section>
+    </div>
+  </section>
+
+  <style>
+    /* Releases — use the shared hero rhythm (do NOT override .hero padding), keep scan-ability. */
+
+    /* Tighten the first screen: reduce the gap between intro text, quick jumps and the next section. */
+    /* Keep the same top spacing as other top-level pages (e.g. Software). */
+    /* Keep the same top rhythm as other pages (e.g. Software) */
+    .releases-page .hero{ padding-top: 10px; padding-bottom: 24px; max-width: 104ch; }
+    .releases-page .hero .lead{ margin-bottom: 12px; }
+    .releases-page .hero .desc{ margin-top: 0; margin-bottom: 10px; }
+    .releases-page .hero .jump{ margin-top: 14px; }
+    .releases-page .divider{ margin: 28px 0 34px; }
+
+    /* IMPORTANT: do not force a fixed hero height.
+       A fixed min-height created a large empty gap and broke alignment with other pages (e.g. Products).
+       Keep the shared hero spacing so the first line sits on the same baseline across pages. */
+
+    .releases-page .desc b{ color: var(--fg0); }
+
+    .jump{
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .label{ color: rgba(220,235,240,.56); font-size: 12px; letter-spacing: 0.12em; }
+
+    .section{ margin-top: 22px; }
+
+    .log-head{
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 760px){
+      .log-head{ flex-direction: column; align-items: flex-start; }
+    }
+
+    .log-jump{ display:flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+    @media (max-width: 760px){
+      .log-jump{ justify-content: flex-start; }
+    }
+
+    .release-list{ display:flex; flex-direction: column; gap: 14px; }
+
+    .release-card{ padding: 18px; }
+    @media (max-width: 560px){ .release-card{ padding: 14px; } }
+
+    .release-meta{ display:flex; align-items:center; gap: 10px; color: rgba(220,235,240,.68); }
+    .tag{
+      display:inline-flex; align-items:center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      font-size: 12px;
+      letter-spacing: .06em;
+    }
+    .dot{ opacity: .55; }
+
+    .release-title{ margin: 10px 0 4px; font-size: 22px; line-height: 1.25; }
+    .release-sub{ color: rgba(220,235,240,.70); }
+    .release-summary{ margin: 10px 0 0; color: var(--fg1); }
+
+    .highlights{ margin-top: 12px; }
+    .chips{ display:flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip{
+      display:inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(160,255,248,.14);
+      background: rgba(32,255,242,.04);
+      color: rgba(236,246,250,.86);
+      font-size: 12px;
+    }
+
+    .release-grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 980px){ .release-grid{ grid-template-columns: 1fr; } }
+
+    .release-col{ padding: 14px; }
+    .release-col ul{ margin: 10px 0 0; padding-left: 18px; color: rgba(230,242,246,.86); line-height: 1.75; }
+    .release-col li{ margin: 0 0 8px; }
+
+    .release-actions{ margin-top: 12px; display:flex; flex-wrap: wrap; gap: 10px; }
+  </style>
+</Base>

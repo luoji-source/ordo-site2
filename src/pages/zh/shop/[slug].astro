@@ -1,0 +1,499 @@
+---
+import Base from "@/layouts/Base.astro";
+import { ORDER_EMAIL, ZH_PRODUCTS, getZhProduct } from "@/data/shop/products";
+
+export function getStaticPaths() {
+  return ZH_PRODUCTS.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const product = getZhProduct(slug);
+if (!product) {
+  return Astro.redirect("/zh/shop");
+}
+
+const mailto = (variantLabel: string) => {
+  const subject = encodeURIComponent(`订购｜${product.name} ${product.series ?? ""}`.trim());
+  const body = encodeURIComponent(
+    `请填写购买登记信息（我们将回邮确认规格/数量/交期/交付方式）。\n\n` +
+      `- 产品：${product.name}\n` +
+      `- 系列/版本：${product.series ?? ""}\n` +
+      `- 款式（风/火/雷/电）：${variantLabel || ""}\n` +
+      `- 数量：\n` +
+      `- 收货地区/城市：\n` +
+      `- 联系方式：\n` +
+      `- 备注（如需开票/定制说明）：\n`
+  );
+  return `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+};
+---
+
+<Base lang="zh" title={`${product.title} · ORDO`} description={product.description}>
+  <section class="section">
+    <div class="wrap">
+      <nav class="crumb" aria-label="面包屑">
+        <a href="/zh/shop">商城</a>
+        <span class="sep">/</span>
+        <span aria-current="page">{product.name}{product.series ? ` · ${product.series}` : ""}</span>
+      </nav>
+
+      <header class="pdp">
+        <div class="pdp__media">
+          <div class="gallery" data-gallery>
+            <div
+              class="galleryMain"
+              id="pdpMain"
+              style={`--zoom-src: url('${product.images?.[0]?.src ?? ""}')`}
+              role="button"
+              aria-label="点击切换放大查看"
+              tabindex="0"
+            >
+              <img id="pdpMainImg" src={product.images?.[0]?.src} alt={product.images?.[0]?.alt} loading="eager" />
+              <div class="zoomTip">点击放大，移动查看细节</div>
+            </div>
+
+            <div class="thumbs" aria-label="图片预览">
+              {product.images.slice(0, 6).map((img, i) => (
+                <button
+                  class={`thumb${i === 0 ? " isActive" : ""}`}
+                  type="button"
+                  aria-label={`查看图片 ${i + 1}`}
+                  data-src={img.src}
+                  data-alt={img.alt}
+                >
+                  <img src={img.src} alt={img.alt} loading="lazy" />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <aside class="pdp__buy" aria-label="购买信息">
+          <div class="badge">{product.statusBadge}</div>
+          <h1 class="h1">
+            {product.name}
+            {product.series ? <span class="muted">· {product.series}</span> : null}
+          </h1>
+          <p class="lead">{product.lead}</p>
+
+          <div class="meta">
+            <div class="kv"><span>SKU</span><span class="mono">{product.sku}</span></div>
+            <div class="kv"><span>价格</span><span class="mono">邮件确认</span></div>
+            <div class="kv"><span>购买方式</span><span>在线商城：邮件订购 / 邮件确认</span></div>
+            <div class="kv"><span>理念</span><span>借鉴众筹：节点透明（不采用众筹模式）</span></div>
+            <div class="kv"><span>核对</span><span>版本 / 批次 / 完整性 / 款式</span></div>
+          </div>
+
+          <div class="variant" aria-label="选择款式">
+            <div class="variant__label">可选款式</div>
+            <div class="variant__chips" role="radiogroup">
+              {product.variants.map((v, i) => (
+                <button
+                  class={`chipBtn${i === 0 ? " isActive" : ""}`}
+                  type="button"
+                  role="radio"
+                  aria-checked={i === 0 ? "true" : "false"}
+                  data-variant={v.label}
+                >
+                  <span>{v.label}</span>
+                  <span class="note">{v.note}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div class="cta">
+            <a class="btn" id="orderBtn" href={mailto(product.variants?.[0]?.label ?? "")}>订购</a>
+            <a class="btn ghost" href="/zh/updates">交付更新</a>
+            <a class="btn ghost" href="/zh/shop">返回商城</a>
+          </div>
+
+          <div class="fine">
+            核心能力是“滑块定位行/段落”。我们不做价格刺激；下单前把版本/批次与交付节点说清楚（借鉴众筹的透明节点理念，但不采用众筹模式）。
+          </div>
+        </aside>
+      </header>
+
+      <nav class="tabs" aria-label="详情页导航">
+        <a href="#why">为什么需要</a>
+        <a href="#how">怎么用</a>
+        <a href="#scenarios">适用场景</a>
+        <a href="#series">风火雷电</a>
+        <a href="#what">买什么</a>
+        <a href="#specs">规格口径</a>
+        <a href="#delivery">交付与售后</a>
+        <a href="#faq">FAQ</a>
+        <a href="#evidence">证据</a>
+      </nav>
+
+      <section class="block" id="why">
+        <h2 class="h2">为什么需要</h2>
+        <p class="desc">{product.whyIntro}</p>
+        <div class="grid3">
+          {product.whyCards.map((c) => (
+            <article class="card">
+              <div class="pill">{c.no}</div>
+              <h3 class="t">{c.title}</h3>
+              <p class="p">{c.desc}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="block" id="how">
+        <h2 class="h2">怎么用</h2>
+        <p class="desc">{product.usageIntro ?? "三步定位：放置 → 设定 → 复归。"}</p>
+
+        <div class="grid3">
+          {(product.usageSteps ?? []).map((s, i) => (
+            <article class="card">
+              <div class="pill">{String(i + 1).padStart(2, "0")}</div>
+              <h3 class="t">{s.title}</h3>
+              <p class="p">{s.desc}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="block" id="scenarios">
+        <h2 class="h2">适用场景</h2>
+        <p class="desc">这些场景不是“万能宣传”，而是同一能力在不同连续过程中成立：固定中断边界点，便于复归。</p>
+
+        <div class="grid2">
+          {(product.scenarios ?? []).map((s) => (
+            <article class="card scenarioCard">
+              <div class="scenarioMedia">
+                <img src={s.image.src} alt={s.image.alt} loading="lazy" />
+              </div>
+              <div class="scenarioBody">
+                <h3 class="t">{s.title}</h3>
+                <p class="p"><strong>你要解决：</strong>{s.problem}</p>
+                <p class="p" style="margin-top: 8px;"><strong>它做的事：</strong>{s.does}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="block" id="series">
+        <h2 class="h2">风火雷电的寓意</h2>
+        <p class="desc">{product.seriesIntro ?? "风火雷电是四种状态标签，你按偏好选择外观。"}</p>
+
+        <div class="grid2">
+          {(product.seriesMeanings ?? []).map((m) => (
+            <article class="card">
+              <div class="pill">{m.label}</div>
+              <h3 class="t">{m.title}</h3>
+              <p class="p">{m.desc}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="block" id="what">
+        <h2 class="h2">买什么</h2>
+        <p class="desc">对外只承诺可核对的事实：滑块定位行/段落；外观款式用于区分；版本/批次用于交付与售后追溯。</p>
+        <div class="grid2">
+          <article class="card">
+            <h3 class="t">你会得到什么</h3>
+            <ul class="ul">
+              <li>阅读定位器本体（款式：风/火/雷/电 四选一）</li>
+              <li>版本/批次信息（与邮件确认一致）</li>
+              <li>到手核对口径与售后通道</li>
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="t">它不做什么</h3>
+            <ul class="ul">
+              <li>不采集阅读行为数据</li>
+              <li>不评分、不催促、不强提醒</li>
+              <li>不替代阅读方法，只提供可回到的位置事实</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="block" id="specs">
+        <h2 class="h2">规格口径</h2>
+        <p class="desc">我们更关注“口径一致”，而不是堆叠参数。若某一批次发生变化，会在邮件确认与更新页写清楚。</p>
+
+        <div class="spec">
+          <article class="card">
+            <h3 class="t">对外公开的事实</h3>
+            <ul class="ul">
+              {product.points.map((t) => (
+                <li>{t}</li>
+              ))}
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="t">到手核对</h3>
+            <ul class="ul">
+              {product.checklist.map((t) => (
+                <li>{t}</li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="block" id="delivery">
+        <h2 class="h2">交付与售后</h2>
+        <p class="desc">{product.deliveryIntro}</p>
+
+        <div class="timeline card">
+          {product.delivery.map((s) => (
+            <div class="row">
+              <div class="l">
+                <span class="tb">{s.t}</span>
+                {s.name}
+              </div>
+              <div class="r">{s.desc}</div>
+            </div>
+          ))}
+        </div>
+
+        <div class="grid2" style="margin-top: 12px;">
+          <article class="card">
+            <h3 class="t">使用边界</h3>
+            <ul class="ul">
+              {product.boundaries.map((t) => (
+                <li>{t}</li>
+              ))}
+            </ul>
+          </article>
+          <article class="card">
+            <h3 class="t">支持通道</h3>
+            <p class="p">需要核对或售后时，请带上版本/批次信息。我们按事实处理并写入记录，便于追溯。</p>
+            <div class="cta" style="margin-top: 10px;">
+              <a class="btn ghost" href="/zh/support#contact">售后/核对支持</a>
+              <a class="btn ghost" href="/zh/updates">查看更新</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="block" id="faq">
+        <h2 class="h2">常见问题</h2>
+        <div class="faq">
+          {product.faq.map((f) => (
+            <article class="card">
+              <h3 class="q">{f.q}</h3>
+              <p class="a">{f.a}</p>
+            </article>
+          ))}
+        </div>
+
+        <div class="footerCta">
+          <a class="btn" id="orderBtn2" href={mailto(product.variants?.[0]?.label ?? "")}>订购</a>
+          <a class="btn ghost" href="/zh/shop">返回商城</a>
+        </div>
+      </section>
+
+      <section class="block" id="evidence">
+        <h2 class="h2">证据</h2>
+        <p class="desc">
+          证据页展示可核对的事实材料：材料、表面处理与可见工艺口径。这里不做“材料神话”。
+        </p>
+        <div class="cta" style="margin-top: 10px;">
+          <a class="btn ghost" href="/zh/evidence">打开证据页</a>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <script is:inline>
+    (() => {
+      // Gallery
+      const root = document.querySelector('[data-gallery]');
+      if (root) {
+        const main = root.querySelector('#pdpMain');
+        const mainImg = root.querySelector('#pdpMainImg');
+        const thumbs = Array.from(root.querySelectorAll('.thumb'));
+        if (main && mainImg) {
+          let zoomOn = false;
+
+          const setActive = (src) => {
+            thumbs.forEach((b) => {
+              b.classList.toggle('isActive', b.getAttribute('data-src') === src);
+            });
+          };
+
+          const setMain = (src, alt) => {
+            mainImg.src = src;
+            mainImg.alt = alt || '';
+            main.style.setProperty('--zoom-src', `url('${src}')`);
+            zoomOn = false;
+            main.classList.remove('isZoom');
+            main.style.backgroundImage = 'none';
+            main.style.backgroundPosition = '50% 50%';
+            setActive(src);
+          };
+
+          thumbs.forEach((btn) => {
+            btn.addEventListener('click', () => {
+              const src = btn.getAttribute('data-src');
+              const alt = btn.getAttribute('data-alt') || '';
+              if (src) setMain(src, alt);
+            });
+          });
+
+          const updateBgPos = (ev) => {
+            if (!zoomOn) return;
+            const rect = main.getBoundingClientRect();
+            const x = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+            const y = Math.max(0, Math.min(1, (ev.clientY - rect.top) / rect.height));
+            main.style.backgroundPosition = `${(x * 100).toFixed(2)}% ${(y * 100).toFixed(2)}%`;
+          };
+
+          main.addEventListener('mousemove', updateBgPos);
+          main.addEventListener('mouseenter', (ev) => updateBgPos(ev));
+          main.addEventListener('click', (ev) => {
+            zoomOn = !zoomOn;
+            if (zoomOn) {
+              main.classList.add('isZoom');
+              main.style.backgroundImage = 'var(--zoom-src)';
+              updateBgPos(ev);
+            } else {
+              main.classList.remove('isZoom');
+              main.style.backgroundImage = 'none';
+            }
+          });
+
+          setActive(mainImg.getAttribute('src') || '');
+        }
+      }
+
+      // Variants -> update mailto on CTAs
+      const chips = Array.from(document.querySelectorAll('[data-variant]'));
+      const orderBtn = document.getElementById('orderBtn');
+      const orderBtn2 = document.getElementById('orderBtn2');
+      const buildMailto = (variantLabel) => {
+        const subject = encodeURIComponent(`${`订购｜${product.name} ${product.series ?? ""}`.trim()}`);
+        const body = encodeURIComponent(
+          `请填写购买登记信息（我们将回邮确认规格/数量/交期/交付方式）。\n\n` +
+            `- 产品：${product.name}\n` +
+            `- 系列/版本：${product.series ?? ""}\n` +
+            `- 款式（风/火/雷/电）：${variantLabel || ''}\n` +
+            `- 数量：\n` +
+            `- 收货地区/城市：\n` +
+            `- 联系方式：\n` +
+            `- 备注（如需开票/定制说明）：\n`
+        );
+        return `mailto:${"orders@ordoinc.com"}?subject=${subject}&body=${body}`;
+      };
+
+      const setActiveChip = (btn) => {
+        chips.forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle('isActive', on);
+          b.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+      };
+
+      const setVariant = (label, btn) => {
+        if (btn) setActiveChip(btn);
+        const href = buildMailto(label);
+        if (orderBtn) orderBtn.setAttribute('href', href);
+        if (orderBtn2) orderBtn2.setAttribute('href', href);
+      };
+
+      chips.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const label = btn.getAttribute('data-variant') || '';
+          setVariant(label, btn);
+        });
+      });
+    })();
+  </script>
+
+  <style>
+    .section{padding:26px 0;}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 28px;}
+
+    .crumb{margin:6px 0 16px;color:rgba(220,235,240,.62);font-size:12px;}
+    .crumb a{color:rgba(220,235,240,.78);text-decoration:none;border-bottom:1px solid rgba(220,235,240,0.14);}
+    .sep{margin:0 8px;opacity:.6;}
+
+    .pdp{display:grid;grid-template-columns: .95fr 1.05fr;gap:18px;align-items:start;}
+
+    .galleryMain{aspect-ratio:16/10;max-height:380px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.2);position:relative;cursor:zoom-in;user-select:none;}
+    .galleryMain img{width:100%;height:100%;object-fit:cover;display:block;}
+    .galleryMain.isZoom{cursor:zoom-out;background-repeat:no-repeat;background-size:220%;}
+    .galleryMain.isZoom img{opacity:0;}
+    .zoomTip{position:absolute;left:10px;bottom:10px;font-size:12px;opacity:.75;padding:6px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.28);backdrop-filter: blur(6px);}
+    .thumbs{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-start;}
+    .thumb{flex:0 0 calc((100% - 5*8px)/6);max-width:calc((100% - 5*8px)/6);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.2);opacity:.82;cursor:pointer;padding:0;max-height:56px;}
+    .thumb:hover{opacity:1;}
+    .thumb.isActive{opacity:1;border-color:rgba(255,255,255,.28);}
+    .thumb img{width:100%;height:56px;aspect-ratio:16/10;object-fit:cover;display:block;}
+
+    .pdp__buy{border:1px solid rgba(255,255,255,.12);border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));backdrop-filter: blur(10px);padding:18px;position:sticky;top:84px;}
+    .badge{align-self:flex-start;font-size:12px;letter-spacing:.08em;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.22);opacity:.9;width:fit-content;}
+    
+    .muted{opacity:.78;font-weight:500;margin-left:6px;}
+    .lead{margin:10px 0 0;opacity:.88;line-height:1.7;}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;}
+    .meta{margin-top:12px;display:grid;gap:10px;}
+    .kv{display:flex;justify-content:space-between;gap:12px;color:rgba(220,235,240,.78);font-size:12px;}
+    .kv span:first-child{color:rgba(220,235,240,.55);}
+
+    .variant{margin-top:12px;}
+    .variant__label{font-size:12px;opacity:.72;margin-bottom:8px;}
+    .variant__chips{display:flex;gap:8px;flex-wrap:wrap;}
+    .chipBtn{display:inline-flex;align-items:baseline;gap:8px;padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18);cursor:pointer;color:rgba(220,235,240,.88);}
+    .chipBtn .note{font-size:12px;opacity:.68;}
+    .chipBtn.isActive{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.06);}
+    .chipBtn:hover{background:rgba(255,255,255,.06)}
+
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+    .btn:hover{background:rgba(255,255,255,.06)}
+    .btn.ghost{opacity:.85;background:transparent;border-color:rgba(255,255,255,.12);}
+    .fine{margin-top:10px;font-size:12px;opacity:.7;line-height:1.7;}
+
+    .tabs{margin:18px 0 6px;display:flex;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px solid rgba(255,255,255,.10);border-radius:16px;background:rgba(0,0,0,.12);}
+    .tabs a{font-size:13px;text-decoration:none;opacity:.8;border-bottom:1px solid transparent;padding:6px 8px;border-radius:10px;}
+    .tabs a:hover{opacity:1;background:rgba(255,255,255,.06)}
+
+    .block{padding:22px 0;}
+    .h2{font-size:20px;margin:0 0 8px;}
+    .desc{margin:0 0 14px;opacity:.82;line-height:1.7;max-width:980px;}
+
+    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+    .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+    .spec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+    /* Scenario cards: image + copy (keep "电商" layout stable) */
+    .scenarioCard{padding:0;overflow:hidden;}
+    .scenarioMedia{aspect-ratio:3/2;background:rgba(0,0,0,.18);border-bottom:1px solid rgba(255,255,255,.08);}
+    .scenarioMedia img{width:100%;height:100%;object-fit:cover;display:block;}
+    .scenarioBody{padding:14px;}
+    .pill{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18);font-size:12px;opacity:.9}
+    .t{margin:10px 0 6px;font-size:16px;}
+    .p{margin:0;opacity:.82;line-height:1.65;font-size:13px;}
+    .ul{margin:0;padding-left:18px;opacity:.82;line-height:1.7;}
+
+    .timeline{padding:4px 12px;}
+    .row{display:grid;grid-template-columns:160px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+    .row:last-child{border-bottom:none;}
+    .l{display:flex;gap:10px;align-items:center;font-size:13px;}
+    .tb{display:inline-flex;align-items:center;justify-content:center;width:38px;height:24px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.18);font-size:12px;opacity:.9}
+    .r{opacity:.82;line-height:1.65;font-size:13px;}
+
+    .faq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+    .q{margin:0 0 6px;font-size:15px;}
+    .a{margin:0;opacity:.82;line-height:1.7;font-size:13px;}
+    .footerCta{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+
+    @media (max-width: 980px){
+      .pdp{grid-template-columns:1fr;}
+      .grid3{grid-template-columns:repeat(2,minmax(0,1fr));}
+      .faq{grid-template-columns:1fr;}
+      .spec{grid-template-columns:1fr;}
+    }
+    @media (max-width: 560px){
+      .grid3{grid-template-columns:1fr;}
+      .grid2{grid-template-columns:1fr;}
+      .row{grid-template-columns:1fr;}
+    }
+  </style>
+</Base>

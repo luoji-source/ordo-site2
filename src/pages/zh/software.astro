@@ -1,0 +1,355 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const pageTitle = '软件';
+const pageDesc = 'ORDO Return：在你已经使用的工具里，让“回到哪里”可核对。';
+
+const downloads = {
+  notion: '/downloads/ordo-return-notion-v1.0.zip',
+  browser: '/downloads/ordo-return-browser-v1.0.zip',
+  vscode: '/downloads/ordo-return-vscode-v1.0.zip',
+  figma: '/downloads/ordo-return-figma-v1.0.zip',
+} as const;
+---
+
+<Base title={pageTitle} description={pageDesc} lang="zh">
+  <section class="page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">软件</h1>
+        <p class="lead">
+          <strong>ORDO Return</strong> 是一组“回到这里”的小工具：把位置与下一步留成可核对事实，便于中断、交接与继续，帮你 “中断后 5 秒回到工作现场” 。
+        </p>
+
+        <nav class="heroNav" aria-label="页面导航">
+          <a class="pill" href="#releases">发布</a>
+          <a class="pill" href="/zh/releases">发布记录</a>
+          <a class="pill" href="/zh/support">支持与联系</a>
+        </nav>
+
+        <p class="note">
+          本页列出已发布的 v1.0 版本与下载链接。后续会持续发布更高阶版本：更强的多点位管理、协作交接、版本核对等（以“可核对”为准）。
+        </p>
+      </header>
+
+      <hr class="divider" />
+
+      <section id="releases" class="section">
+        <div class="sectionHead">
+          <h2>发布</h2>
+        </div>
+
+        <div class="grid">
+          <article id="notion" class="card">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="metaLine">ORDO Return · Notion</span>
+                <span class="version">v1.0</span>
+              </div>
+              <span class="tag">RELEASE</span>
+            </div>
+            <h3>ORDO Return · Notion v1.0</h3>
+            <p class="desc">在 Notion 里留下一条可核对的“我到哪了”，并把下一步写成事实记录。</p>
+            <ul class="bullets">
+              <li>位置点：当前段落 / 页内位置的可核对标记</li>
+              <li>下一步：把“要做什么”写成可交接的清单</li>
+              <li>不追踪：不自动上报，不替你做决定</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.notion} download data-dl-link>下载</a>
+              <span class="pill dlCount" data-dl-counter={downloads.notion} data-lang="zh"></span>
+              <a class="link" href="/zh/releases">查看发布记录 →</a>
+            </div>
+          </article>
+
+          <article id="browser" class="card">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="metaLine">ORDO Return · Browser</span>
+                <span class="version">v1.0</span>
+              </div>
+              <span class="tag">RELEASE</span>
+            </div>
+            <h3>ORDO Return · Browser v1.0</h3>
+            <p class="desc">在网页阅读里记录停点：回到桌面后，你能复核并继续。</p>
+            <ul class="bullets">
+              <li>页面停点：记录你“停在了哪里”</li>
+              <li>可复核：用链接与时间戳做基本对照</li>
+              <li>最小干预：只做标记，不做推荐与替代</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.browser} download data-dl-link>下载</a>
+              <span class="pill dlCount" data-dl-counter={downloads.browser} data-lang="zh"></span>
+              <a class="link" href="/zh/support">获取支持 →</a>
+            </div>
+          </article>
+
+          <article id="vscode" class="card">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="metaLine">ORDO Return · VS Code</span>
+                <span class="version">v1.0</span>
+              </div>
+              <span class="tag">RELEASE</span>
+            </div>
+            <h3>ORDO Return · VS Code v1.0</h3>
+            <p class="desc">在代码与文档之间交接时，用可核对的位置点与下一步，把上下文留住。</p>
+            <ul class="bullets">
+              <li>文件/行号：把“停点”固定为可复现坐标</li>
+              <li>下一步清单：把动作写清楚，便于交接</li>
+              <li>边界清晰：不收集项目内容，不做远程同步</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.vscode} download data-dl-link>下载</a>
+              <span class="pill dlCount" data-dl-counter={downloads.vscode} data-lang="zh"></span>
+              <a class="link" href="/zh/releases">查看变更 →</a>
+            </div>
+          </article>
+
+          <article id="figma" class="card">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="metaLine">ORDO Return · Figma</span>
+                <span class="version">v1.0</span>
+              </div>
+              <span class="tag">RELEASE</span>
+            </div>
+            <h3>ORDO Return · Figma v1.0</h3>
+            <p class="desc">把设计“停点”和下一步固定下来：谁接手，都能核对并继续。</p>
+            <ul class="bullets">
+              <li>画板/组件：用显式标记对齐讨论对象</li>
+              <li>下一步：把决策与动作拆成可核对条目</li>
+              <li>可验证：以文件名/链接/标记做对照</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.figma} download data-dl-link>下载</a>
+              <span class="pill dlCount" data-dl-counter={downloads.figma} data-lang="zh"></span>
+              <a class="link" href="/zh/support">联系支持 →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<script type="module">
+  const INITIAL = 1000;
+  const lang = 'zh-Hans';
+  const fmt = new Intl.NumberFormat(lang);
+  const label = (n) => `${fmt.format(n)} 次`;
+
+  const getKey = (href) => `ordo_dl_${href}`;
+
+  function ensureCount(href) {
+    const k = getKey(href);
+    const existing = Number(localStorage.getItem(k));
+    if (Number.isFinite(existing) && existing > 0) return existing;
+    localStorage.setItem(k, String(INITIAL));
+    return INITIAL;
+  }
+
+  function setCounter(href, value) {
+    document.querySelectorAll(`[data-dl-counter="${CSS.escape(href)}"]`).forEach((el) => {
+      el.textContent = label(value);
+    });
+  }
+
+  // Init all counters
+  document.querySelectorAll('[data-dl-counter]').forEach((el) => {
+    const href = el.getAttribute('data-dl-counter');
+    if (!href) return;
+    const count = ensureCount(href);
+    setCounter(href, count);
+  });
+
+  // Increment on click
+  document.querySelectorAll('a[data-dl-link]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const href = a.getAttribute('href');
+      if (!href) return;
+      const k = getKey(href);
+      const current = ensureCount(href);
+      const next = current + 1;
+      localStorage.setItem(k, String(next));
+      setCounter(href, next);
+    });
+  });
+</script>
+
+<style>
+  .hero {
+    margin: 0 0 20px;
+    padding-top: 10px;
+  }
+.lead {
+    margin: 18px 0 0;
+    max-width: 62ch;
+    font-size: 18px;
+    line-height: 1.7;
+    color: rgba(235, 245, 255, 0.88);
+  }
+
+  .heroNav {
+    margin: 20px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(120, 200, 215, 0.22);
+    background: rgba(6, 12, 16, 0.38);
+    color: rgba(230, 245, 255, 0.86);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1;
+    transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+  }
+
+  .pill:hover {
+    transform: translateY(-1px);
+    border-color: rgba(120, 200, 215, 0.36);
+    background: rgba(6, 12, 16, 0.52);
+  }
+
+  .note {
+    margin: 18px 0 0;
+    max-width: 80ch;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(220, 240, 255, 0.68);
+  }
+
+  .sectionHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  .sectionHead p {
+    margin: 0;
+    color: rgba(220, 240, 255, 0.7);
+    font-size: 14px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .cardTop {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .metaLine {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(220, 240, 255, 0.62);
+  }
+
+  .version {
+    font-size: 12px;
+    color: rgba(220, 240, 255, 0.78);
+  }
+h3 {
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+  }
+
+  .desc {
+    margin: 10px 0 0;
+    color: rgba(235, 245, 255, 0.84);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .bullets {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+  }
+
+  .bullets li {
+    position: relative;
+    padding-left: 14px;
+    color: rgba(220, 240, 255, 0.74);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: rgba(120, 200, 215, 0.55);
+  }
+
+  .actions {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .dlCount {
+    padding: 8px 10px;
+    font-size: 12px;
+    opacity: 0.78;
+  }
+.link {
+    margin-left: auto;
+    color: rgba(120, 220, 235, 0.95);
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sectionHead {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 540px) {
+
+.lead {
+      font-size: 16px;
+    }
+  }</style>

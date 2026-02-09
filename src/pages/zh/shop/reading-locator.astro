@@ -2,317 +2,383 @@
 import Base from "@/layouts/Base.astro";
 ---
 
-<Base lang="zh" title="阅读定位器 风火雷电系列 · ORDO 商店">
+<Base lang="zh" title="阅读定位器 · ORDO 商城">
   <section class="page">
     <div class="container">
       <nav class="crumb" aria-label="面包屑">
-        <a href="/zh/shop">商店</a>
+        <a href="/zh/shop">商城</a>
         <span class="sep">/</span>
-        <span aria-current="page">阅读定位器 · 风火雷电系列</span>
+        <span>阅读定位器</span>
       </nav>
 
-      <header class="p-hero">
-        <div class="left">
-          <div class="tag">最新推荐</div>
-          <h1 class="h1">阅读定位器 · 风火雷电系列</h1>
-          <p class="lead">
-            这不是“更强的工具”，而是一件让你在阅读中<b>回到原位置</b>的器具：你读到哪、从哪里继续、何时暂停与回到原位。
-            系列提供四个外观款式：风 / 火 / 雷 / 电。
+      <main class="wrap">
+        <div class="p-hero">
+          <div>
+            <div class="p-kicker">实体器具 · 阅读</div>
+            <h1 class="h1">阅读定位器 · 风火雷电系列</h1>
+            <p class="subtitle">ORDO Mark v1.0 四枚标准套装</p>
+            <p class="lead">
+              普通书签只告诉你“这一页”。但真正让人重建上下文的，是：这一页的哪一段、哪一行、读到哪里。
+              <br />
+              阅读定位器的答案很直接：把“位置”做成一个可以被手指重复确认的结构。
+            </p>
+
+            <div class="highlights">
+              <div class="kv"><span>你会用在</span><span>读书被打断：下次打开，立刻回到同一位置</span></div>
+              <div class="kv"><span>你会用在</span><span>长文/资料反复查阅：用刻度把“进度”标出来</span></div>
+              <div class="kv"><span>你会用在</span><span>学习/训练：把“当前段落”变成可复现的位置</span></div>
+            </div>
+
+            <div class="meta">
+              快速跳转：
+              <a href="#problem">问题</a><span class="dot">•</span>
+              <a href="#how">工作方式</a><span class="dot">•</span>
+              <a href="#specs">规格</a><span class="dot">•</span>
+              <a href="#layers">结构</a><span class="dot">•</span>
+              <a href="#printing">工艺与耐用</a><span class="dot">•</span>
+              <a href="#variants">风火雷电</a><span class="dot">•</span>
+              <a href="#order">订购</a>
+            </div>
+          </div>
+
+          <div class="buybox">
+            <div class="badge">四枚套装：风 · 火 · 雷 · 电</div>
+            <div class="price">¥ 199 <span class="unit">/套</span></div>
+            <div class="small">
+              当前阶段采用邮件订购 / 批次交付。
+              规格、材料、测试与版本信息公开透明，便于核对与追溯。
+            </div>
+            <div class="actions">
+              <a class="btn" href="mailto:order@ordo.ninja?subject=阅读定位器订购">订购</a>
+              <a class="btn2" href="/zh/support">支持与联系</a>
+            </div>
+            <div class="foot">
+              <div><strong>外形</strong> 150×32mm，R6 圆角</div>
+              <div><strong>核心</strong> 滑道 72mm + 刻度 0–100</div>
+              <div><strong>结构</strong> 五层复合（含磁性材料层）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery" aria-label="产品图片（占位）">
+          <figure class="g-item">
+            <div class="g-media">
+              <img src="/images/shop/reading-locator/detail-placeholder-1100x825.png" alt="阅读定位器四款（风火雷电）" />
+              <span class="img-dim">1100×825</span>
+            </div>
+            <figcaption>首发四款：风 / 火 / 雷 / 电（同规格，不同镂空图案与视觉表达）</figcaption>
+          </figure>
+          <figure class="g-item">
+            <div class="g-media">
+              <img src="/images/shop/reading-locator/detail-placeholder-960x720.png" alt="滑道与刻度细节" />
+              <span class="img-dim">960×720</span>
+            </div>
+            <figcaption>滑道 + 刻度：你看到的不是装饰，而是一套可复用的位置语言</figcaption>
+          </figure>
+          <figure class="g-item">
+            <div class="g-media">
+              <img src="/images/shop/reading-locator/scene-reading-960x640.png" alt="夹在书页上的阅读定位器" />
+              <span class="img-dim">960×640</span>
+            </div>
+            <figcaption>夹上 → 滑到当前行附近 → 放下。下次打开，直接接上</figcaption>
+          </figure>
+          <figure class="g-item">
+            <div class="g-media">
+              <img src="/images/shop/reading-locator/scene-workdocs-960x640.png" alt="多项目/多文档区分" />
+              <span class="img-dim">960×640</span>
+            </div>
+            <figcaption>四枚套装便于在多本书 / 多项目之间快速区分</figcaption>
+          </figure>
+        </div>
+
+
+        <div class="divider"></div>
+
+        <section class="section" id="problem">
+          <div class="pill">问题</div>
+          <h2>它解决什么问题</h2>
+          <p class="sublead">
+            这不是“记住你读到哪”，而是让你<strong>无需回忆</strong>也能快速重建上下文。
           </p>
 
-          <div class="highlights">
-            <div class="hl"><span class="k">交付</span><span class="v">在售 / 小批量批次</span></div>
-            <div class="hl"><span class="k">下单</span><span class="v">邮件确认（非众筹）</span></div>
-            <div class="hl"><span class="k">核对</span><span class="v">版本 / 批次 / 完整性</span></div>
+          <div class="grid2">
+            <article class="card">
+              <h3 class="h3">普通书签的不足</h3>
+              <p>
+                普通书签只告诉你“这一页”。但当你被打断后，真正让人重建上下文的，是：这一页的哪一段、哪一行、读到哪里。
+                仅有页码往往不够，你仍需要扫视、回想、重新对齐。
+              </p>
+            </article>
+
+            <article class="card">
+              <h3 class="h3">阅读定位器的做法</h3>
+              <p>
+                把“位置”做成一个可以被手指重复确认的结构：滑块停在哪里，就代表你当前行附近的进度。
+                你不需要记住一切，只需要把位置留在器具上。
+              </p>
+              <p class="small" style="margin-top:10px;">
+                关键不是“记录”，而是“标定”——用结构把当前位置固定下来。
+              </p>
+            </article>
           </div>
-        </div>
+        </section>
 
-        <aside class="buybox" aria-label="购买信息">
-          <div class="buy-top">
-            <div class="badge">在售 / 预售并行</div>
-            <div class="mono">SKU：RL-FHLD</div>
+        <section class="section" id="how">
+          <div class="pill">工作方式</div>
+          <h2>它怎么工作（3 秒理解）</h2>
+          <p class="sublead">夹上 → 滑到当前行附近 → 放下。下次回来：打开书，看到滑块位置，就能立即接上。</p>
+
+          <div class="grid2">
+            <article class="card">
+              <h3 class="h3">3 步上手</h3>
+              <div class="timeline" style="margin-top:12px;">
+                <div class="row">
+                  <div class="k">01</div>
+                  <div class="v"><strong>夹上</strong>：夹在页面边缘，保持稳定夹持</div>
+                </div>
+                <div class="row">
+                  <div class="k">02</div>
+                  <div class="v"><strong>滑到附近</strong>：把滑块滑到当前行/段落附近</div>
+                </div>
+                <div class="row">
+                  <div class="k">03</div>
+                  <div class="v"><strong>放下</strong>：合上书/文件，下次打开直接对齐</div>
+                </div>
+              </div>
+            </article>
+
+            <article class="card">
+              <h3 class="h3">不是“记录”，而是“标定”</h3>
+              <p>
+                阅读定位器采用“滑道 + 刻度”的位置表达：
+                你看到的滑块位置与刻度，是一套可复用的位置语言。
+              </p>
+              <ul class="bullets" style="margin-top:12px;">
+                <li>用结构表达位置，避免仅靠记忆或回想</li>
+                <li>滑块可被手指触摸确认，回到同一判断点</li>
+                <li>位置是事实：你能看到、能对齐、能复现</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="specs">
+          <div class="pill">规格</div>
+          <h2>关键规格（工程信息，公开透明）</h2>
+
+          <div class="timeline" style="margin-top:14px;">
+            <div class="row">
+              <div class="k">成品外形</div>
+              <div class="v">150（高）× 32（宽）mm；外轮廓圆角 R6.0</div>
+            </div>
+            <div class="row">
+              <div class="k">中央滑道</div>
+              <div class="v">长 72 mm；宽 4.1 mm；上下端 R2.05 圆弧过渡</div>
+            </div>
+            <div class="row">
+              <div class="k">刻度/数字</div>
+              <div class="v">0/20/40/60/80/100；刻度线宽 0.20 mm；与滑道边设计距离 0.5 mm</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="layers">
+          <div class="pill">结构</div>
+          <h2>材质与结构（为什么它“像器具”）</h2>
+          <p class="sublead">阅读定位器采用五层复合结构：触感、刚性、滑动反馈与耐用性，来自结构而非“装饰”。</p>
+
+          <div class="grid2">
+            <article class="card">
+              <h3 class="h3">这不是“书签”，它是阅读定位器</h3>
+              <p>
+                阅读定位器用于在阅读这类连续活动中，把“当前位置”变成一个可以重复确认的结构位置。
+                你不需要记住一切，只需要把位置留在器具上。
+              </p>
+              <p class="small" style="margin-top:10px;">
+                结构核心：<strong>滑道 + 刻度</strong>（把位置可视化）。
+              </p>
+            </article>
+
+            <article class="card">
+              <h3 class="h3">五层结构</h3>
+              <ul class="layerlist" style="margin-top:12px;">
+                <li><strong>L1</strong>：3K 平纹碳纤维（3K 平纹 / 哑光树脂面）</li>
+                <li><strong>L2</strong>：黑色磨砂 PET（0.20–0.35）</li>
+                <li><strong>L3</strong>：背景色层（0.15–0.20）</li>
+                <li><strong>L4</strong>：磁性材料层</li>
+                <li><strong>L5</strong>：碳纤维背板（3K 平纹 / 哑光树脂面）</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="printing">
+          <div class="pill">工艺与耐用</div>
+          <h2>印刷与耐用（你看得到的那部分，我们也按标准做）</h2>
+
+          <div class="grid2">
+            <article class="card">
+              <h3 class="h3">工艺链路</h3>
+              <p class="sublead" style="margin-top:10px;">
+                CNC 精加工 + 层压复合 + UV 平板直喷（白墨/红色/可选清漆）+ 边缘精修抛光
+              </p>
+
+              <h3 class="h3" style="margin-top:16px;">抽检/测试（示例）</h3>
+              <ul class="bullets" style="margin-top:10px;">
+                <li>百格 + 胶带附着力</li>
+                <li>酒精擦拭 20 次</li>
+                <li>耐磨擦 50 次</li>
+              </ul>
+              <p class="small" style="margin-top:10px;">我们把“工程交付”写进流程：打样阶段 100% 外观 + 尺寸抽检，并保留记录用于追溯。</p>
+            </article>
+
+            <article class="card">
+              <h3 class="h3">风险与说明</h3>
+              <ul class="bullets" style="margin-top:12px;">
+                <li>原材料批次差异可能导致纹理略有不同</li>
+                <li>量产初期部分工序需要参数微调</li>
+                <li>物流因素可能导致个别地区延后</li>
+                <li>我们会在项目更新中说明，并坚持质量优先，不为赶时间降低品质</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="care">
+          <h2>使用与保养（简短但够用）</h2>
+          <div class="grid2" style="margin-top:14px;">
+            <article class="card">
+              <h3 class="h3">使用</h3>
+              <ul class="bullets" style="margin-top:10px;">
+                <li>建议夹在纸张厚度适中的页面边缘</li>
+                <li>滑块按需滑到当前位置附近（行/段落）</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3 class="h3">保养</h3>
+              <ul class="bullets" style="margin-top:10px;">
+                <li>避免与钥匙等硬物长期摩擦（防刮）</li>
+                <li>如需清洁，可用干净软布轻擦</li>
+                <li>避免强溶剂长时间浸润（量产测试以酒精擦拭作为耐受基准）</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="variants">
+          <h2>为什么有「风·火·雷·电」</h2>
+          <p class="sublead">
+            它们不是世界观，也不是玄学设定。
+            它们是阅读定位器首发的四个款式代号 / 四种状态标签：你选择的不只是外观，而是当下你想进入的阅读状态。
+          </p>
+
+          
+          <div class="variants-row" style="margin-top:14px;" aria-label="四款代号与状态标签">
+            <span class="v-item v-wind">风｜冷静 · 流动</span>
+            <span class="v-item v-fire">火｜能量 · 行动</span>
+            <span class="v-item v-thunder">雷｜突破 · 节律</span>
+            <span class="v-item v-electric">电｜专注 · 速度</span>
           </div>
 
-          <div class="price">价格：<span class="mono">邮件确认</span></div>
-          <div class="small">我们不在页面上做“价格刺激”。下单前先把交付批次与节点说清楚。</div>
+          <p class="small style="margin-top:12px;">
+            四枚标准套装：风 · 火 · 雷 · 电，一套完整表达。规格与材料一致，差异在于上部镂空图案与视觉表达；作为套装时，便于你在多本书/多项目之间快速区分。
+          </p>
+        </section>
 
-          <div class="buy-grid">
-            <div class="kv"><span>可选款式</span><span class="mono">风 / 火 / 雷 / 电</span></div>
-            <div class="kv"><span>发货方式</span><span>现货或批次交付</span></div>
-            <div class="kv"><span>发票</span><span>个人/组织均可</span></div>
-            <div class="kv"><span>售后</span><span>核对事实后处理</span></div>
+        <section class="section" id="order">
+          <h2>订购与支持</h2>
+          <p class="sublead">当前采用邮件订购。我们会在确认中告知：版本/批次、交付时间与可核对信息（规格/材料/测试摘要）。</p>
+          <div class="footer-cta">
+            <a class="btn" href="mailto:order@ordo.ninja?subject=阅读定位器订购">订购</a>
+            <a class="btn2" href="/zh/support">支持与联系</a>
+            <a class="btn2" href="/zh/shop">返回商城</a>
           </div>
-
-          <a class="btn full" href="mailto:sales@ordo.example?subject=ORDO%20%E4%B8%8B%E5%8D%95%E7%A1%AE%E8%AE%A4%EF%BD%9C%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%EF%BC%88%E8%AF%B7%E5%9B%9E%E5%A4%8D%E7%A1%AE%E8%AE%A4%EF%BC%89&body=%E4%BD%A0%E5%A5%BD%EF%BC%8CORDO%20%E5%9B%A2%E9%98%9F%EF%BC%9A%0A%0A%E6%88%91%E5%B7%B2%E9%98%85%E8%AF%BB%E4%BA%A7%E5%93%81%E8%AF%A6%E6%83%85%E9%A1%B5%EF%BC%8C%E5%B9%B6%E5%B8%8C%E6%9C%9B%E4%B8%8B%E5%8D%95%EF%BC%9A%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%0A%0A%E9%80%89%E6%8B%A9%E6%AC%BE%E5%BC%8F%EF%BC%88%E9%A3%8E/%E7%81%AB/%E9%9B%B7/%E7%94%B5%EF%BC%89%EF%BC%9A____%0A%E6%95%B0%E9%87%8F%EF%BC%9A____%0A%0A%E4%BA%A4%E4%BB%98%E5%81%8F%E5%A5%BD%EF%BC%9A%0A-%20%E5%9C%A8%E5%94%AE%E7%8E%B0%E8%B4%A7%EF%BC%88%E5%A6%82%E6%9C%89%EF%BC%89%EF%BC%9A%E6%98%AF%20/%20%E5%90%A6%0A-%20%E5%8F%AF%E6%8E%A5%E5%8F%97%E6%89%B9%E6%AC%A1%E4%BA%A4%E4%BB%98%EF%BC%9A%E6%98%AF%20/%20%E5%90%A6%0A-%20%E6%9C%9F%E6%9C%9B%E6%94%B6%E8%B4%A7%E6%97%B6%E9%97%B4%EF%BC%9A____%0A%0A%E6%94%B6%E8%B4%A7%E4%BF%A1%E6%81%AF%EF%BC%9A%0A-%20%E6%94%B6%E4%BB%B6%E4%BA%BA%EF%BC%9A____%0A-%20%E7%94%B5%E8%AF%9D%EF%BC%9A____%0A-%20%E5%9C%B0%E5%9D%80%EF%BC%9A____%0A%0A%E5%BC%80%E7%A5%A8%E4%BF%A1%E6%81%AF%EF%BC%88%E5%A6%82%E9%9C%80%EF%BC%89%EF%BC%9A%0A-%20%E6%8A%AC%E5%A4%B4%EF%BC%9A____%0A-%20%E7%A8%8E%E5%8F%B7%EF%BC%9A____%0A-%20%E9%82%AE%E7%AE%B1%EF%BC%9A____%0A%0A%E5%A4%87%E6%B3%A8%EF%BC%9A____%0A%0A%E8%AF%B7%E5%9B%9E%E5%A4%8D%E7%A1%AE%E8%AE%A4%EF%BC%9A%E4%BB%B7%E6%A0%BC%E3%80%81%E5%8F%AF%E9%80%89%E6%89%B9%E6%AC%A1%E3%80%81%E9%A2%84%E8%AE%A1%E5%8F%91%E8%B4%A7%E8%8A%82%E7%82%B9%E3%80%81%E5%94%AE%E5%90%8E%E6%A0%B8%E5%AF%B9%E6%96%B9%E5%BC%8F%E3%80%82%E8%B0%A2%E8%B0%A2%EF%BC%81%0A">邮件确认下单</a>
-          <a class="btn ghost full" href="/zh/updates">查看交付更新</a>
-
-          <div class="foot">
-            <div class="fitem"><span class="dot"></span> 这不是众筹；我们借鉴的是“透明节点”的理念</div>
-            <div class="fitem"><span class="dot"></span> 你收到的将带版本/批次口径，便于核对与追溯</div>
-          </div>
-        </aside>
-      </header>
-
-      <section class="gallery">
-        <figure class="gcard">
-          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27700%27%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%230b1618%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23173238%27/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%27r%27%20cx%3D%2730%25%27%20cy%3D%2710%25%27%20r%3D%2790%25%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%233a7c8a%27%20stop-opacity%3D%270.55%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%230b1618%27%20stop-opacity%3D%270%27/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23r%29%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2770%27%20y%3D%27210%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%27120%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.92%29%27%20font-weight%3D%27800%27%3E%E9%A3%8E%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27295%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%2734%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.70%29%27%3E%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%C2%B7%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27620%27%20font-family%3D%27ui-monospace%2C%20SFMono-Regular%27%20font-size%3D%2722%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.55%29%27%3EORDO%20%C2%B7%20%E8%A7%86%E8%A7%89%E5%8D%A0%E4%BD%8D%E5%9B%BE%EF%BC%88%E5%8F%AF%E6%9B%BF%E6%8D%A2%E4%B8%BA%E7%9C%9F%E5%AE%9E%E4%BA%A7%E5%93%81%E5%9B%BE%EF%BC%89%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="风款（占位图）" />
-          <figcaption>风 · 轻与静</figcaption>
-        </figure>
-        <figure class="gcard">
-          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27700%27%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%230b1618%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23173238%27/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%27r%27%20cx%3D%2730%25%27%20cy%3D%2710%25%27%20r%3D%2790%25%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%233a7c8a%27%20stop-opacity%3D%270.55%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%230b1618%27%20stop-opacity%3D%270%27/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23r%29%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2770%27%20y%3D%27210%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%27120%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.92%29%27%20font-weight%3D%27800%27%3E%E7%81%AB%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27295%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%2734%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.70%29%27%3E%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%C2%B7%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27620%27%20font-family%3D%27ui-monospace%2C%20SFMono-Regular%27%20font-size%3D%2722%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.55%29%27%3EORDO%20%C2%B7%20%E8%A7%86%E8%A7%89%E5%8D%A0%E4%BD%8D%E5%9B%BE%EF%BC%88%E5%8F%AF%E6%9B%BF%E6%8D%A2%E4%B8%BA%E7%9C%9F%E5%AE%9E%E4%BA%A7%E5%93%81%E5%9B%BE%EF%BC%89%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="火款（占位图）" />
-          <figcaption>火 · 温与定</figcaption>
-        </figure>
-        <figure class="gcard">
-          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27700%27%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%230b1618%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23173238%27/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%27r%27%20cx%3D%2730%25%27%20cy%3D%2710%25%27%20r%3D%2790%25%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%233a7c8a%27%20stop-opacity%3D%270.55%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%230b1618%27%20stop-opacity%3D%270%27/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23r%29%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2770%27%20y%3D%27210%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%27120%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.92%29%27%20font-weight%3D%27800%27%3E%E9%9B%B7%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27295%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%2734%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.70%29%27%3E%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%C2%B7%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27620%27%20font-family%3D%27ui-monospace%2C%20SFMono-Regular%27%20font-size%3D%2722%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.55%29%27%3EORDO%20%C2%B7%20%E8%A7%86%E8%A7%89%E5%8D%A0%E4%BD%8D%E5%9B%BE%EF%BC%88%E5%8F%AF%E6%9B%BF%E6%8D%A2%E4%B8%BA%E7%9C%9F%E5%AE%9E%E4%BA%A7%E5%93%81%E5%9B%BE%EF%BC%89%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="雷款（占位图）" />
-          <figcaption>雷 · 清与断</figcaption>
-        </figure>
-        <figure class="gcard">
-          <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271200%27%20height%3D%27700%27%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%230b1618%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23173238%27/%3E%0A%20%20%20%20%20%20%3C/linearGradient%3E%0A%20%20%20%20%20%20%3CradialGradient%20id%3D%27r%27%20cx%3D%2730%25%27%20cy%3D%2710%25%27%20r%3D%2790%25%27%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%270%27%20stop-color%3D%27%233a7c8a%27%20stop-opacity%3D%270.55%27/%3E%0A%20%20%20%20%20%20%20%20%3Cstop%20offset%3D%271%27%20stop-color%3D%27%230b1618%27%20stop-opacity%3D%270%27/%3E%0A%20%20%20%20%20%20%3C/radialGradient%3E%0A%20%20%20%20%3C/defs%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23g%29%27/%3E%0A%20%20%20%20%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20fill%3D%27url%28%23r%29%27/%3E%0A%20%20%20%20%3Ctext%20x%3D%2770%27%20y%3D%27210%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%27120%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.92%29%27%20font-weight%3D%27800%27%3E%E7%94%B5%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27295%27%20font-family%3D%27ui-sans-serif%2C%20system-ui%27%20font-size%3D%2734%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.70%29%27%3E%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%C2%B7%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%3C/text%3E%0A%20%20%20%20%3Ctext%20x%3D%2774%27%20y%3D%27620%27%20font-family%3D%27ui-monospace%2C%20SFMono-Regular%27%20font-size%3D%2722%27%20fill%3D%27rgba%28220%2C235%2C240%2C0.55%29%27%3EORDO%20%C2%B7%20%E8%A7%86%E8%A7%89%E5%8D%A0%E4%BD%8D%E5%9B%BE%EF%BC%88%E5%8F%AF%E6%9B%BF%E6%8D%A2%E4%B8%BA%E7%9C%9F%E5%AE%9E%E4%BA%A7%E5%93%81%E5%9B%BE%EF%BC%89%3C/text%3E%0A%20%20%20%20%3C/svg%3E" alt="电款（占位图）" />
-          <figcaption>电 · 明与快</figcaption>
-        </figure>
-      </section>
-
-      <div class="divider" aria-hidden="true"></div>
-
-      <section class="section" id="why">
-        <h2>它解决什么</h2>
-        <p class="sublead">
-          阅读定位器不替你做判断。它只把“你在书里的位置”变成可核对事实，减少丢失、反复、回读的成本。
-        </p>
-
-        <div class="grid3">
-          <article class="card">
-            <div class="pill">01</div>
-            <h3 class="t">回到原位</h3>
-            <p class="p">当你被打断、停读、跨天继续时，你需要的不是提醒，而是一个可核对的位置事实。</p>
-          </article>
-          <article class="card">
-            <div class="pill">02</div>
-            <h3 class="t">减少反复确认</h3>
-            <p class="p">你不再需要“我读到哪了”的心理消耗——位置在器具上。</p>
-          </article>
-          <article class="card">
-            <div class="pill">03</div>
-            <h3 class="t">让交付可追溯</h3>
-            <p class="p">版本与批次用于核对与售后：发生变化时你能回到同一事实底座。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="timeline">
-        <h2>交付节点（借鉴众筹理念，但不是众筹）</h2>
-        <p class="sublead">
-          我们借鉴的是“节点透明”：你在下单前就能知道交付会经过什么，若节点变化，原因与影响会在更新页公开。
-        </p>
-
-        <div class="timeline card">
-          <div class="row">
-            <div class="l"><span class="tb">T0</span>邮件确认</div>
-            <div class="r">确认：款式、数量、价格、批次与预计发货窗口。</div>
-          </div>
-          <div class="row">
-            <div class="l"><span class="tb">T1</span>备货/生产</div>
-            <div class="r">按批次：生成追溯信息（版本/批次）。</div>
-          </div>
-          <div class="row">
-            <div class="l"><span class="tb">T2</span>质检与打包</div>
-            <div class="r">形成到手核对清单；缺陷以事实核对后处理。</div>
-          </div>
-          <div class="row">
-            <div class="l"><span class="tb">T3</span>发货/交付</div>
-            <div class="r">提供物流与收货核对口径；必要时提供组织交付清单。</div>
-          </div>
-          <div class="row">
-            <div class="l"><span class="tb">T4</span>售后窗口</div>
-            <div class="r">修复/替换按事实处理，并写入记录，便于追溯。</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="verify">
-        <h2>到手核对与边界</h2>
-        <div class="grid2">
-          <article class="card">
-            <h3 class="t">到手核对清单</h3>
-            <ul class="ul">
-              <li>版本号 / 批次（与邮件确认一致）</li>
-              <li>完整性（配件/包装/说明）</li>
-              <li>外观款式（风/火/雷/电）</li>
-            </ul>
-          </article>
-          <article class="card">
-            <h3 class="t">使用边界（对外口径）</h3>
-            <ul class="ul">
-              <li>它不采集行为数据、不评分、不强提醒</li>
-              <li>它不替代阅读方法，只固定“位置事实”</li>
-              <li>若你需要更细节说明，请走支持页核对通道</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="faq">
-        <h2>常见问题</h2>
-        <div class="faq">
-          <article class="card">
-            <h3 class="q">这是众筹吗？</h3>
-            <p class="a">不是。我们借鉴的是“透明节点”的理念：下单前把交付批次与节点说清楚；节点变化公开原因与影响。</p>
-          </article>
-          <article class="card">
-            <h3 class="q">为什么不直接在线支付？</h3>
-            <p class="a">当前阶段优先保证交付与追溯口径一致。邮件确认能把版本/批次/节点写清楚，避免误购与误解。</p>
-          </article>
-          <article class="card">
-            <h3 class="q">四个款式有什么区别？</h3>
-            <p class="a">对外仅作为外观区分。我们不做对标式参数叙述；你按偏好选择即可。</p>
-          </article>
-          <article class="card">
-            <h3 class="q">售后怎么处理？</h3>
-            <p class="a">以事实核对为准：版本/批次/缺陷事实 → 修复/替换，并写入更新记录便于追溯。</p>
-          </article>
-        </div>
-
-        <div class="footer-cta">
-          <a class="btn" href="mailto:sales@ordo.example?subject=ORDO%20%E4%B8%8B%E5%8D%95%E7%A1%AE%E8%AE%A4%EF%BD%9C%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%EF%BC%88%E8%AF%B7%E5%9B%9E%E5%A4%8D%E7%A1%AE%E8%AE%A4%EF%BC%89&body=%E4%BD%A0%E5%A5%BD%EF%BC%8CORDO%20%E5%9B%A2%E9%98%9F%EF%BC%9A%0A%0A%E6%88%91%E5%B7%B2%E9%98%85%E8%AF%BB%E4%BA%A7%E5%93%81%E8%AF%A6%E6%83%85%E9%A1%B5%EF%BC%8C%E5%B9%B6%E5%B8%8C%E6%9C%9B%E4%B8%8B%E5%8D%95%EF%BC%9A%E9%98%85%E8%AF%BB%E5%AE%9A%E4%BD%8D%E5%99%A8%20%E9%A3%8E%E7%81%AB%E9%9B%B7%E7%94%B5%E7%B3%BB%E5%88%97%0A%0A%E9%80%89%E6%8B%A9%E6%AC%BE%E5%BC%8F%EF%BC%88%E9%A3%8E/%E7%81%AB/%E9%9B%B7/%E7%94%B5%EF%BC%89%EF%BC%9A____%0A%E6%95%B0%E9%87%8F%EF%BC%9A____%0A%0A%E4%BA%A4%E4%BB%98%E5%81%8F%E5%A5%BD%EF%BC%9A%0A-%20%E5%9C%A8%E5%94%AE%E7%8E%B0%E8%B4%A7%EF%BC%88%E5%A6%82%E6%9C%89%EF%BC%89%EF%BC%9A%E6%98%AF%20/%20%E5%90%A6%0A-%20%E5%8F%AF%E6%8E%A5%E5%8F%97%E6%89%B9%E6%AC%A1%E4%BA%A4%E4%BB%98%EF%BC%9A%E6%98%AF%20/%20%E5%90%A6%0A-%20%E6%9C%9F%E6%9C%9B%E6%94%B6%E8%B4%A7%E6%97%B6%E9%97%B4%EF%BC%9A____%0A%0A%E6%94%B6%E8%B4%A7%E4%BF%A1%E6%81%AF%EF%BC%9A%0A-%20%E6%94%B6%E4%BB%B6%E4%BA%BA%EF%BC%9A____%0A-%20%E7%94%B5%E8%AF%9D%EF%BC%9A____%0A-%20%E5%9C%B0%E5%9D%80%EF%BC%9A____%0A%0A%E5%BC%80%E7%A5%A8%E4%BF%A1%E6%81%AF%EF%BC%88%E5%A6%82%E9%9C%80%EF%BC%89%EF%BC%9A%0A-%20%E6%8A%AC%E5%A4%B4%EF%BC%9A____%0A-%20%E7%A8%8E%E5%8F%B7%EF%BC%9A____%0A-%20%E9%82%AE%E7%AE%B1%EF%BC%9A____%0A%0A%E5%A4%87%E6%B3%A8%EF%BC%9A____%0A%0A%E8%AF%B7%E5%9B%9E%E5%A4%8D%E7%A1%AE%E8%AE%A4%EF%BC%9A%E4%BB%B7%E6%A0%BC%E3%80%81%E5%8F%AF%E9%80%89%E6%89%B9%E6%AC%A1%E3%80%81%E9%A2%84%E8%AE%A1%E5%8F%91%E8%B4%A7%E8%8A%82%E7%82%B9%E3%80%81%E5%94%AE%E5%90%8E%E6%A0%B8%E5%AF%B9%E6%96%B9%E5%BC%8F%E3%80%82%E8%B0%A2%E8%B0%A2%EF%BC%81%0A">邮件确认下单</a>
-          <a class="btn ghost" href="/zh/shop">返回商店</a>
-          <a class="btn ghost" href="/zh/support#contact">售后/核对支持</a>
-        </div>
-      </section>
+        </section>
+      </main>
     </div>
   </section>
 
   <style>
-    .page{ padding: 18px 0 44px; }
-    .container{ max-width: 1120px; margin: 0 auto; padding: 0 18px; }
 
-    .crumb{ margin: 8px 0 0; color: rgba(220,235,240,.62); font-size: 12px; }
-    .crumb a{ color: rgba(220,235,240,.76); text-decoration: none; border-bottom: 1px solid rgba(220,235,240,0.12); }
-    .sep{ margin: 0 8px; opacity: .6; }
+    .crumb { display: flex; gap: 10px; align-items: center; font-size: 13px; color: rgba(240,245,255,.6); }
+    .crumb a { color: rgba(240,245,255,.78); text-decoration: none; }
+    .sep { opacity: .45; }
 
-    .tag{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 6px 10px; border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.12);
-      color: rgba(220,235,240,0.82);
-      background: rgba(10,22,26,0.06);
-      font-size: 12px; width: fit-content;
-    }
-    .h1{ margin: 10px 0 0; font-size: 44px; line-height: 1.08; letter-spacing: -0.02em; }
-    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; max-width: 80ch; }
+    .wrap { }
 
-    .p-hero{ margin-top: 12px; display:grid; grid-template-columns: 1.35fr 1fr; gap: 14px; align-items:start; }
-    .highlights{ margin-top: 14px; display:grid; gap: 10px; max-width: 70ch; }
-    .hl{ display:flex; justify-content:space-between; gap: 12px; color: rgba(220,235,240,.72); }
-    .hl .k{ color: rgba(220,235,240,.55); }
-    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .p-hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 22px; align-items: start; }
+    .p-kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: rgba(214,244,250,.75); }
 
-    .buybox{
-      border-radius: 22px;
-      border: 1px solid rgba(220,235,240,0.12);
-      background: radial-gradient(120% 120% at 20% 0%,
-        rgba(48, 92, 110, 0.24) 0%,
-        rgba(14, 26, 30, 0.58) 44%,
-        rgba(10, 16, 18, 0.36) 100%);
-      box-shadow: 0 14px 34px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
-      padding: 18px;
-      position: sticky;
-      top: 84px;
-    }
-    .buy-top{ display:flex; justify-content:space-between; gap: 10px; align-items:center; }
-    .badge{
-      font-size: 12px;
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(120,210,210,0.22);
-      background: rgba(10,22,26,0.06);
-      color: rgba(220,235,240,0.78);
-      white-space: nowrap;
-    }
-    .price{ margin-top: 14px; font-weight: 800; color: rgba(220,235,240,0.92); }
-    .small{ margin-top: 8px; color: rgba(220,235,240,.60); font-size: 12px; line-height: 1.65; }
+    .subtitle{margin:12px 0 18px;font-size:16px;line-height:1.4;font-weight:650;letter-spacing:.06em;color:rgba(214,244,250,.86);opacity:.92;}
+    .lead { color: rgba(240,248,255,.82); font-size: 16px; line-height: 1.75; margin: 0 0 14px; }
 
-    .buy-grid{ margin-top: 14px; display:grid; gap: 10px; }
-    .kv{ display:flex; justify-content:space-between; gap: 12px; color: rgba(220,235,240,.72); font-size: 12px; }
-    .kv span:first-child{ color: rgba(220,235,240,.55); }
+    .highlights { display: grid; gap: 8px; padding: 12px 0 2px; }
+    .kv { display: flex; justify-content: space-between; gap: 14px; padding: 8px 12px; border: 1px solid rgba(120, 220, 255, .14); border-radius: 14px; background: rgba(2, 16, 22, .42); }
+    .kv span:first-child { color: rgba(214,244,250,.75); font-size: 13px; }
+    .kv span:last-child { color: rgba(240,248,255,.78); font-size: 13px; text-align: right; }
 
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 9px 14px; border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.14);
-      color: rgba(220,235,240,0.88);
-      text-decoration:none;
-      background: rgba(10,22,26,0.10);
-      transition: border-color .2s ease, background .2s ease;
-      white-space: nowrap;
-    }
-    .btn:hover{ border-color: rgba(220,235,240,0.24); background: rgba(10,22,26,0.14); }
-    .btn.ghost{ background: transparent; border-color: rgba(220,235,240,0.10); color: rgba(220,235,240,0.76); }
-    .full{ width: 100%; margin-top: 10px; }
+    .buybox { border: 1px solid rgba(120, 220, 255, .14); border-radius: 18px; padding: 16px 16px 14px; background: rgba(2, 16, 22, .52); box-shadow: 0 16px 60px rgba(0,0,0,.35); }
+    .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; color: rgba(214,244,250,.82); border: 1px solid rgba(120, 220, 255, .16); background: rgba(4, 20, 28, .55); }
+    .price { font-size: 28px; font-weight: 720; margin: 10px 0 6px; color: rgba(240,248,255,.94); }
+    .unit { font-size: 12px; opacity: .65; font-weight: 560; }
+    .small { font-size: 12.5px; color: rgba(240,248,255,.7); line-height: 1.6; }
 
-    .foot{ margin-top: 14px; display:grid; gap: 8px; color: rgba(220,235,240,.64); font-size: 12px; }
-    .fitem{ display:flex; gap: 10px; align-items:flex-start; }
-    .dot{ width: 8px; height: 8px; border-radius: 999px; background: rgba(220,235,240,.26); margin-top: 5px; flex: 0 0 auto; }
+    .actions { display: flex; gap: 10px; margin: 14px 0 10px; }
+.foot { border-top: 1px dashed rgba(120,220,255,.18); margin-top: 10px; padding-top: 10px; display: grid; gap: 6px; font-size: 12px; color: rgba(240,248,255,.72); }
+    .foot strong { color: rgba(214,244,250,.86); font-weight: 620; }
 
-    .gallery{ margin-top: 14px; display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
-    .gcard{ margin:0; border-radius: 18px; overflow:hidden; border: 1px solid rgba(220,235,240,0.10); background: rgba(10,22,26,0.10); }
-    .gcard img{ width: 100%; height: 180px; object-fit: cover; display:block; }
-    .gcard figcaption{ padding: 10px 12px; color: rgba(220,235,240,0.78); font-size: 12px; }
+    .gallery { margin-top: 22px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+    .g-item { margin: 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(120,220,255,.12); background: rgba(2, 16, 22, .42); }
+    .g-media { position: relative; }
+    .g-item img { width: 100%; height: 160px; object-fit: cover; display: block; }
+    .img-dim { position: absolute; top: 10px; left: 10px; padding: 6px 10px; border-radius: 999px;
+      font-size: 12px; letter-spacing: .02em; color: rgba(240,248,255,.9);
+      background: rgba(0,0,0,.38); border: 1px solid rgba(120,220,255,.16); backdrop-filter: blur(8px); }
+    .g-item figcaption { padding: 8px 10px; font-size: 12px; color: rgba(240,248,255,.68); line-height: 1.5; }
 
-    .divider{ height: 1px; background: rgba(220,235,240,0.08); margin: 16px 0; }
+    .section { padding: 10px 0 18px; }
+    .pill { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; color: rgba(214,244,250,.82); border: 1px solid rgba(120, 220, 255, .16); background: rgba(4, 20, 28, .55); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .variants-row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center;
+      padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(120,220,255,.12); background: rgba(2, 16, 22, .42); }
+    .v-item { font-size: 13.5px; line-height: 1.4; font-weight: 650; letter-spacing: .02em; }
+    .v-wind { color: rgba(120, 220, 255, .92); }
+    .v-fire { color: rgba(255, 170, 90, .92); }
+    .v-thunder { color: rgba(190, 140, 255, .92); }
+    .v-electric { color: rgba(255, 235, 120, .92); }
 
-    .section{ margin-top: 10px; }
-    .section h2{ margin: 0 0 10px; font-size: 18px; letter-spacing: 0.02em; color: rgba(220,235,240,0.92); }
-    .sublead{ margin: 0 0 14px; color: rgba(220,235,240,0.70); line-height: 1.7; max-width: 94ch; }
+    .h3 { margin: 0 0 6px; font-size: 14px; color: rgba(214,244,250,.9); font-weight: 650; }
+    .card p { margin: 0; color: rgba(240,248,255,.74); line-height: 1.75; font-size: 13.5px; }
 
-    .card{
-      border-radius: 18px;
-      border: 1px solid rgba(220,235,240,0.10);
-      background: radial-gradient(120% 120% at 20% 0%,
-        rgba(48, 92, 110, 0.22) 0%,
-        rgba(14, 26, 30, 0.55) 45%,
-        rgba(10, 16, 18, 0.34) 100%);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.06);
-      padding: 18px;
-    }
+    .timeline { border: 1px solid rgba(120,220,255,.12); border-radius: 16px; padding: 12px; background: rgba(2, 16, 22, .42); display: grid; gap: 10px; }
+    .row { display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: start; }
+    .k { color: rgba(214,244,250,.82); font-size: 12px; text-transform: none; letter-spacing: .06em; }
+    .v { color: rgba(240,248,255,.76); font-size: 13.5px; line-height: 1.65; }
 
-    .pill{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 6px 10px; border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.12);
-      color: rgba(220,235,240,0.78);
-      background: rgba(10,22,26,0.06);
-      font-size: 12px; width: fit-content; margin-bottom: 10px;
-    }
+    .bullets { margin: 0; padding-left: 18px; color: rgba(240,248,255,.72); line-height: 1.7; font-size: 13.5px; }
+    .bullets li { margin: 6px 0; }
 
-    .grid3{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
-    .grid2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
-    .t{ margin:0; font-size: 16px; color: rgba(220,235,240,0.92); }
-    .p{ margin: 10px 0 0; color: rgba(220,235,240,0.70); line-height: 1.7; }
-    .ul{ margin: 0; padding-left: 18px; color: rgba(220,235,240,0.76); line-height: 1.7; }
-    .ul li{ margin: 6px 0; }
+    .layerlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .layerlist li { padding: 10px 10px; border-radius: 14px; border: 1px solid rgba(120,220,255,.12); background: rgba(255,255,255,.03); color: rgba(240,248,255,.76); font-size: 13.5px; line-height: 1.6; }
+    .layerlist strong { color: rgba(214,244,250,.9); }
 
-    .timeline{ padding: 14px 18px; }
-    .row{ display:grid; grid-template-columns: 1fr 1.2fr; gap: 12px; padding: 12px 0; border-top: 1px solid rgba(220,235,240,0.08); }
-    .row:first-child{ border-top: none; padding-top: 0; }
-    .l{ color: rgba(220,235,240,.86); font-weight: 700; display:flex; align-items:center; gap: 10px; }
-    .r{ color: rgba(220,235,240,.66); line-height: 1.7; }
-    .tb{ display:inline-flex; align-items:center; justify-content:center; width: 34px; height: 22px; border-radius: 999px; border: 1px solid rgba(220,235,240,0.12); color: rgba(220,235,240,0.78); background: rgba(10,22,26,0.06); font-size: 12px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; font-size: 12.5px; color: rgba(240,248,255,.68); }
+    .meta a { color: rgba(214,244,250,.86); text-decoration: none; border-bottom: 1px dashed rgba(214,244,250,.22); }
+    .meta a:hover { border-bottom-color: rgba(214,244,250,.5); }
+    .dot { opacity: .4; }
 
-    .faq{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
-    .q{ margin: 0; font-size: 14px; color: rgba(220,235,240,0.90); }
-    .a{ margin: 10px 0 0; color: rgba(220,235,240,0.70); line-height: 1.7; }
-    .footer-cta{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .footer-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
 
-    @media (max-width: 1100px){
-      .p-hero{ grid-template-columns: 1fr; }
-      .buybox{ position: relative; top: auto; }
-      .gallery{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .grid3, .grid2, .faq{ grid-template-columns: 1fr; }
-      .row{ grid-template-columns: 1fr; }
-      .h1{ font-size: 36px; }
-    }
-    @media (max-width: 680px){
-      .gallery{ grid-template-columns: 1fr; }
+    @media (max-width: 960px) {
+
+      .p-hero { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: repeat(2, 1fr); }
+      .g-item img { height: 170px; }
+      .grid2 { grid-template-columns: 1fr; }
+      .grid3 { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
+
     }
   </style>
 </Base>

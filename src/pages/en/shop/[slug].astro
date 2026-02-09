@@ -1,0 +1,11 @@
+---
+export function getStaticPaths() {
+  // Keep EN routes valid (linked from language switch or direct visit),
+  // but the PDP copy is currently maintained on the Chinese pages.
+  // Add EN product data later if needed.
+  return [{ params: { slug: "reading-locator" } }];
+}
+
+const { slug } = Astro.params;
+return Astro.redirect(`/zh/shop/${slug}`);
+---

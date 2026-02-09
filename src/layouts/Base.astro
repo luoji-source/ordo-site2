@@ -6,15 +6,72 @@ const store = getLocalStore?.() ?? {};
 const site = store.site ?? {};
 const orderEmail = site.orderEmail ?? "orders@ordoinc.com";
 
-const { title = "ORDO", lang = "zh", showOrder = true } = Astro.props;
+const {
+  title = "ORDO",
+  description,
+  keywords,
+  robots,
+  // ISO 639-1: "en" | "zh". (We render zh as zh-Hans for better indexing.)
+  lang = "zh",
+  showOrder = true,
+} = Astro.props;
+
 const pathname = Astro.url?.pathname ?? "";
+
+const htmlLang = lang === "en" ? "en" : "zh-Hans";
+
+// SEO
+const siteOrigin = Astro.site?.toString?.() || "https://ordoinc.com";
+const canonicalUrl = pathname ? new URL(pathname, siteOrigin).toString() : siteOrigin;
+
+// Default Open Graph image
+const ogImage = (Astro.props.ogImage ?? `${siteOrigin}/og/ordo-mark.png`).toString();
+
+// Only emit hreflang when the route is language-scoped (/en/* or /zh/*).
+const isLangScoped = pathname.startsWith("/en") || pathname.startsWith("/zh");
+const altEnPath = pathname.startsWith("/zh") ? pathname.replace(/^\/zh(?=\/|$)/, "/en") : pathname;
+const altZhPath = pathname.startsWith("/en") ? pathname.replace(/^\/en(?=\/|$)/, "/zh") : pathname;
+const altEnUrl = isLangScoped ? new URL(altEnPath || "/en", siteOrigin).toString() : null;
+const altZhUrl = isLangScoped ? new URL(altZhPath || "/zh", siteOrigin).toString() : null;
+
+const defaultDescription =
+  lang === "en"
+    ? "ORDO designs and manufactures physical and digital instruments for judgment—grounded in checkable facts."
+    : "ORDO 设计并制造用于判断的器具（实体与数字），以可核对事实为准。";
+
+const metaDescription = (description ?? defaultDescription).toString();
+
+const defaultKeywords =
+  lang === "en"
+    ? "ORDO, RESPECTA, ORDO Return, instruments, checkable facts, interruption, resume work, context switching"
+    : "ORDO, RESPECTA, ORDO Return, 器具, 可核对, 中断, 续接, 上下文恢复, 阅读定位器, 书签";
+
+const metaKeywords = (keywords ?? defaultKeywords).toString();
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ORDO",
+  url: siteOrigin,
+  email: orderEmail,
+  sameAs: ["https://respecta.org.cn"],
+};
+
+// Minimal WebSite JSON-LD (no on-site search)
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "ORDO",
+  url: siteOrigin,
+};
 
 const homeHref = lang === "en" ? "/en" : "/zh";
 const productsHref = lang === "en" ? "/en/products" : "/zh/products";
-const ordoHref = lang === "en" ? "/en/ordo" : "/zh/ordo"; // 关于
-const updatesHref = lang === "en" ? "/en/updates" : "/zh/updates";
-const evidenceHref = lang === "en" ? "/en/evidence" : "/zh/evidence";
-const contactHref = lang === "en" ? "/en/contact" : "/zh/contact";
+const softwareHref = lang === "en" ? "/en/software" : "/zh/software";
+const releasesHref = lang === "en" ? "/en/releases" : "/zh/releases";
+const manufacturingHref = lang === "en" ? "/en/manufacturing" : "/zh/manufacturing";
+const supportHref = lang === "en" ? "/en/support" : "/zh/support";
+const ordoHref = lang === "en" ? "/en/ordo" : "/zh/ordo"; // ORDO
 const shopHref = lang === "en" ? "/en/shop" : "/zh/shop";
 const orderHref = shopHref;
 
@@ -35,12 +92,45 @@ const isActive = (href: string) => {
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <meta name="description" content="ORDO 设计并制造用于判断的物理器具。" />
+
+    <meta name="description" content={metaDescription} />
+    <meta name="keywords" content={metaKeywords} />
+
+    {robots && <meta name="robots" content={robots} />}
+
+    <link rel="canonical" href={canonicalUrl} />
+
+    {isLangScoped && (
+      <>
+        <link rel="alternate" hreflang="en" href={altEnUrl!} />
+        <link rel="alternate" hreflang="zh-Hans" href={altZhUrl!} />
+        <link rel="alternate" hreflang="x-default" href={new URL("/en", siteOrigin).toString()} />
+      </>
+    )}
+
+    <meta property="og:site_name" content="ORDO" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ORDO" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+      <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
   </head>
   <body>
     <div class="site">
@@ -62,27 +152,31 @@ const isActive = (href: string) => {
               {lang === "en" ? "Products" : "产品"}
             </a>
 
+            <a class={`nav-link ${isActive(softwareHref) ? "is-active" : ""}`.trim()} href={softwareHref}>
+              {lang === "en" ? "Software" : "软件"}
+            </a>
+
+            <a class={`nav-link ${isActive(releasesHref) ? "is-active" : ""}`.trim()} href={releasesHref}>
+              {lang === "en" ? "Releases" : "发布"}
+            </a>
+
+            <a class={`nav-link ${isActive(manufacturingHref) ? "is-active" : ""}`.trim()} href={manufacturingHref}>
+              {lang === "en" ? "Manufacturing" : "制造"}
+            </a>
+
+            <a class={`nav-link ${isActive(supportHref) ? "is-active" : ""}`.trim()} href={supportHref}>
+              {lang === "en" ? "Support" : "支持"}
+            </a>
+
             <a class={`nav-link ${isActive(ordoHref) ? "is-active" : ""}`.trim()} href={ordoHref}>
-              {lang === "en" ? "About" : "关于"}
-            </a>
-
-            <a class={`nav-link ${isActive(updatesHref) ? "is-active" : ""}`.trim()} href={updatesHref}>
-              {lang === "en" ? "Updates" : "更新"}
-            </a>
-
-            <a class={`nav-link ${isActive(evidenceHref) ? "is-active" : ""}`.trim()} href={evidenceHref}>
-              {lang === "en" ? "Evidence" : "证据"}
-            </a>
-
-            <a class={`nav-link ${isActive(contactHref) ? "is-active" : ""}`.trim()} href={contactHref}>
-              {lang === "en" ? "Contact" : "联系"}
+              {lang === "en" ? "ORDO" : "ORDO"}
             </a>
           </nav>
 
           <div class="nav-cta">
             {showOrder && (
               <a class="nav-btn primary" href={orderHref}>
-                {lang === "en" ? "Shop" : "商店"}</a>
+                {lang === "en" ? "Shop" : "商城"}</a>
             )}
             <a class="nav-btn" href={langHref}>{lang === "en" ? "中文" : "EN"}</a>
           </div>
@@ -100,7 +194,7 @@ const isActive = (href: string) => {
             <div class="footer-meta">
               <span class="footer-copy">© 2026 ORDO. All rights reserved.</span>
               <span class="footer-tagline">
-                {lang === "en" ? "Physical instruments for judgment." : "用于判断的物理器具"}
+                {lang === "en" ? "Instruments (hardware & software) for judgment." : "用于判断的器具（实体与数字）"}
               </span>
             </div>
           </div>
@@ -110,7 +204,7 @@ const isActive = (href: string) => {
             <a href={lang === "en" ? "/en/terms" : "/zh/terms"}>{lang === "en" ? "Terms" : "条款"}</a>
             <a href={lang === "en" ? "/en/cookies" : "/zh/cookies"}>{lang === "en" ? "Cookies" : "Cookies"}</a>
             <a href={lang === "en" ? "/en/sitemap" : "/zh/sitemap"}>{lang === "en" ? "Sitemap" : "Sitemap"}</a>
-            <a href={`mailto:${orderEmail}`}>{lang === "en" ? "Contact" : "联系"}</a>
+            <a href={supportHref}>{lang === "en" ? "Support" : "支持"}</a>
           </nav>
         </div>
       </footer>

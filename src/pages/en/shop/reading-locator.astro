@@ -1,0 +1,309 @@
+---
+import Base from "@/layouts/Base.astro";
+
+const orderEmail = "orders@ordoinc.com";
+const pageTitle = "Line Pointer · ORDO";
+const orderSubject = "Line Pointer · ORDO Mark v1.0 Standard Set — Order";
+const orderBody = [
+  "Name:",
+  "Email / contact:",
+  "",
+  "Item:",
+  "Line Pointer · ORDO Mark v1.0 Standard Set",
+  "",
+  "Notes:",
+  "- Quantity:",
+  "- Shipping country/city:",
+  "- Any invoice requirements:",
+].join("\n");
+
+const mailto = (to: string, subject: string, body: string) => {
+  const s = encodeURIComponent(subject);
+  const b = encodeURIComponent(body);
+  return `mailto:${to}?subject=${s}&body=${b}`;
+};
+---
+
+<Base lang="en" title={pageTitle}>
+  <section class="page">
+    <div class="container">
+      <div class="crumb">Shop / <span>Line Pointer</span></div>
+
+      <div class="hero">
+        <div class="hero-main">
+          <div class="kicker">Physical instrument · Reading</div>
+          <h1 class="title">
+            Line Pointer <span class="dot">·</span>
+            <span class="series">Wind / Fire / Thunder / Electric</span>
+          </h1>
+          <div class="sub">ORDO Mark v1.0 Standard Set</div>
+
+          <div class="lead">
+            <p>
+              A normal bookmark tells you only “this page”. But what rebuilds context is:
+              which paragraph, which line, and how far you were into it.
+            </p>
+            <p>
+              Line Pointer’s answer is simple: make “position” into a physical structure
+              you can verify repeatedly with your finger.
+            </p>
+          </div>
+
+          <div class="uses">
+            <div class="uses-title">You’ll use it for:</div>
+            <ul>
+              <li>Interrupted reading: next time you open, you’re back to the same spot.</li>
+              <li>Revisiting long docs / notes: use the scale to mark “progress”.</li>
+              <li>Study / training: turn the “current paragraph” into a reproducible position.</li>
+            </ul>
+          </div>
+
+          <div class="editions">
+            <div class="editions-title">Editions</div>
+            <div class="variants-row" aria-label="Wind / Fire / Thunder / Electric">
+              <span class="v-item v-wind"><span class="v-name">Wind</span><span class="v-dot">｜</span><span class="v-kw">Calm · Flow</span></span>
+              <span class="v-item v-fire"><span class="v-name">Fire</span><span class="v-dot">｜</span><span class="v-kw">Energy · Action</span></span>
+              <span class="v-item v-thunder"><span class="v-name">Thunder</span><span class="v-dot">｜</span><span class="v-kw">Breakthrough · Rhythm</span></span>
+              <span class="v-item v-electric"><span class="v-name">Electric</span><span class="v-dot">｜</span><span class="v-kw">Focus · Speed</span></span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="hero-buy">
+          <div class="buy-badge">Set of four: Wind · Fire · Thunder · Electric</div>
+          <div class="buy-price">
+            <span class="currency">$</span>
+            <span class="amount">38.00</span>
+            <span class="unit">USD</span>
+          </div>
+          <div class="buy-desc">
+            Orders are handled via email and delivered in batches. Specs, materials,
+            tests, and version facts are published for verification and traceability.
+          </div>
+          <div class="buy-actions">
+            <a class="btn primary" href={mailto(orderEmail, orderSubject, orderBody)}>Order</a>
+            <a class="btn" href="/en/support">Support & Contact</a>
+          </div>
+          <div class="buy-hr"></div>
+          <div class="buy-kv">
+            <div class="row">
+              <div class="k">Size</div>
+              <div class="v">150×32mm, R6 corners</div>
+            </div>
+            <div class="row">
+              <div class="k">Core</div>
+              <div class="v">72mm slide track + scale 0–100</div>
+            </div>
+            <div class="row">
+              <div class="k">Structure</div>
+              <div class="v">5-layer composite (incl. magnetic layer)</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="gallery">
+        <a class="g-main" href="/images/shop/reading-locator/detail-placeholder-1100x825.png" target="_blank" rel="noreferrer">
+          <img src="/images/shop/reading-locator/detail-placeholder-1100x825.png" alt="Line Pointer main image" loading="eager" />
+        </a>
+        <div class="g-grid">
+          <a href="/images/shop/reading-locator/scene-reading-960x640.png" target="_blank" rel="noreferrer">
+            <img src="/images/shop/reading-locator/scene-reading-960x640.png" alt="In use: reading" />
+          </a>
+          <a href="/images/shop/reading-locator/scene-workdocs-960x640.png" target="_blank" rel="noreferrer">
+            <img src="/images/shop/reading-locator/scene-workdocs-960x640.png" alt="In use: work documents" />
+          </a>
+          <a href="/images/shop/reading-locator/scene-learning-960x640.png" target="_blank" rel="noreferrer">
+            <img src="/images/shop/reading-locator/scene-learning-960x640.png" alt="In use: learning" />
+          </a>
+          <a href="/images/shop/reading-locator/scene-multitask-960x640.png" target="_blank" rel="noreferrer">
+            <img src="/images/shop/reading-locator/scene-multitask-960x640.png" alt="In use: multitask" />
+          </a>
+        </div>
+      </div>
+
+      <section class="section">
+        <h2>Where it helps</h2>
+
+        <div class="list">
+          <div class="li">
+            <div class="tag">Use it for</div>
+            <div class="text">When reading gets interrupted: reopen and return to the same position.</div>
+          </div>
+          <div class="li">
+            <div class="tag">Use it for</div>
+            <div class="text">Long documents you revisit: mark “progress” on the scale and verify later.</div>
+          </div>
+          <div class="li">
+            <div class="tag">Use it for</div>
+            <div class="text">Study / drills: make the “current paragraph” a reproducible, checkable position.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Verifiable points</h2>
+
+        <div class="tri">
+          <div class="card">
+            <div class="card-title">Facts</div>
+            <ul>
+              <li>First production batch: four Editions (Wind / Fire / Thunder / Electric) are manufactured and delivered together.</li>
+              <li>Structural spec: Mark Core (same generation). Linear rail + slider makes “progress” visible and checkable.</li>
+              <li>Public points: texture, scale, travel, damping, and markings are consistent and verifiable.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Boundaries</div>
+            <ul>
+              <li>The scale is for personal verification, not a measurement standard; differences caused by paper/binding are not guaranteed to be uniform.</li>
+              <li>Editions (Wind/Fire/Thunder/Electric) express texture/visual differences, not performance tiers.</li>
+              <li>Normal boundary covers reasonable usage; extreme bending/pressure can cause deformation and needs separate judgement.</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Trace</div>
+            <ul>
+              <li>Search by Edition name in the Shop and compare the physical scale and slider travel.</li>
+              <li>For manufacturing and delivery verification, refer to the Manufacturing page’s public process and acceptance facts.</li>
+              <li>If damping becomes abnormal or scale markings wear unexpectedly, report via Support with photos and usage context.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Public specs</h2>
+        <div class="specs">
+          <div class="spec">
+            <div class="spec-title">Rail & slider</div>
+            <div class="spec-text">
+              A linear track with a tactile slider. The slider position is your checkable “where I was”.
+            </div>
+            <div class="spec-points">
+              <span>72mm travel</span>
+              <span>0–100 scale</span>
+              <span>repeatable verification</span>
+            </div>
+          </div>
+
+          <div class="spec">
+            <div class="spec-title">Material stack</div>
+            <div class="spec-text">
+              5-layer composite designed for rigidity and feel; includes a magnetic layer for the set structure.
+            </div>
+            <div class="spec-points">
+              <span>carbon fiber surface</span>
+              <span>tactile feedback</span>
+              <span>composite rigidity</span>
+            </div>
+          </div>
+
+          <div class="spec">
+            <div class="spec-title">External markings</div>
+            <div class="spec-text">
+              Scale and Edition markings are public points for cross-checking and traceability.
+            </div>
+            <div class="spec-points">
+              <span>Edition marks</span>
+              <span>scale visibility</span>
+              <span>consistent layout</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+
+  <style>
+
+    .crumb { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+    .crumb span { color: var(--text); opacity: .9; }
+
+    .hero { display: grid; grid-template-columns: 1fr 420px; gap: 28px; align-items: start; }
+    @media (max-width: 980px) { .hero { grid-template-columns: 1fr; } }
+
+    .kicker { color: var(--muted); letter-spacing: .12em; text-transform: uppercase; font-size: 12px; margin-bottom: 12px; }
+    .title { font-size: 48px; line-height: 1.06; margin: 0 0 10px; }
+    .title .dot { opacity: .45; margin: 0 6px; }
+    .title .series { font-size: 22px; opacity: .75; font-weight: 600; }
+    @media (max-width: 980px) { .title { font-size: 40px; } .title .series { font-size: 18px; } }
+
+    .sub { font-size: 18px; color: var(--muted); font-weight: 600; margin-bottom: 18px; }
+
+    .lead p { margin: 0 0 10px; color: rgba(255,255,255,.82); }
+    .uses { margin-top: 18px; padding: 14px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); }
+    .uses-title { font-weight: 650; margin-bottom: 10px; }
+    .uses ul { margin: 0; padding-left: 18px; color: rgba(255,255,255,.8); }
+    .uses li { margin: 6px 0; }
+
+    .editions { margin-top: 18px; display: flex; align-items: baseline; gap: 14px; }
+    @media (max-width: 780px) { .editions { flex-direction: column; align-items: flex-start; gap: 10px; } }
+    .editions-title { color: rgba(255,255,255,.72); font-size: 14px; min-width: 86px; }
+
+    /* Editions row (match zh layout + color cues) */
+    .variants-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .v-item { display: inline-flex; align-items: baseline; gap: 6px; border: 1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.10); padding: 7px 10px; border-radius: 999px; font-size: 13px; line-height: 1; white-space: nowrap; }
+    .v-name { font-weight: 720; }
+    .v-dot { opacity: .55; }
+    .v-kw { color: rgba(255,255,255,.78); font-weight: 600; letter-spacing: .01em; }
+    .v-wind .v-name { color: rgba(140, 200, 255, .95); }
+    .v-fire .v-name { color: rgba(255, 155, 120, .95); }
+    .v-thunder .v-name { color: rgba(170, 170, 255, .95); }
+    .v-electric .v-name { color: rgba(120, 230, 200, .95); }
+
+    .kv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    @media (max-width: 780px) { .kv { grid-template-columns: 1fr; } }
+    .kv-item { border: 1px solid rgba(255,255,255,.08); border-radius: 16px; padding: 12px 14px; background: rgba(255,255,255,.02); }
+    .kv-item .k { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .kv-item .v { font-size: 14px; color: rgba(255,255,255,.85); }
+
+    .hero-buy { border: 1px solid rgba(255,255,255,.10); border-radius: 22px; padding: 18px 18px 16px; background: rgba(0,0,0,.12); }
+    .buy-badge { display: inline-flex; padding: 8px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.10); color: rgba(255,255,255,.8); font-size: 13px; margin-bottom: 12px; }
+    .buy-price { display: flex; align-items: baseline; gap: 8px; margin: 6px 0 10px; }
+    .currency { font-size: 20px; opacity: .85; }
+    .amount { font-size: 40px; font-weight: 720; letter-spacing: -0.02em; }
+    .unit { font-size: 14px; opacity: .7; }
+
+    .buy-desc { color: rgba(255,255,255,.72); font-size: 13px; line-height: 1.5; margin: 10px 0 12px; }
+    .buy-actions { display: flex; gap: 10px; margin-bottom: 12px; }
+.buy-hr { height: 1px; background: rgba(255,255,255,.08); margin: 14px 0; }
+    .buy-kv .row { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; }
+    .buy-kv .k { color: rgba(255,255,255,.68); font-size: 13px; }
+    .buy-kv .v { color: rgba(255,255,255,.86); font-size: 13px; text-align: right; }
+
+    .gallery { margin-top: 26px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; }
+    @media (max-width: 980px) { .gallery { grid-template-columns: 1fr; } }
+    .g-main { border-radius: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); display: block; background: rgba(255,255,255,.02); }
+    .g-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .g-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .g-grid a { border-radius: 18px; overflow: hidden; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); display: block; }
+    .g-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .section { margin-top: 34px; }
+    .section h2 { margin: 0 0 14px; font-size: 22px; }
+    .list { display: grid; gap: 10px; }
+    .li { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: start; padding: 12px 14px; border: 1px solid rgba(255,255,255,.08); border-radius: 18px; background: rgba(255,255,255,.02); }
+    @media (max-width: 720px) { .li { grid-template-columns: 1fr; } }
+.text { color: rgba(255,255,255,.82); }
+
+    .tri { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 980px) { .tri { grid-template-columns: 1fr; } }
+
+    .card-title { font-weight: 720; margin-bottom: 10px; }
+    .card ul { margin: 0; padding-left: 18px; color: rgba(255,255,255,.78); }
+    .card li { margin: 6px 0; }
+
+    .specs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 980px) { .specs { grid-template-columns: 1fr; } }
+    .spec { border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 14px 14px 12px; background: rgba(255,255,255,.02); }
+    .spec-title { font-weight: 720; margin-bottom: 10px; }
+    .spec-text { color: rgba(255,255,255,.78); margin-bottom: 10px; line-height: 1.5; }
+    .spec-points { display: flex; flex-wrap: wrap; gap: 8px; }
+    .spec-points span { font-size: 12px; color: rgba(255,255,255,.78); border: 1px solid rgba(255,255,255,.10); background: rgba(0,0,0,.10); padding: 6px 10px; border-radius: 999px; }
+
+    :global(body) { background: #050a0c; }
+  </style>
+</Base>

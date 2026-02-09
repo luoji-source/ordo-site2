@@ -4,7 +4,7 @@ import Base from "@/layouts/Base.astro";
 
 <Base lang="zh" title="ORDO · ORDO">
   <section class="page-shell">
-    <div class="container">
+    <div class="container ordo-container">
       <div class="section-head">
         <h1 class="h1">ORDO</h1>
       </div>
@@ -12,12 +12,12 @@ import Base from "@/layouts/Base.astro";
       <div class="company-grid">
         <main class="company-main">
           <p class="company-lead">
-            ORDO 设计并制造器具（Instruments），用于人在阅读、工作与判断时，面对中断、切换与长期跨度，保持位置、边界与连续性。
+            ORDO 设计并制造器具（Instruments）——包括实体器具与数字器具——用于人在阅读、工作与判断时，面对中断、切换与长期跨度，保持位置、边界与连续性。
           </p>
 
           <div class="prose">
             <p>
-              我们关注的不是提高效率或替人决策，而是在人必须亲自承担判断的场合，提供一个稳定、可信、不会干扰人的物理参照点。
+              我们关注的不是提高效率或替人决策，而是在人必须亲自承担判断的场合，提供一个稳定、可信、不会干扰人的参照点。
               ORDO 的器具不记录你、不评价你，也不提醒你该做什么；它们只负责把关键事实留在现实世界中。
             </p>
 
@@ -56,19 +56,17 @@ import Base from "@/layouts/Base.astro";
 
           <div class="card">
             <div class="eyebrow">标准与边界</div>
-            <div class="h3" style="margin:10px 0 8px">ORDO 负责制造，RESPECTA 负责判断</div>
+            <div class="h3">ORDO 负责制造，RESPECTA 负责判断</div>
             <div class="muted">
-              RESPECTA 为独立标准站点。此链接仅用于阅读标准文本，不构成对任何产品的自动背书。
+              RESPECTA 为独立标准文本。标准用于阅读与核对，不构成对任何产品的自动背书。
             </div>
-            <a class="btn" href="https://respecta.org.cn" target="_blank" rel="noopener noreferrer" style="margin-top:14px">
-              阅读 RESPECTA ↗
-            </a>
+            <a class="respecta-link" href="https://respecta.org.cn" target="_blank" rel="noopener">RESPECTA · respecta.org.cn →</a>
           </div>
 
           <div class="card company-note">
             <div class="eyebrow">制造者责任</div>
             <div class="muted">设计 / 制造 / 交付与售后</div>
-            <div class="muted" style="margin-top:10px">我们公开版本与制造记录，用于“核对事实”，而不是“影响决定”。</div>
+            <div class="muted mt-10">我们公开版本与制造记录，用于“核对事实”，而不是“影响决定”。</div>
           </div>
         </aside>
       </div>
@@ -76,14 +74,40 @@ import Base from "@/layouts/Base.astro";
   </section>
 
   <style>
-    .section-head{
+    .ordo-container{
+      max-width: 1160px;
+      padding-inline: clamp(26px, 4vw, 84px);
+    }
+
+    .respecta-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(32,255,242,0.34);
+      background:linear-gradient(180deg, rgba(32,255,242,0.10), rgba(10,22,26,0.06));
+      color:rgba(32,255,242,0.92);
+      font-size:12px;
+      letter-spacing:0.04em;
+      box-shadow: 0 10px 34px rgba(0,0,0,0.28);
+    }
+    .respecta-link:hover{
+      border-color:rgba(32,255,242,0.62);
+      background:linear-gradient(180deg, rgba(32,255,242,0.16), rgba(10,22,26,0.10));
+      color:rgba(240,252,255,0.96);
+      box-shadow: 0 14px 46px rgba(0,0,0,0.34), 0 0 0 1px rgba(32,255,242,0.10) inset;
+    }
+
+.section-head{
       display:block;
     }
     .section-head .h1{justify-self:start; text-align:left;}
 
     .company-grid{
       display:grid;
-      grid-template-columns:minmax(0,1fr) 360px;
+      grid-template-columns:minmax(0,1fr) 340px;
       gap:clamp(24px,4vw,56px);
       align-items:start;
       margin-top:clamp(16px,2vw,22px);

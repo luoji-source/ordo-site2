@@ -7,16 +7,21 @@ const site = store.site ?? {};
 const brand = (site.brand ?? "ORDO").toString();
 ---
 
-<Base lang="zh" title={`${brand} · 首页`}>
+<Base
+  lang="zh"
+  title={`${brand} · 首页`}
+  description="ORDO 构建可核对的器具与软件：把关键状态留成事实，让你在中断后快速回到判断与工作现场。"
+  keywords={["ORDO", "RESPECTA", "器具", "硬件", "软件", "回到这里", "re-entry", "可核对事实"]}
+>
   <!-- Brand Home: judgement-first. Minimal, one-screen message + direct paths to Shop / System. -->
 
-  <section class="home-hero" aria-label="品牌宣示">
+  <section class="home-hero" aria-label="ORDO 设计并制造用于判断的实体和数字器具">
     <div class="container hero-shell">
       <div class="hero-copy">
         <div class="eyebrow">{brand}</div>
-        <h1 class="home-h1" aria-label="ORDO 设计并制造用于判断的物理器具">
+        <h1 class="home-h1" aria-label="ORDO 设计并制造用于判断的实体和数字器具">
           <span class="home-h1-line">ORDO 设计并制造</span>
-          <span class="home-h1-line">用于判断的物理器具</span>
+          <span class="home-h1-line">用于判断的实体和数字器具</span>
         </h1>
 
         <h2 class="home-lead">
@@ -26,12 +31,13 @@ const brand = (site.brand ?? "ORDO").toString();
 
         <p class="home-body">
           我们不提醒、不记录、不替你决定，<br />
-          只把已经发生的事实，留在器具上。
+          只把已经发生的事实，留在器具上或工作流里。
         </p>
 
         <div class="cta-row">
-          <a class="btn primary" href="/zh/products">了解器具</a>
-          <a class="btn outline" href="/zh/shop">进入商店</a>
+          <a class="btn primary" href="/zh/shop">商城</a>
+          <a class="btn outline" href="/zh/software">软件</a>
+          <a class="btn ghost" href="/zh/products">了解器具</a>
         </div>
       </div>
 

@@ -1,0 +1,359 @@
+---
+import Base from '@/layouts/Base.astro';
+
+const pageTitle = 'Software';
+const pageDesc = 'ORDO Return: keep “where I was” checkable inside the tools you already use.';
+
+const downloads = {
+  notion: '/downloads/ordo-return-notion-v1.0.zip',
+  browser: '/downloads/ordo-return-browser-v1.0.zip',
+  vscode: '/downloads/ordo-return-vscode-v1.0.zip',
+  figma: '/downloads/ordo-return-figma-v1.0.zip',
+} as const;
+---
+
+<Base title={pageTitle} description={pageDesc} lang="en">
+  <section class="page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">Software</h1>
+        <p class="lead">
+          <b>ORDO Return</b> is a set of “Back here” micro-tools: it turns your position and next step into checkable facts, making interruptions, handoffs, and continuation easy — bringing you back to the work scene in 5 seconds after an interruption.
+        </p>
+        <nav class="heroNav" aria-label="Quick links">
+          <a class="pill" href="#releases">Releases</a>
+          <a class="pill" href="/en/releases">Release log</a>
+          <a class="pill" href="/en/support">Support</a>
+        </nav>
+        <p class="note">
+          This page lists the publicly verifiable v1.0 builds and direct downloads. Higher-tier versions will continue
+          to ship as additional releases (always grounded in what you can verify).
+        </p>
+      </header>
+
+      <hr class="divider" />
+
+      <section id="releases" class="section">
+        <div class="sectionHead">
+          <h2>Releases</h2>
+        </div>
+
+        <div class="cards" role="list">
+          <article id="notion" class="releaseCard" role="listitem">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="series">ORDO Return · Notion</span>
+                <span class="ver">v1.0</span>
+              </div>
+              <span class="badge">RELEASE</span>
+            </div>
+            <h3>Notion</h3>
+            <p class="summary">
+              A Return marker inside Notion: keep a checkable “where I was” point and the next-step note — so interruption
+              doesn’t erase your position.
+            </p>
+            <ul class="bullets">
+              <li>Record a position + next step in a durable, reviewable format</li>
+              <li>Designed for handoff: another person can verify what you meant</li>
+              <li>No tracking; no background behavior</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.notion} download data-dl-link>Download</a>
+              <span class="pill dlCount" data-dl-counter={downloads.notion} data-lang="en"></span>
+              <a class="link" href="/en/releases">See release log →</a>
+            </div>
+          </article>
+
+          <article id="browser" class="releaseCard" role="listitem">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="series">ORDO Return · Browser</span>
+                <span class="ver">v1.0</span>
+              </div>
+              <span class="badge">RELEASE</span>
+            </div>
+            <h3>Browser</h3>
+            <p class="summary">
+              A lightweight Return layer for web reading: keep a checkable stop point and a next-step note on the page you
+              already opened.
+            </p>
+            <ul class="bullets">
+              <li>Capture “where I stopped” with a simple, verifiable marker</li>
+              <li>Keep the next action explicit (what to do when you return)</li>
+              <li>Minimal surface: you can audit what it stores</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.browser} download data-dl-link>Download</a>
+              <span class="pill dlCount" data-dl-counter={downloads.browser} data-lang="en"></span>
+              <a class="link" href="/en/support">Questions →</a>
+            </div>
+          </article>
+
+          <article id="vscode" class="releaseCard" role="listitem">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="series">ORDO Return · VS Code</span>
+                <span class="ver">v1.0</span>
+              </div>
+              <span class="badge">RELEASE</span>
+            </div>
+            <h3>VS Code</h3>
+            <p class="summary">
+              A Return marker inside code: keep your stop line and next-step note checkable — so context survives task
+              switches.
+            </p>
+            <ul class="bullets">
+              <li>Anchor a line / range and attach a short next-step note</li>
+              <li>Suited for collaboration: makes handoff explicit</li>
+              <li>Clear boundaries: no behavior outside the editor</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.vscode} download data-dl-link>Download</a>
+              <span class="pill dlCount" data-dl-counter={downloads.vscode} data-lang="en"></span>
+              <a class="link" href="/en/support">Licensing / access →</a>
+            </div>
+          </article>
+
+          <article id="figma" class="releaseCard" role="listitem">
+            <div class="cardTop">
+              <div class="meta">
+                <span class="series">ORDO Return · Figma</span>
+                <span class="ver">v1.0</span>
+              </div>
+              <span class="badge">RELEASE</span>
+            </div>
+            <h3>Figma</h3>
+            <p class="summary">
+              A Return marker for design review: keep the stop point and verification notes checkable inside your file.
+            </p>
+            <ul class="bullets">
+              <li>Mark a frame / region and attach a next-step checklist</li>
+              <li>Make review and handoff verifiable (what changed, what’s next)</li>
+              <li>Simple release surface — can be audited</li>
+            </ul>
+            <div class="actions">
+              <a class="btn" href={downloads.figma} download data-dl-link>Download</a>
+              <span class="pill dlCount" data-dl-counter={downloads.figma} data-lang="en"></span>
+              <a class="link" href="/en/releases">Updates →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </section>
+</Base>
+
+<script type="module">
+  const INITIAL = 1000;
+  const lang = 'en';
+  const fmt = new Intl.NumberFormat(lang);
+  const label = (n) => `${fmt.format(n)} downloads`;
+
+  const getKey = (href) => `ordo_dl_${href}`;
+
+  function ensureCount(href) {
+    const k = getKey(href);
+    const existing = Number(localStorage.getItem(k));
+    if (Number.isFinite(existing) && existing > 0) return existing;
+    localStorage.setItem(k, String(INITIAL));
+    return INITIAL;
+  }
+
+  function setCounter(href, value) {
+    document.querySelectorAll(`[data-dl-counter="${CSS.escape(href)}"]`).forEach((el) => {
+      el.textContent = label(value);
+    });
+  }
+
+  // Init all counters
+  document.querySelectorAll('[data-dl-counter]').forEach((el) => {
+    const href = el.getAttribute('data-dl-counter');
+    if (!href) return;
+    const count = ensureCount(href);
+    setCounter(href, count);
+  });
+
+  // Increment on click
+  document.querySelectorAll('a[data-dl-link]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const href = a.getAttribute('href');
+      if (!href) return;
+      const k = getKey(href);
+      const current = ensureCount(href);
+      const next = current + 1;
+      localStorage.setItem(k, String(next));
+      setCounter(href, next);
+    });
+  });
+</script>
+
+<style>
+  .hero {
+    max-width: 900px;
+    margin: 0 0 20px;
+    padding-top: 10px;
+  }
+.lead {
+    font-size: 18px;
+    line-height: 1.65;
+    opacity: 0.92;
+    margin: 0 0 18px;
+  }
+
+  .note {
+    margin: 16px 0 0;
+    font-size: 14px;
+    line-height: 1.7;
+    opacity: 0.78;
+  }
+
+  .heroNav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.18);
+    font-size: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 180ms ease, background 180ms ease;
+  }
+
+  .pill:hover {
+    border-color: rgba(0, 180, 170, 0.55);
+    background: rgba(0, 180, 170, 0.08);
+  }
+
+  .sectionHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .sectionHead p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.75;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .releaseCard {
+    border-radius: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    padding: 18px 18px 16px;
+    min-height: 260px;
+  }
+
+  .cardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .ver {
+    letter-spacing: 0.06em;
+    opacity: 0.75;
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 180, 170, 0.35);
+    background: rgba(0, 180, 170, 0.10);
+    letter-spacing: 0.12em;
+  }
+
+  h3 {
+    font-size: 20px;
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .summary {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.65;
+    opacity: 0.86;
+  }
+
+  .bullets {
+    margin: 0 0 16px;
+    padding-left: 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    opacity: 0.82;
+  }
+
+  .bullets li {
+    margin: 6px 0;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .dlCount {
+    padding: 8px 10px;
+    font-size: 12px;
+    opacity: 0.78;
+  }
+.link {
+    font-size: 14px;
+    color: inherit;
+    opacity: 0.78;
+    text-decoration: none;
+    margin-left: auto;
+  }
+
+  .link:hover {
+    opacity: 0.95;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 940px) {
+.cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 520px) {
+.releaseCard {
+      padding: 16px;
+    }
+  }</style>

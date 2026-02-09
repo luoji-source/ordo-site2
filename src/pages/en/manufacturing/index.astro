@@ -1,0 +1,192 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base lang="en" title="Manufacturing & Verification · ORDO">
+  <section class="page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">Manufacturing &amp; Verification</h1>
+        <p class="lead">
+          Verifiable facts—so you can judge whether an instrument exists in reality and has entered a repeatable manufacturing and delivery flow.
+        </p>
+
+        <div class="hero-actions" aria-label="Related">
+          <a class="btn" href="/en/releases">Software release facts</a>
+          <a class="btn" href="/en/shop">Hardware store</a>
+          <a class="btn ghost" href="/en/support">Support</a>
+        </div>
+
+        <p class="note">
+          Note: this page focuses on <strong>hardware</strong> manufacturing/verification. For software versions and changes, use the <a class="inline" href="/en/releases">Releases</a> page.
+        </p>
+      </header>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="h2">Materials</h2>
+        </div>
+
+        <div class="feature">
+          <figure class="media">
+            <img
+              src="/images/evidence/materials/carbon-fiber-prepreg.png"
+              alt="Carbon fiber prepreg (release film and backing paper)"
+              loading="lazy"
+            />
+            <figcaption>
+              Carbon fiber prepreg: the film, backing paper, and weave are structural—no printing and no skin.
+            </figcaption>
+          </figure>
+
+          <div class="copy">
+            <div class="k">Carbon fiber (current mainline)</div>
+            <p class="p">
+              The current line uses carbon-fiber composites to keep tactile and visual language consistent, and to support long-term desk presence.
+            </p>
+            <ul class="list">
+              <li>Public material type and what batch range can be disclosed</li>
+              <li>Public surface treatment principles for consistency</li>
+              <li>Structural constraints that matter (layers, contact surfaces)</li>
+            </ul>
+            <p class="note">
+              Materials are not beliefs. If future scenarios require heat resistance, skin-friendly surfaces, stain resistance, or food-grade materials, verifiability comes first.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 class="h2">Process &amp; Acceptance</h2>
+        </div>
+
+        <div class="grid">
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">Making</div>
+              <div class="mini">in process / equipment &amp; environment</div>
+            </div>
+            <img class="img" src="/images/evidence/process-cnc.jpg" alt="CNC process (carbon fiber plate)" loading="lazy" />
+            <figcaption class="cap">Verify: made in reality—not rendered.</figcaption>
+          </figure>
+
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">Delivery logs</div>
+              <div class="mini">batch / packing / stacking</div>
+            </div>
+            <img class="img" src="/images/evidence/delivery-batch.jpg" alt="Batch packaging and stacking" loading="lazy" />
+            <figcaption class="cap">Verify: repeatable manufacturing enters delivery flow.</figcaption>
+          </figure>
+
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">Acceptance</div>
+              <div class="mini">measurement / inspection / re-check</div>
+            </div>
+            <img class="img" src="/images/evidence/inspection-qc.jpg" alt="Quality check and measurement" loading="lazy" />
+            <figcaption class="cap">Verify: structure &amp; consistency are checked—never “done and forget”.</figcaption>
+          </figure>
+
+          <figure class="card">
+            <div class="card-head">
+              <div class="k">Durability &amp; care</div>
+              <div class="mini">wear / surface behavior</div>
+            </div>
+            <img class="img" src="/images/evidence/longevity-surface.jpg" alt="Surface behavior (water beads on carbon fiber)" loading="lazy" />
+            <figcaption class="cap">Verify: long-term boundaries and maintainability.</figcaption>
+          </figure>
+        </div>
+
+</section>
+    </div>
+  </section>
+
+  <style>
+
+    .hero{ padding-top: 10px; }
+
+    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; max-width: 96ch; }
+
+    .hero-actions{ margin-top: 14px; display:flex; gap: 10px; flex-wrap: wrap; }
+.note{ margin: 12px 0 0; color: rgba(220,235,240,.60); font-size: 12px; line-height: 1.7; max-width: 108ch; }
+    .inline{ color: rgba(240,252,255,0.92); text-underline-offset: 2px; }
+
+    .section{ margin-top: 14px; }
+    .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap: 12px; flex-wrap: wrap; }
+
+    .sublead{ margin: 6px 0 0; color: rgba(220,235,240,0.66); line-height: 1.7; max-width: 100ch; }
+
+    .feature{
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .media{
+      margin:0;
+      border-radius: 22px;
+      border: 1px solid rgba(220,235,240,0.12);
+      overflow: hidden;
+      background: rgba(10,22,26,0.10);
+      box-shadow: 0 18px 38px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
+      display:grid;
+      grid-template-rows: 1fr auto;
+      min-height: 320px;
+    }
+    .media img{ width:100%; height:100%; object-fit: cover; display:block; }
+    .media figcaption{
+      padding: 10px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.0));
+      color: rgba(220,235,240,0.88);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    .copy{
+      border-radius: 22px;
+      border: 1px solid rgba(220,235,240,0.12);
+      background: radial-gradient(120% 120% at 20% 0%,
+        rgba(48, 92, 110, 0.24) 0%,
+        rgba(14, 26, 30, 0.58) 44%,
+        rgba(10, 16, 18, 0.36) 100%);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 18px;
+    }
+    .k{ font-weight: 800; color: rgba(220,235,240,0.92); letter-spacing: 0.08em; font-size: 12px; }
+    .p{ margin: 12px 0 0; color: rgba(220,235,240,.72); line-height: 1.75; }
+    .list{ margin: 12px 0 0; padding-left: 18px; color: rgba(220,235,240,.72); line-height: 1.75; }
+    .list li{ margin: 6px 0; }
+    .note{ margin: 12px 0 0; }
+
+    .grid{
+      display:grid;
+      /* 2×2 on desktop for readability */
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .card-head{ padding: 12px 12px 10px; }
+    .mini{ margin-top: 6px; font-size: 12px; color: rgba(220,235,240,.60); }
+    .img{ width:100%; height: 220px; object-fit: cover; display:block; border-top: 1px solid rgba(220,235,240,0.06); border-bottom: 1px solid rgba(220,235,240,0.06); }
+    .cap{ padding: 10px 12px 12px; color: rgba(220,235,240,.70); font-size: 12px; line-height: 1.65; }
+
+    .footnote{ margin: 12px 0 0; color: rgba(220,235,240,.56); font-size: 12px; line-height: 1.65; }
+
+    @media (max-width: 1100px){
+      .feature{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px){
+
+      .grid{ grid-template-columns: 1fr; }
+      .media{ min-height: 280px; }
+      .img{ height: 200px; }
+    }
+  </style>
+</Base>

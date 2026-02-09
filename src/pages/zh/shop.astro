@@ -1,337 +1,290 @@
 ---
 import Base from "@/layouts/Base.astro";
 
-const orderEmail = "order@ordoinc.com";
+const title = "商城";
+const pageTitle = "商城";
+const pageDesc = "在线商城：展示在售、预告与规划产品。采用邮件订购与邮件确认方式，并借鉴众筹的‘节点透明’理念。";
 
-function safeText(v, fallback = "") {
-  return typeof v === "string" && v.trim().length ? v : fallback;
-}
+const orderEmail = "orders@ordoinc.com";
 
-// ✅ 来自首页推荐产品模块（移植到商店顶部）
-const pNameZh = "连续事实标定器 · 阅读场景";
-const pLine1 = "风火雷电系列";
-const pLine2 = "滑道式 · 碳纤维";
-const pVersion = "v1.1";
-
-// 占位：主图尺寸提示
-const heroSetMeta = { w: 1100, h: 825, label: "四枚并排主图（占位）" };
-
-// 文案占位（保持首页结构）
-const hero = {
-  subtitle: "用于标定阅读过程中“当前停留位置”的实体器具",
-  micro: "不是装饰，不记录数据，不提醒你阅读",
-  orderHint: "下单邮件写：姓名 / 地址 / 数量（默认 1 套装）",
+const featured = {
+  name: "阅读定位器",
+  series: "风火雷电系列",
+  status: "最新推荐",
+  tagline:
+    "一枚可以“滑动”的工程级阅读标记。不是装饰，它把真实结构、滑动反馈与碳纤维材料压缩进书和文件里。你会用在：",
+  points: [
+    "读书被打断：下次打开，立刻回到同一位置",
+    "长文/资料反复查阅：用刻度把“进度”标出来",
+    "学习/训练：把“当前段落”变成可复现的位置",
+  ],
+  images: [
+    { src: "/images/home/reading-locator-hero.jpg", alt: "阅读定位器·风火雷电系列" },
+    { src: "/images/home/slide-structure-960.png", alt: "结构示意" },
+    { src: "/images/explain-reading-scene-960.png", alt: "使用场景示意" },
+  ],
 };
 
-const orderHref = `mailto:${orderEmail}?subject=${encodeURIComponent(`ORDO 下单 / ${pNameZh} ${pVersion}`)}`;
-const contactHref = `mailto:${orderEmail}?subject=${encodeURIComponent("ORDO 咨询 / 商店")}`;
+const grid = [
+  {
+    name: "标记定位尺",
+    status: "预告",
+    desc: "以后再也不会忘记我上次测量的尺寸是多少。",
+    chips: ["预告", "小批量", "可订阅"],
+  },
+  {
+    name: "家庭外出看板",
+    status: "预告",
+    desc: "再没有任何事让我出门放心不下。",
+    chips: ["预告", "打样中", "可订阅"],
+  },
+];
+
+const mailto = (subject) => {
+  const s = encodeURIComponent(subject);
+  const b = encodeURIComponent(
+    "请填写购买登记信息（我们将回邮确认规格/数量/交期/交付方式）。\n\n- 产品：\n- 系列/版本：\n- 数量：\n- 收货地区/城市：\n- 联系方式：\n- 备注（如需开票/定制说明）：\n"
+  );
+  return `mailto:${orderEmail}?subject=${s}&body=${b}`;
+};
 ---
 
-<Base lang="zh" title="商店 · ORDO">
-  <!-- 顶部：移植首页推荐产品板块 -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow">ORDO · 新推出产品</div>
+<Base title={`${pageTitle} · ORDO`} description={pageDesc} lang="zh">
+  <section id="featured" class="section">
+    <div class="section__head">
+      <h2 class="h2">最新推荐</h2>
+    </div>
 
-          <h1 class="h1 nowrap" title={pNameZh}>{pNameZh}</h1>
-
-          <div class="sub">{safeText(hero.subtitle, "用于标定阅读过程中“当前停留位置”的实体器具")}</div>
-          <div class="micro">{safeText(hero.micro, "不是装饰，不记录数据，不提醒你阅读")}</div>
-
-          <div class="spec">
-            <div class="spec-row"><span class="k">系列</span><span class="v">{pLine1}</span></div>
-            <div class="spec-row"><span class="k">形式</span><span class="v">{pLine2}</span></div>
-            <div class="spec-row"><span class="k">版本</span><span class="v">{pVersion}</span></div>
+    <article class="featured">
+      <div class="featured__media">
+        <div class="gallery" data-gallery="featured">
+          <div
+            class="galleryMain"
+            id="featuredMain"
+            style={`--zoom-src: url('${featured.images?.[0]?.src ?? ''}')`}
+            role="button"
+            aria-label="点击切换放大查看"
+            tabindex="0"
+          >
+            <img
+              id="featuredMainImg"
+              src={featured.images?.[0]?.src}
+              alt={featured.images?.[0]?.alt}
+              loading="eager"
+            />
+            <div class="zoomTip">点击放大，移动查看细节</div>
           </div>
 
-          <div class="cta-row">
-            <a class="btn primary" href={orderHref}>下单</a>
-            <a class="btn" href={contactHref}>咨询</a>
+          <div class="thumbs" aria-label="图片预览">
+            {featured.images.slice(0, 6).map((img, i) => (
+              <button
+                class={`thumb${i === 0 ? ' isActive' : ''}`}
+                type="button"
+                aria-label={`查看图片 ${i + 1}`}
+                data-src={img.src}
+                data-alt={img.alt}
+              >
+                <img src={img.src} alt={img.alt} loading="lazy" />
+              </button>
+            ))}
           </div>
-
-          <div class="order-hint">{safeText(hero.orderHint, "下单邮件写：姓名 / 地址 / 数量（默认 1 套装）")}</div>
-        </div>
-
-        <div class="hero-media">
-          <div class="ph-fit ph-hero ruler" role="img" aria-label="四枚并排主图占位">
-            <div class="ph-inner">
-              <div class="ph-top">
-                <span class="tag">主图 / 四枚并排</span>
-                <span class="dim">参考尺寸：{heroSetMeta.w}×{heroSetMeta.h}px</span>
-              </div>
-              <div class="ph-mid">
-                <div class="ph-title">{heroSetMeta.label}</div>
-                <div class="ph-sub">{pNameZh}</div>
-              </div>
-              <div class="ph-bottom">
-                <span class="muted">{pVersion}</span>
-                <span class="muted">4:3</span>
-              </div>
-            </div>
-          </div>
-          <div class="media-note">主图与左侧功能描述对齐；比例 4:3。</div>
         </div>
       </div>
+
+      <div class="featured__body">
+        <div class="titleBlock">
+          <h3 class="h3"><span class="prodName">{featured.name}</span> <span class="muted">· {featured.series}</span></h3>
+          <p class="subtitle">ORDO Mark v1.0 四枚标准套装</p>
+        </div>
+        <p class="tagline">{featured.tagline}</p>
+
+        <ul class="points">
+          {featured.points.map((t) => (
+            <li>{t}</li>
+          ))}
+        </ul>
+
+        <div class="cta">
+          <a class="btn" href={mailto(`订购｜${featured.name} ${featured.series}`)}>订购</a>
+          <a class="btn ghost" href="/zh/shop/reading-locator">详情页</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section id="catalog" class="section">
+    <div class="grid grid--plan">
+      {grid.map((p) => (
+        <article class={`card ${p.status === '预告' ? 'card--pre' : 'card--plan'}`.trim()}>
+          <div class="card__top">
+            <div class="card__title">{p.name}</div>
+            <div class={`status ${p.status === '预告' ? 'status--pre' : 'status--plan'}`.trim()}>{p.status}</div>
+          </div>
+          <div class="card__desc">{p.desc}</div>
+          <div class="chips">
+            {p.chips.map((c) => (
+              <span class="chip">{c}</span>
+            ))}
+          </div>
+          <div class="card__footer">
+            {p.status === '预告' ? (
+              <>
+                <a class="link" href={mailto(`订阅｜${p.name}`)}>订阅 →</a>
+                <span class="hint">不展示价格</span>
+              </>
+            ) : (
+              <span class="hint">规划占位：不开放订购</span>
+            )}
+          </div>
+        </article>
+      ))}
     </div>
   </section>
 
-  <!-- 下部：标准电商展示区（8 个：2 个预告 + 6 个规划） -->
-  <section class="catalog">
-    <div class="container">
-      <div class="catalog-head">
-        <h2 class="h2b">全部产品</h2>
-        <div class="catalog-note">本页展示在售/预告/规划产品。预告与规划不披露可对标参数，以交付节点与事实口径为准。</div>
-      </div>
+  <script is:inline>
+    (() => {
+      const root = document.querySelector('[data-gallery="featured"]');
+      if (!root) return;
 
-      <div class="grid">
-        <!-- 预告 01 -->
-        <article class="card">
-          <div class="thumb">01</div>
-          <div class="card-top">
-            <h3 class="title">预告产品 A（占位）</h3>
-            <span class="badge presale">预告</span>
-          </div>
-          <p class="text">以节点透明的方式发布；上线前仅公开边界与可核对口径。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>登记意向</a>
-          </div>
-        </article>
+      const main = root.querySelector('.galleryMain');
+      const mainImg = root.querySelector('#featuredMainImg');
+      // Thumbnails are rendered as buttons with the .thumb class.
+      const thumbs = Array.from(root.querySelectorAll('.thumb'));
+      if (!main || !mainImg) return;
 
-        <!-- 预告 02 -->
-        <article class="card">
-          <div class="thumb">02</div>
-          <div class="card-top">
-            <h3 class="title">预告产品 B（占位）</h3>
-            <span class="badge presale">预告</span>
-          </div>
-          <p class="text">保持“可核对事实”叙事，不做对标式宣传与参数堆叠。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>登记意向</a>
-          </div>
-        </article>
+      let zoomOn = false;
 
-        <!-- 规划 03 -->
-        <article class="card">
-          <div class="thumb">03</div>
-          <div class="card-top">
-            <h3 class="title">规划产品 01（占位）</h3>
-            <span class="badge plan">规划</span>
-          </div>
-          <p class="text">公开“要解决的问题”与“核对方式”，不公开可被对标的实现细节。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>合作提案</a>
-          </div>
-        </article>
+      const setActive = (src) => {
+        thumbs.forEach((b) => {
+          b.classList.toggle('isActive', b.getAttribute('data-src') === src);
+        });
+      };
 
-        <!-- 规划 04 -->
-        <article class="card">
-          <div class="thumb">04</div>
-          <div class="card-top">
-            <h3 class="title">规划产品 02（占位）</h3>
-            <span class="badge plan">规划</span>
-          </div>
-          <p class="text">以交付事实为中心：边界、节点、验收口径。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>合作提案</a>
-          </div>
-        </article>
+      const setMain = (src, alt) => {
+        mainImg.src = src;
+        mainImg.alt = alt || '';
+        main.style.setProperty('--zoom-src', `url('${src}')`);
+        // reset zoom state when switching images
+        zoomOn = false;
+        main.classList.remove('isZoom');
+        main.style.backgroundImage = 'none';
+        main.style.backgroundPosition = '50% 50%';
+        setActive(src);
+      };
 
-        <!-- 规划 05 -->
-        <article class="card">
-          <div class="thumb">05</div>
-          <div class="card-top">
-            <h3 class="title">规划产品 03（占位）</h3>
-            <span class="badge plan">规划</span>
-          </div>
-          <p class="text">对外只给“可理解但不可对标”的信息层：用途、边界、核对。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>合作提案</a>
-          </div>
-        </article>
+      thumbs.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const src = btn.getAttribute('data-src');
+          const alt = btn.getAttribute('data-alt') || '';
+          if (src) setMain(src, alt);
+        });
+      });
 
-        <!-- 规划 06 -->
-        <article class="card">
-          <div class="thumb">06</div>
-          <div class="card-top">
-            <h3 class="title">规划产品 04（占位）</h3>
-            <span class="badge plan">规划</span>
-          </div>
-          <p class="text">维持产品体系一致的语言：事实、节点、边界、追溯。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>合作提案</a>
-          </div>
-        </article>
+      const updateBgPos = (ev) => {
+        if (!zoomOn) return;
+        const rect = main.getBoundingClientRect();
+        const x = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+        const y = Math.max(0, Math.min(1, (ev.clientY - rect.top) / rect.height));
+        main.style.backgroundPosition = `${(x * 100).toFixed(2)}% ${(y * 100).toFixed(2)}%`;
+      };
 
-        <!-- 规划 07 -->
-        <article class="card">
-          <div class="thumb">07</div>
-          <div class="card-top">
-            <h3 class="title">规划产品 05（占位）</h3>
-            <span class="badge plan">规划</span>
-          </div>
-          <p class="text">公开“交付将如何被核对”，不公开“如何做到”的工艺细节。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>合作提案</a>
-          </div>
-        </article>
+      main.addEventListener('mousemove', updateBgPos);
+      main.addEventListener('mouseenter', (ev) => updateBgPos(ev));
+      main.addEventListener('click', (ev) => {
+        zoomOn = !zoomOn;
+        if (zoomOn) {
+          main.classList.add('isZoom');
+          main.style.backgroundImage = 'var(--zoom-src)';
+          updateBgPos(ev);
+        } else {
+          main.classList.remove('isZoom');
+          main.style.backgroundImage = 'none';
+        }
+      });
 
-        <!-- 规划 08 -->
-        <article class="card">
-          <div class="thumb">08</div>
-          <div class="card-top">
-            <h3 class="title">规划产品 06（占位）</h3>
-            <span class="badge plan">规划</span>
-          </div>
-          <p class="text">信息只到“你该知道的程度”，避免被竞争对手做参数对标。</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>咨询</a>
-            <a class="btn ghost" href={contactHref}>合作提案</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
+      // initial
+      setActive(mainImg.getAttribute('src') || '');
+    })();
+  </script>
 
   <style>
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    .shop-card{ min-height:168px; display:flex; flex-direction:column; gap:10px; }
 
-    /* HERO（来自首页模块的风格） */
-    .hero { padding: 26px 0 18px; }
-    .hero-grid { display: grid; grid-template-columns: minmax(480px, 1fr) minmax(520px, 1fr);
-      gap: 24px; align-items: start; }
-    @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; } }
+    .k{font-size:12px;letter-spacing:.22em;opacity:.7;margin-bottom:10px;}
+    
+    .sub{max-width:920px;margin:0 0 18px;opacity:.9;font-size:16px;line-height:1.7;}
+    .pill{display:inline-flex;align-items:center;padding:7px 12px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(0,0,0,.18);font-size:13px;opacity:.9}
 
-    .eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
-    .h1 { font-size: clamp(28px, 3.1vw, 42px); line-height: 1.14; margin: 12px 0 10px; letter-spacing: -0.02em; }
-    .nowrap { white-space: nowrap; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; scrollbar-width: thin; }
-    .sub { font-size: 15px; opacity: .88; line-height: 1.7; max-width: 70ch; }
-    .micro { margin-top: 10px; font-size: 13px; opacity: .72; line-height: 1.7; max-width: 70ch; }
+    .section{padding:26px 0;}
+    .section__head{max-width:1100px;margin:0 auto 16px;padding:0 28px;}
+    .h2{font-size:22px;margin:0 0 6px;}
+    .desc{margin:0;opacity:.82;line-height:1.7;max-width:980px;}
 
-    .spec { margin-top: 16px; border-radius: 18px; border: 1px solid rgba(220,235,240,.10); background: rgba(10,22,26,.12); overflow: hidden; }
-    .spec-row { display: grid; grid-template-columns: 84px 1fr; gap: 14px; padding: 11px 14px; border-top: 1px solid rgba(220,235,240,.08); }
-    .spec-row:first-child { border-top: none; }
-    .k { font-size: 12px; opacity: .65; letter-spacing: .08em; text-transform: uppercase; }
-    .v { font-size: 14px; opacity: .92; }
+    .featured{max-width:1100px;margin:0 auto;padding:18px;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));backdrop-filter: blur(10px);display:grid;grid-template-columns: .95fr 1.05fr;gap:18px;}
 
-    .cta-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+    .featured__media{min-width:0;}
+    .gallery{display:block;}
+    .galleryMain{aspect-ratio:16/10;max-height:340px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.2);position:relative;cursor:zoom-in;user-select:none;}
+    .galleryMain img{width:100%;height:100%;object-fit:cover;display:block;}
+    .galleryMain.isZoom{cursor:zoom-out;background-repeat:no-repeat;background-size:220%;}
+    .galleryMain.isZoom img{opacity:0;}
+    /* Thumbnails: up to 6. Keep them compact so 6 items visually align with the main image block. */
+    .thumbs{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-start;}
+    /* Each thumbnail takes 1/6 of the main image width so 6 items align cleanly. */
+    .thumb{flex:0 0 calc((100% - 5*8px)/6);max-width:calc((100% - 5*8px)/6);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.2);opacity:.82;cursor:pointer;padding:0;max-height:56px;}
+    .thumb:hover{opacity:1;}
+    .thumb.isActive{opacity:1;border-color:rgba(255,255,255,.28);}
+    .thumb img{width:100%;height:56px;aspect-ratio:16/10;object-fit:cover;display:block;}
 
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 10px 14px; border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.14);
-      color: rgba(220,235,240,0.88);
-      text-decoration:none;
-      background: rgba(10,22,26,0.10);
-      transition: border-color .2s ease, background .2s ease;
-      white-space: nowrap;
-      cursor: pointer;
-      font-size: 14px;
+    .featured__body{padding:16px 14px 16px 8px;display:flex;flex-direction:column;gap:14px;justify-content:center;}
+    .badge{align-self:flex-start;font-size:12px;letter-spacing:.08em;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.22);opacity:.9}
+    .h3{margin:0;font-size:22px;line-height:1.15;}
+    .titleBlock{display:flex;flex-direction:column;gap:6px;}
+    /* Make the product name more prominent than the series label (matches the site's typographic hierarchy). */
+    .titleBlock .prodName{font-size:28px;font-weight:820;letter-spacing:.02em;}
+    .titleBlock .muted{font-size:20px;}
+    .subtitle{margin:6px 0 0;font-size:15px;line-height:1.45;font-weight:650;letter-spacing:.06em;color:rgba(214,244,250,.86);opacity:.92;}
+    .subhead{max-width:1100px;margin:0 auto 10px;padding:0 28px;display:flex;align-items:baseline;justify-content:space-between;gap:14px;}
+    .h3s{margin:0;font-size:14px;letter-spacing:.08em;opacity:.92;}
+    .subdesc{font-size:12px;opacity:.72;line-height:1.6;}
+    .muted{opacity:.78;font-weight:500;}
+    .tagline{margin:0;opacity:.9;line-height:1.7;}
+    .points{margin:0;padding-left:18px;opacity:.86;line-height:1.7;}
+
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+    .btn:hover{background:rgba(255,255,255,.06)}
+    .btn.ghost{opacity:.85}
+    .fine{font-size:12px;opacity:.72;line-height:1.7;margin-top:2px;}
+
+    .grid{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:14px;}
+    .grid--pre{grid-template-columns:repeat(2, minmax(0,1fr));}
+    .grid--plan{grid-template-columns:repeat(3, minmax(0,1fr));}
+    .card__top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+    .card__title{font-size:16px;font-weight:700;}
+    .status{font-size:12px;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);opacity:.92;white-space:nowrap;}
+    .status--pre{background:rgba(255,255,255,.06)}
+    .status--plan{background:rgba(0,0,0,.18);opacity:.8}
+    .card__desc{opacity:.82;line-height:1.65;font-size:13px;}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
+    .chip{font-size:12px;opacity:.8;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.14)}
+    .card__footer{display:flex;align-items:center;justify-content:space-between;margin-top:2px;}
+    .link{font-size:13px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.22);padding-bottom:2px;}
+    .hint{font-size:12px;opacity:.65;}
+
+    .bottomNote{max-width:1100px;margin:14px auto 0;padding:0 28px;font-size:12px;opacity:.7;}
+
+    @media (max-width: 980px){
+      .featured{grid-template-columns: 1fr;}
+      .grid{grid-template-columns:repeat(2, minmax(0,1fr));}
+      .grid--pre{grid-template-columns:repeat(2, minmax(0,1fr));}
+      .grid--plan{grid-template-columns:repeat(2, minmax(0,1fr));}
+      
     }
-    .btn:hover{ border-color: rgba(220,235,240,0.24); background: rgba(10,22,26,0.14); }
-    .btn.primary { background: rgba(120,210,210,.16); border-color: rgba(120,210,210,.45); }
-    .btn.ghost{ background: transparent; border-color: rgba(220,235,240,0.10); color: rgba(220,235,240,0.76); }
-
-    .order-hint { margin-top: 10px; font-size: 13px; opacity: .72; }
-
-    .hero-media { width: 100%; margin-top: 48px; }
-    @media (max-width: 980px) { .hero-media { margin-top: 18px; } }
-
-    /* Placeholder */
-    .ph-fit{
-      border-radius: 22px;
-      border: 1px solid rgba(220,235,240,0.12);
-      overflow: hidden;
-      background: rgba(10,22,26,0.10);
-      box-shadow: 0 18px 38px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
-      min-height: 320px;
-    }
-    .ph-inner{ height: 100%; padding: 14px; display:flex; flex-direction: column; justify-content: space-between; }
-    .ph-top{ display:flex; justify-content: space-between; gap: 10px; align-items:center; }
-    .tag{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.12);
-      color: rgba(220,235,240,0.82);
-      background: rgba(10,22,26,0.06);
-      font-size: 12px;
-      width: fit-content;
-    }
-    .dim{ color: rgba(220,235,240,0.55); font-size: 12px; }
-    .ph-title{ color: rgba(220,235,240,0.90); font-weight: 800; letter-spacing: 0.02em; }
-    .ph-sub{ color: rgba(220,235,240,0.66); margin-top: 6px; }
-    .ph-bottom{ display:flex; justify-content: space-between; gap: 10px; }
-    .muted{ color: rgba(220,235,240,0.56); font-size: 12px; }
-    .media-note{ margin-top: 10px; color: rgba(220,235,240,0.56); font-size: 12px; line-height: 1.6; }
-
-    /* Catalog */
-    .catalog{ padding: 18px 0 44px; }
-    .catalog-head{ border-top: 1px solid rgba(220,235,240,0.08); padding-top: 18px; }
-    .h2b{ margin: 0; font-size: 18px; letter-spacing: 0.02em; color: rgba(220,235,240,0.92); }
-    .catalog-note{ margin-top: 8px; color: rgba(220,235,240,0.66); line-height: 1.7; max-width: 92ch; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .card{
-      border-radius: 18px;
-      border: 1px solid rgba(220,235,240,0.10);
-      background: radial-gradient(120% 120% at 20% 0%,
-        rgba(48, 92, 110, 0.22) 0%,
-        rgba(14, 26, 30, 0.55) 45%,
-        rgba(10, 16, 18, 0.34) 100%);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.06);
-      padding: 14px;
-      display:flex;
-      flex-direction: column;
-      min-height: 230px;
-    }
-    .thumb{
-      height: 96px;
-      border-radius: 14px;
-      border: 1px solid rgba(220,235,240,0.10);
-      background: linear-gradient(135deg, rgba(48,92,110,0.34), rgba(10,16,18,0.08));
-      display:flex; align-items:center; justify-content:center;
-      color: rgba(220,235,240,0.70);
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      margin-bottom: 12px;
-    }
-    .card-top{ display:flex; justify-content:space-between; gap: 10px; align-items:flex-start; }
-    .title{ margin: 0; font-size: 14px; color: rgba(220,235,240,0.92); line-height: 1.4; }
-    .badge{
-      font-size: 12px;
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.12);
-      background: rgba(10,22,26,0.06);
-      color: rgba(220,235,240,0.74);
-      white-space: nowrap;
-    }
-    .badge.presale{ border-color: rgba(255,210,120,0.22); }
-    .badge.plan{ border-color: rgba(220,235,240,0.12); opacity: .9; }
-    .text{ margin: 10px 0 0; color: rgba(220,235,240,0.66); line-height: 1.65; font-size: 13px; }
-    .card-actions{ display:flex; gap: 10px; margin-top: auto; flex-wrap: wrap; padding-top: 12px; }
-
-    @media (max-width: 1100px){
-      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .hero-grid{ grid-template-columns: 1fr; }
-      .hero-media{ margin-top: 18px; }
-    }
-    @media (max-width: 680px){
-      .grid{ grid-template-columns: 1fr; }
+    @media (max-width: 560px){
+      .grid{grid-template-columns:1fr;}
+      .grid--pre{grid-template-columns:1fr;}
+      .grid--plan{grid-template-columns:1fr;}
+      
     }
   </style>
 </Base>

@@ -1,0 +1,285 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const title = "发布 · ORDO";
+const description =
+  "公开可核对的版本事实：用于器具（硬件）与软件的发布记录，包含变更要点、影响边界与核对路径。";
+const keywords = [
+  "ORDO",
+  "发布",
+  "发布记录",
+  "版本事实",
+  "硬件",
+  "软件",
+  "可核对",
+  "核对路径",
+];
+
+// 内容保持不变：仅对齐公用模版的首屏节奏与排版。
+const releases = [
+  {
+    id: 'reading-locator-wftd-20260202',
+    kind: '器具（硬件）',
+    date: '2026.02.02',
+    // 对外命名：型号/套装作为主标题，系列名作为副标题
+    name: 'ORDO Mark v1.0 四枚标准套装',
+    subtitle: '阅读定位器 · 风火雷电系列',
+    summary: '在阅读与交接场景，把“停止位/进度”留在实体器具上；回到书桌仍能核对并继续。',
+    highlights: [
+      '四个 Edition 首批交付',
+      'Mark Core 滑道 + 滑块作为可见进度',
+      '公开核对：纹理 / 刻度 / 行程 / 阻尼 / 标识',
+    ],
+    facts: [
+      '本次为首批生产：风 / 火 / 雷 / 电四个 Edition 同步进入制造与交付。',
+      '结构口径：Mark Core（同一结构代次）。以线性滑道与滑块，把进度从“记忆”变成“可见事实”。',
+      '对外发布的可核对点：碳纤维纹理与滑道开槽、刻度表达（0–100% 分段）、滑块行程与阻尼范围、Edition 标识。',
+    ],
+    boundaries: [
+      '刻度用于个人核对，不是计量标准；不同纸张/装订带来的手感差异不作为一致性承诺。',
+      'Edition（风火雷电）是刻度/视觉表达的区分，不代表性能等级或用途优先级。',
+      '正常边界覆盖合理使用场景；跌落/挤压导致的结构变形需单独判定。',
+    ],
+    trace: [
+      '在商城以 Edition 名称检索并对照实物刻度与滑块行程。',
+      '如需对制造与交付事实进行核对，参考“制造”页的公开过程与验收口径。',
+      '出现阻尼异常/刻度磨损等问题：在“支持”提交现象、使用场景与（如有）包装/刻印信息。',
+    ],
+    actions: [
+      { label: '商城 →', href: '/zh/shop' },
+      { label: '制造与验收 →', href: '/zh/manufacturing' },
+    ],
+  },
+  {
+    id: 're-entry-20260203',
+    kind: '软件',
+    date: '2026.02.03',
+    name: 'ORDO Return · Notion v1.0',
+    subtitle: 'Re-Entry',
+    summary: '被打断后，把“停止位/下一步/材料盒”写成可核对事实，用最短路径回到同一判断位置。',
+    highlights: [
+      '三字段：停止位 / 下一步 / 材料盒',
+      '触发式记录（不做后台追踪）',
+      '用于续接，不替你做决定',
+    ],
+    facts: [
+      '核心结构固定为三项：停止位（你停在哪里）、下一步（回来第一步做什么）、材料盒（恢复上下文所需少量链接/文件）。',
+      '触发式记录：只在你主动打开/提交时写入；不做后台追踪，不把提醒当作产品基础。',
+      '口径一致：不替你做判断，只把你写下的事实留在工作流里，便于回到同一位置继续。',
+    ],
+    boundaries: [
+      '不提醒 / 不评分 / 不强推：软件不驱动你做决定，只提供可核对的“停止位/下一步/材料”。',
+      '不扩展为监控系统：不以“统计与行为干预”作为默认目标；仅在你需要时提供参考。',
+      '范围限制：发布记录只覆盖本次公开功能边界，不包含未来规划与内部实现细节。',
+    ],
+    trace: [
+      '在“软件”页进入 Re-Entry，按三项字段完成一次记录并回读核对。',
+      '版本与变更以发布记录为准：回答“变了什么 / 影响哪些边界 / 如何核对”。',
+      '问题与需求：在“支持”选择“支持/售后”或“合作提案”，提交可复现的事实描述。',
+    ],
+    actions: [
+      { label: '软件 →', href: '/zh/software#re-entry' },
+      { label: '支持与联系 →', href: '/zh/support' },
+    ],
+  },
+];
+
+const sections = [
+  { label: "发布记录", href: "#release-log" },
+  { label: "硬件", href: "#hardware" },
+  { label: "软件", href: "#software" },
+  { label: "支持", href: "#support" },
+];
+---
+
+<Base title={title} description={description} keywords={keywords} lang="zh">
+  <section class="page releases-page">
+    <div class="container">
+      <header class="hero">
+        <h1 class="h1">发布</h1>
+        <p class="lead">公开可核对的版本事实：器具（硬件）与软件的发布记录。</p>
+        <p class="desc">每条记录固定三块：<b>变更要点</b> · <b>影响边界</b> · <b>核对路径</b>。</p>
+
+        <div class="jump" aria-label="Quick jumps">
+          <span class="label">快速跳转：</span>
+          {sections.map((s) => (
+            <a class="pill" href={s.href}>{s.label}</a>
+          ))}
+        </div>
+      </header>
+
+      <div class="divider"></div>
+
+      <section class="section" id="release-log">
+        <div class="log-head">
+          <div>
+            <h2 class="h2">发布记录</h2>
+            <p class="sublead">仅发布可核对事项；更深核对请通过支持。</p>
+          </div>
+          <div class="log-jump" aria-label="Jump to sections">
+            <a class="pill" href="#hardware">硬件 →</a>
+            <a class="pill" href="#software">软件 →</a>
+            <a class="pill" href="#support">支持 →</a>
+          </div>
+        </div>
+
+        <div class="release-list">
+          {releases.map((r) => (
+            <article class="panel release-card" id={r.id}>
+              <header>
+                <div class="release-meta">
+                  <span class="tag">{r.kind}</span>
+                  <span class="dot">·</span>
+                  <span class="date">{r.date}</span>
+                </div>
+
+                <h3 class="release-title">{r.name}</h3>
+                <div class="release-sub">{r.subtitle}</div>
+                <p class="release-summary">{r.summary}</p>
+
+                {r.highlights && (
+                  <div class="highlights">
+                    <div class="mini">要点</div>
+                    <div class="chips">
+                      {r.highlights.map((t) => (
+                        <span class="chip">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </header>
+
+              <div class="release-grid">
+                <section class="panel release-col">
+                  <div class="mini">变更要点</div>
+                  <ul>
+                    {r.facts.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+                <section class="panel release-col">
+                  <div class="mini">影响边界</div>
+                  <ul>
+                    {r.boundaries.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+                <section class="panel release-col">
+                  <div class="mini">核对路径</div>
+                  <ul>
+                    {r.trace.map((t) => (
+                      <li>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+              </div>
+
+              <div class="release-actions">
+                {r.actions.map((a) => (
+                  <a href={a.href} class="pill">{a.label}</a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section" id="support">
+        <div class="divider"></div>
+        <h2 class="h2">支持</h2>
+        <p class="sublead">如需更深核对或反馈异常，请通过支持发起可复现的事实描述。</p>
+        <a href="/zh/support" class="pill">支持与联系 →</a>
+      </section>
+    </div>
+  </section>
+
+  <style>
+    /* 发布页：对齐 Products / Manufacturing 的首屏节奏与起始高度 */
+    /* Keep the same top spacing as other top-level pages (e.g. 软件). */
+    /* Keep the same top rhythm as other pages (e.g. 软件) */
+    .releases-page .hero{ padding-top: 10px; padding-bottom: 24px; max-width: 104ch; }
+
+    .releases-page .desc b{ color: var(--fg0); }
+
+    /* 收紧首屏：缩小「快速跳转」与上方说明、以及与下方内容之间的空隙。 */
+    .releases-page .hero .lead{ margin-bottom: 12px; }
+    .releases-page .hero .desc{ margin-top: 0; margin-bottom: 10px; }
+    .jump{
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .label{ color: rgba(220,235,240,.56); font-size: 12px; letter-spacing: 0.12em; }
+
+    /* Divider 往上抬一点，避免首屏出现大段空白。 */
+    .divider{ height:1px; background: rgba(255,255,255,0.08); margin: 18px 0 28px; }
+    .section{ margin-top: 18px; }
+
+    .log-head{
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    @media (max-width: 760px){
+      .log-head{ flex-direction: column; align-items: flex-start; }
+    }
+
+    .log-jump{ display:flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
+    @media (max-width: 760px){
+      .log-jump{ justify-content: flex-start; }
+    }
+
+    .release-list{ display:flex; flex-direction: column; gap: 14px; }
+
+    .release-card{ padding: 18px; }
+    @media (max-width: 560px){ .release-card{ padding: 14px; } }
+
+    .release-meta{ display:flex; align-items:center; gap: 10px; color: rgba(220,235,240,.68); }
+    .tag{
+      display:inline-flex; align-items:center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.03);
+      font-size: 12px;
+      letter-spacing: .06em;
+    }
+    .dot{ opacity: .55; }
+
+    .release-title{ margin: 10px 0 4px; font-size: 22px; line-height: 1.25; }
+    .release-sub{ color: rgba(220,235,240,.70); }
+    .release-summary{ margin: 10px 0 0; color: var(--fg1); }
+
+    .highlights{ margin-top: 12px; }
+    .chips{ display:flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .chip{
+      display:inline-flex;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(160,255,248,.14);
+      background: rgba(32,255,242,.04);
+      color: rgba(236,246,250,.86);
+      font-size: 12px;
+    }
+
+    .release-grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 980px){ .release-grid{ grid-template-columns: 1fr; } }
+
+    .release-col{ padding: 14px; }
+    .release-col ul{ margin: 10px 0 0; padding-left: 18px; color: rgba(230,242,246,.86); line-height: 1.75; }
+    .release-col li{ margin: 0 0 8px; }
+
+    .release-actions{ margin-top: 12px; display:flex; flex-wrap: wrap; gap: 10px; }
+  </style>
+</Base>

@@ -4,22 +4,198 @@ import Base from "@/layouts/Base.astro";
 
 <Base lang="en" title="ORDO · ORDO">
   <section class="page-shell">
-    <div class="container">
+    <div class="container ordo-container">
       <div class="section-head">
-        <div class="eyebrow">Company</div>
         <h1 class="h1">ORDO</h1>
-        <p class="lead">Manufacturing responsibility: design, manufacturing, delivery, and support. The RESPECTA external link appears only on this page.</p>
       </div>
-      <div class="muted">(Structure placeholder. Content will be filled in later.)</div>
 
-      <div class="card" style="margin-top:24px">
-        <div class="eyebrow">Standard &amp; Boundary</div>
-        <div class="h3" style="margin:8px 0 6px">ORDO builds; RESPECTA judges</div>
-        <div class="muted">RESPECTA is an independent standard website. This link is for reading the standard text only and does not imply automatic endorsement.</div>
-        <a class="btn" href="https://respecta.org.cn" target="_blank" rel="noopener noreferrer" style="margin-top:12px">
-          Read RESPECTA ↗
-        </a>
+      <div class="company-grid">
+        <main class="company-main">
+          <p class="company-lead">
+            ORDO designs and manufactures instruments—physical and digital—so people can keep position, boundaries, and continuity across reading, work, and judgment, under interruption, switching, and long spans.
+          </p>
+
+          <div class="prose">
+            <p>
+              We care less about efficiency or deciding for you, and more about a stable, trustworthy reference when judgment must remain yours.
+              ORDO instruments do not record you, do not evaluate you, and do not remind you what to do; they only keep key facts in the real world.
+            </p>
+
+            <div class="callout" aria-label="Three things">
+              <div class="callout-title">An instrument only does three things</div>
+              <div class="callout-lines" role="list">
+                <span role="listitem">Where you are now</span>
+                <span role="listitem">Where you left</span>
+                <span role="listitem">Where you will continue</span>
+              </div>
+            </div>
+
+            <p>
+              When time stretches, tasks get interrupted, and attention keeps switching, you can still return to your position of judgment.
+            </p>
+            <ul>
+              <li>After interruption: return to the original position without losing continuity.</li>
+              <li>Between switches: keep boundaries and reduce “context rebuilding”.</li>
+              <li>Across long spans: facts survive time better than memory.</li>
+            </ul>
+
+            <h2>Standard &amp; boundaries</h2>
+            <p>
+              Instruments made by ORDO follow RESPECTA (a standard for rules and instruments).
+            </p>
+            <p>
+              ORDO does not provide monitoring, scoring, ranking, or forced reminders. Instruments should not drive you to decide; they should only offer reliable reference when you need it.
+            </p>
+            <div class="quote" aria-label="Instrument stance">
+              Silent when you are away; accurate when you return.
+            </div>
+          </div>
+        </main>
+
+        <aside class="company-aside">
+          <div class="card">
+            <div class="eyebrow">STANDARD &amp; BOUNDARIES</div>
+            <div class="h3">ORDO manufactures; RESPECTA judges</div>
+            <div class="muted">
+              RESPECTA is an independent standard text. A standard is for reading and verification, and does not automatically endorse any product.
+            </div>
+            <a class="respecta-link" href="https://respecta.org.cn" target="_blank" rel="noopener">RESPECTA · respecta.org.cn →</a>
+          </div>
+
+          <div class="card company-note">
+            <div class="eyebrow">MAKER RESPONSIBILITY</div>
+            <div class="muted">Design / manufacturing / delivery / support</div>
+            <div class="muted mt-10">We publish versions and manufacturing records for verification of facts—not persuasion.</div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
+
+  <style>
+    .ordo-container{
+      max-width: 1160px;
+      padding-inline: clamp(26px, 4vw, 84px);
+    }
+
+    .respecta-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      margin-top:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(32,255,242,0.34);
+      background:linear-gradient(180deg, rgba(32,255,242,0.10), rgba(10,22,26,0.06));
+      color:rgba(32,255,242,0.92);
+      font-size:12px;
+      letter-spacing:0.04em;
+      box-shadow: 0 10px 34px rgba(0,0,0,0.28);
+    }
+    .respecta-link:hover{
+      border-color:rgba(32,255,242,0.62);
+      background:linear-gradient(180deg, rgba(32,255,242,0.16), rgba(10,22,26,0.10));
+      color:rgba(240,252,255,0.96);
+      box-shadow: 0 14px 46px rgba(0,0,0,0.34), 0 0 0 1px rgba(32,255,242,0.10) inset;
+    }
+
+    .section-head{ display:block; }
+    .section-head .h1{ justify-self:start; text-align:left; }
+
+    .company-grid{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 340px;
+      gap:clamp(24px,4vw,56px);
+      align-items:start;
+      margin-top:clamp(16px,2vw,22px);
+    }
+    .company-main{max-width:72ch;}
+    .company-lead{
+      font-size:clamp(16px,1.35vw,18px);
+      line-height:1.85;
+      color:rgba(220,235,240,0.90);
+      margin:0 0 18px;
+    }
+    .prose{ color:rgba(220,235,240,0.78); line-height:1.9; }
+    .prose p{margin:0 0 14px;}
+    .prose ul{margin:0 0 14px 1.2em; padding:0;}
+    .prose li{margin:0 0 8px;}
+    .prose h2{
+      margin:22px 0 10px;
+      font-size:13px;
+      letter-spacing:0.12em;
+      text-transform:none;
+      color:rgba(220,235,240,0.70);
+    }
+
+    .callout{
+      margin:14px 0 18px;
+      padding:14px 14px 12px;
+      border:1px solid rgba(220,235,240,0.12);
+      border-radius:16px;
+      background:linear-gradient(180deg, rgba(10,22,26,0.22), rgba(10,22,26,0.10));
+      box-shadow:0 10px 40px rgba(0,0,0,0.24);
+    }
+    .callout-title{
+      font-size:12px;
+      letter-spacing:0.12em;
+      text-transform:none;
+      color:rgba(220,235,240,0.60);
+      margin-bottom:10px;
+    }
+    .callout-lines{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:10px;
+      color:rgba(240,252,255,0.92);
+    }
+    .callout-lines span{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid rgba(220,235,240,0.08);
+      border-radius:14px;
+      background:rgba(10,22,26,0.10);
+      font-weight:600;
+      user-select:none;
+    }
+    .callout-lines span::before{
+      content:"";
+      width:6px;
+      height:6px;
+      border-radius:999px;
+      background:rgba(220,235,240,0.55);
+      flex:0 0 auto;
+    }
+
+    .quote{
+      margin:14px 0 8px;
+      padding:12px 14px;
+      border-left:2px solid rgba(220,235,240,0.22);
+      background:rgba(10,22,26,0.08);
+      border-radius:12px;
+      color:rgba(240,252,255,0.92);
+      font-weight:600;
+    }
+
+    .company-aside{position:relative;}
+    .company-note{margin-top:16px;}
+
+    /* Reduce sidebar prominence for reading flow */
+    .company-aside .btn{
+      padding:10px 12px;
+      box-shadow:none;
+      border-color:rgba(220,235,240,0.10);
+      background:rgba(10,22,26,0.10);
+    }
+
+    @media (max-width: 960px){
+      .callout-lines{grid-template-columns:1fr;}
+    }
+    @media (max-width: 960px){
+      .company-grid{grid-template-columns:1fr;}
+      .company-main{max-width:unset;}
+    }
+  </style>
 </Base>

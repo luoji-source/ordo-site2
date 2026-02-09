@@ -2,345 +2,239 @@
 import Base from "@/layouts/Base.astro";
 ---
 
-<Base lang="zh" title="产品体系 · ORDO">
-  <section class="page-shell">
+<Base
+  lang="zh"
+  title="产品 · ORDO"
+  description="ORDO 产品体系：按可核对事实与边界能力组织的器具（硬件）与软件，用于中断后的回到这里。"
+  keywords={["ORDO", "产品体系", "器具", "硬件", "软件", "RESPECTA", "回到这里", "re-entry"]}
+>
+  <section class="page">
     <div class="container">
-      <header class="products-hero">
+      <header class="hero" aria-label="产品体系">
         <h1 class="h1">产品体系</h1>
         <p class="lead">按规则能力组织：边界确认 / 责任事实 / 回溯事实。</p>
-        <p class="intro">
-          ORDO 的器具不是提醒系统，也不替你做判断；它们把关键规则落成可核对事实，让你在中断与切换之后仍能回到自己的判断位置。
+        <p class="note">
+          ORDO 的器具不是提醒系统，也不替你做判断。它们把关键规则落成<strong>可核对事实</strong>，让你在中断与切换之后仍能回到自己的判断位置。
         </p>
 
-        <div class="chips-wrap"><div class="chips-label">快速跳转：</div>
-        <nav class="chips" aria-label="产品家族导航">
-          <a class="chip" href="#family-boundary">边界事实</a>
-          <a class="chip" href="#family-duty">责任事实</a>
-          <a class="chip" href="#family-trace">回溯事实</a>
-        </nav>
-      </div>
+        <div class="hero-actions" aria-label="相关入口">
+          <a class="btn" href="/zh/shop">硬件商城</a>
+          <a class="btn" href="/zh/software">软件</a>
+          <a class="btn" href="/zh/manufacturing">制造与核对</a>
+          <a class="btn ghost" href="/zh/releases">发布记录</a>
+        </div>
+      <p class="jump">
+          快速定位：
+          <a class="inline" href="#tiers">体系分层</a> ·
+          <a class="inline" href="#families">产品家族</a> ·
+          <a class="inline" href="#redlines">范式红线</a>
+        </p>
       </header>
 
-      <main class="products-main">
-        <section class="section" id="tiers">
-          <h2>一张图理解 ORDO 的产品体系</h2>
-          <p class="muted">
-            ORDO 以“规则能力”分层，而不是以功能堆叠分组：先把事实立在现实里，再把事实组织成场景，必要时形成共同语言，并以标准作为边界。
-          </p>
+      <div class="divider" aria-hidden="true"></div>
 
-          <div class="tier-stepper" role="list" aria-label="规则能力分层">
-            <div class="tier card" role="listitem">
-              <div class="tier-head">
-                <div class="tier-no">01</div>
-                <div class="tier-title">事实层</div>
-                <div class="tier-sub">Facts</div>
-              </div>
-              <div class="tier-body">把关键状态外显为事实：你能看到、能回到、能核对。</div>
+      <section class="section" id="tiers" aria-label="体系分层">
+        <div class="section-head">
+          <h2 class="h2">体系分层</h2>
+          <p class="sublead">以“规则能力”分层，而不是以功能堆叠分组。</p>
+        </div>
+
+        <div class="grid-4" role="list" aria-label="体系分层">
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">01</div>
+            <div class="tier-head">
+              <div class="tier-cn">事实层</div>
+              <div class="tier-en">Facts</div>
             </div>
-
-            <div class="tier card" role="listitem">
-              <div class="tier-head">
-                <div class="tier-no">02</div>
-                <div class="tier-title">场景层</div>
-                <div class="tier-sub">Scenes</div>
-              </div>
-              <div class="tier-body">把事实组织为可部署的场景：阅读、工作、交接、复现等，不改变你的判断，只保留边界。</div>
-            </div>
-
-            <div class="tier card" role="listitem">
-              <div class="tier-head">
-                <div class="tier-no">03</div>
-                <div class="tier-title">组织层</div>
-                <div class="tier-sub">Orgs</div>
-              </div>
-              <div class="tier-body">把场景稳定为共同语言：在团队/家庭中仍能保持一致的边界与责任事实。</div>
-            </div>
-
-            <div class="tier card" role="listitem">
-              <div class="tier-head">
-                <div class="tier-no">04</div>
-                <div class="tier-title">标准层</div>
-                <div class="tier-sub">Standards</div>
-              </div>
-              <div class="tier-body">标准文本用于阅读与核对，不构成对任何产品的自动背书。</div>
-            </div>
-          </div>
-        </section>
-
-        <div class="divider" aria-hidden="true"></div>
-
-<section class="section" id="families">
-          <h2>产品家族</h2>
-
-          <div class="family-grid" role="list">
-<article class="family card" id="family-boundary" role="listitem">
-            <header class="family-top">
-              <div class="family-title">边界事实系统</div>
-              <p class="family-one">把“开始 / 暂停 / 切换 / 继续”变成可见事实。</p>
-              <div class="tags" aria-label="适用场景">
-                <span class="tag">阅读</span><span class="tag">写作</span><span class="tag">深度工作</span><span class="tag">恢复专注</span>
-              </div>
-            </header>
-            <div class="family-mid">
-              <div class="kicker">你会在这些时刻用到它：</div>
-              <ul>
-                <li>被打断后想迅速回到原位置</li>
-                <li>任务切换频繁但不想重建上下文</li>
-              </ul>
-            </div>
+            <p class="p">把关键状态外显为事实：你能看到、能回到、能核对。</p>
           </article>
 
-          <article class="family card" id="family-duty" role="listitem">
-            <header class="family-top">
-              <div class="family-title">责任事实系统</div>
-              <p class="family-one">把“已履行 / 已交接 / 已关闭”变成事实，而不是提醒与追责。</p>
-              <div class="tags" aria-label="适用场景">
-                <span class="tag">家庭责任</span><span class="tag">照护事项</span><span class="tag">维护任务</span><span class="tag">协作交接</span>
-              </div>
-            </header>
-            <div class="family-mid">
-              <div class="kicker">你会在这些时刻用到它：</div>
-              <ul>
-                <li>需要把责任落到现实，而不是落到口头承诺</li>
-                <li>需要明确“谁已完成 / 何时完成 / 是否可核对”</li>
-              </ul>
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">02</div>
+            <div class="tier-head">
+              <div class="tier-cn">场景层</div>
+              <div class="tier-en">Scenes</div>
             </div>
+            <p class="p">把事实组织为可部署场景：阅读、工作、交接、复现等；不改变判断，只保留边界。</p>
           </article>
 
-          <article class="family card" id="family-trace" role="listitem">
-            <header class="family-top">
-              <div class="family-title">回溯事实系统</div>
-              <p class="family-one">把“上次发生 / 上次确认 / 复现依据”变成事实锚点。</p>
-              <div class="tags" aria-label="适用场景">
-                <span class="tag">创作</span><span class="tag">专业工作</span><span class="tag">复盘</span><span class="tag">经验复现</span>
-              </div>
-            </header>
-            <div class="family-mid">
-              <div class="kicker">你会在这些时刻用到它：</div>
-              <ul>
-                <li>需要把关键依据留在现实中，便于回到同一判断位置</li>
-                <li>需要跨时间复现决策背景，而不依赖记忆</li>
-              </ul>
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">03</div>
+            <div class="tier-head">
+              <div class="tier-cn">组织层</div>
+              <div class="tier-en">Orgs</div>
             </div>
-          </div>
-
+            <p class="p">把场景稳定为共同语言：在团队/家庭中仍能保持一致的边界与责任事实。</p>
           </article>
-        </section>
 
-        <div class="divider" aria-hidden="true"></div>
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">04</div>
+            <div class="tier-head">
+              <div class="tier-cn">标准层</div>
+              <div class="tier-en">Standards</div>
+            </div>
+            <p class="p">标准文本用于阅读与核对；不构成对任何产品的自动背书。</p>
+          </article>
+        </div>
+      </section>
 
-<section class="section" id="redlines">
-          <h2>范式红线</h2>
-          <div class="quote" aria-label="范式红线">
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="section" id="families" aria-label="产品家族">
+        <div class="section-head">
+          <h2 class="h2">产品家族</h2>
+          <p class="sublead">用“可核对事实”组织三类典型场景。</p>
+        </div>
+
+        <div class="grid-3" role="list" aria-label="产品家族">
+          <article class="card" role="listitem">
+            <div class="card-head">
+              <div class="k">边界事实系统</div>
+              <div class="mini">停止位 / 下一步 / 已交接</div>
+            </div>
+            <p class="p">让“停止位 / 下一步 / 已交接”变成事实锚点，方便回到同一判断位置。</p>
+            <div class="tags" aria-label="适用场景">
+              <span class="tag">阅读</span><span class="tag">写作</span><span class="tag">沟通</span><span class="tag">交接</span>
+            </div>
+            <ul class="list">
+              <li>被打断后想迅速回到原位置</li>
+              <li>任务切换频繁但不想重建上下文</li>
+            </ul>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="card-head">
+              <div class="k">责任事实系统</div>
+              <div class="mini">已履行 / 已交接 / 已关闭</div>
+            </div>
+            <p class="p">把“已履行 / 已交接 / 已关闭”变成事实，而不是提醒与追责。</p>
+            <div class="tags" aria-label="适用场景">
+              <span class="tag">家庭责任</span><span class="tag">照护事项</span><span class="tag">维护任务</span><span class="tag">协作交接</span>
+            </div>
+            <ul class="list">
+              <li>把责任落到现实，而不是落到口头承诺</li>
+              <li>明确“谁已完成 / 何时完成 / 是否可核对”</li>
+            </ul>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="card-head">
+              <div class="k">回溯事实系统</div>
+              <div class="mini">上次发生 / 上次确认 / 复现依据</div>
+            </div>
+            <p class="p">把“上次发生 / 上次确认 / 复现依据”变成事实锚点。</p>
+            <div class="tags" aria-label="适用场景">
+              <span class="tag">创作</span><span class="tag">专业工作</span><span class="tag">复盘</span><span class="tag">经验复现</span>
+            </div>
+            <ul class="list">
+              <li>把关键依据留在现实中，便于回到同一判断位置</li>
+              <li>跨时间复现决策背景，而不依赖记忆</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="section" id="redlines" aria-label="范式红线">
+        <div class="section-head">
+          <h2 class="h2">范式红线</h2>
+          <p class="sublead">不监控、不评分、不惩罚、不强提醒。</p>
+        </div>
+
+        <div class="quote" role="note">
+          <p>
             ORDO 的产品不以监控、评分、惩罚、强提醒为成立基础。器具不驱动你做决定，只在你需要时提供可靠参照。
-            <br />
-            你不在场时它保持沉默；你回来时它仍然准确。
-          </div>
-        </section>
-      </main>
+          </p>
+          <p class="quote-foot">你不在场时它保持沉默；你回来时它仍然准确。</p>
+        </div>
+      </section>
     </div>
   </section>
 
   <style>
-    .products-hero{
-      display:block;
-      max-width: 104ch;
-      margin: 0 auto 14px;
-    }
-    .products-hero .lead{
-      margin: 0;
-      color: rgba(220,235,240,0.86);
-      line-height: 1.8;
-      max-width: 72ch;
-    }
-    .products-hero .intro{
-      margin: 12px 0 0;
-      color: rgba(220,235,240,0.78);
-      line-height: 1.9;
-      max-width: 80ch;
-    }
+    /* Align with Manufacturing page layout */
 
-    
-    .chips-wrap{
-      margin-top: 14px;
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
+    .hero{ padding-top: 10px; max-width: 104ch; }
+
+    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.78); line-height: 1.85; max-width: 92ch; }
+
+    .hero-actions{ margin-top: 14px; display:flex; gap: 10px; flex-wrap: wrap; }
+.note{ margin: 12px 0 0; color: rgba(220,235,240,.60); font-size: 12px; line-height: 1.75; max-width: 104ch; }
+    .jump{ margin: 10px 0 0; color: rgba(220,235,240,.56); font-size: 12px; line-height: 1.75; }
+    .inline{ color: rgba(240,252,255,0.92); text-underline-offset: 2px; }
+
+    .section{ margin-top: 14px; }
+    .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap: 12px; flex-wrap: wrap; }
+
+    .sublead{ margin: 6px 0 0; color: rgba(220,235,240,0.66); line-height: 1.75; max-width: 110ch; }
+
+    .card-head{ display:flex; justify-content:space-between; align-items:flex-end; gap: 12px; flex-wrap: wrap; }
+    .k{ font-weight: 800; color: rgba(240,252,255,0.92); letter-spacing: 0.08em; font-size: 12px; }
+    .mini{ margin-top: 6px; font-size: 12px; color: rgba(220,235,240,.60); }
+    .p{ margin: 10px 0 0; color: rgba(220,235,240,.74); line-height: 1.85; }
+    /* Desktop layout: keep all three blocks visually consistent */
+    .grid-3{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 12px; }
+    .grid-3 > article{ min-height: 260px; }
+    /* Third card sits on its own row but keeps the same width/height as the others */
+    .grid-3 > article:nth-child(3){
+      grid-column: 1 / -1;
+      width: calc((100% - 12px) / 2);
+      max-width: none;
+      justify-self: center;
     }
-    .chips-label{
+    .grid-4{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 12px; }
+
+    .tier .no{
+      position:absolute;
+      top: 12px;
+      right: 14px;
       font-size: 12px;
-      letter-spacing: 0.10em;
-      color: rgba(220,235,240,0.60);
-      white-space: nowrap;
+      color: rgba(220,235,240,0.24);
+      letter-spacing: 0.18em;
     }
-.chips{
-      margin-top: 14px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .chip{
-      display:inline-flex;
-      align-items:center;
-      padding: 8px 12px;
+    .tier-head{ display:flex; gap: 10px; align-items: baseline; margin-top: 2px; }
+    .tier-cn{ font-weight: 780; color: rgba(240,252,255,0.92); }
+    .tier-en{ font-size: 12px; letter-spacing: 0.12em; color: rgba(220,235,240,0.52); }
+
+    .tags{ margin-top: 10px; display:flex; gap: 6px; flex-wrap: wrap; }
+    .tag{
+      padding: 5px 10px;
       border-radius: 999px;
       border: 1px solid rgba(220,235,240,0.10);
-      background: rgba(10,22,26,0.06);
-      color: rgba(240,252,255,0.86);
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-    .chip:hover{ border-color: rgba(220,235,240,0.22); background: rgba(10,22,26,0.10);} 
-    .chip:focus-visible{ outline: 2px solid rgba(220,235,240,0.22); outline-offset: 2px; }
-
-    .products-main{
-      max-width: 104ch;
-      margin: 0 auto;
-    }
-    .section{ margin-top: 12px; }
-    .section h2{
-      margin: 0 0 10px;
-      font-size: 13px;
-      letter-spacing: 0.12em;
+      background: rgba(10,22,26,0.10);
       color: rgba(220,235,240,0.70);
-    }
-    .muted{
-      color: rgba(220,235,240,0.62);
-      line-height: 1.85;
-      margin: 0;
-    }
-
-    .divider{
-      height: 1px;
-      background: rgba(220,235,240,0.08);
-      margin: 14px 0;
-    }
-
-    .tier-stepper{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 10px;
-    }
-    .tier{
-      padding: 18px;
-    }
-    
-    .tier-no{
       font-size: 12px;
-      letter-spacing: 0.14em;
-      color: rgba(220,235,240,0.62);
-      padding: 6px 10px;
-      border-radius: 999px;
+    }
+
+    .list{ margin: 12px 0 0; padding-left: 18px; color: rgba(220,235,240,.70); line-height: 1.75; }
+    .list li{ margin: 6px 0; }
+
+    .quote{
+      margin-top: 12px;
+      border-radius: 18px;
       border: 1px solid rgba(220,235,240,0.10);
-      background: rgba(10,22,26,0.06);
-      line-height: 1;
-      white-space: nowrap;
-    }
-.tier-head{
-      display:flex;
-      align-items: baseline;
-      justify-content: flex-start;
-      gap: 10px;
-    }
-    .tier-title{
-      font-weight: 720;
-      color: rgba(240,252,255,0.92);
-      letter-spacing: 0.02em;
-    }
-    .tier-sub{
-      margin-left: auto;
-      font-size: 12px;
-      letter-spacing: 0.12em;
-      color: rgba(220,235,240,0.55);
-      white-space: nowrap;
-    }
-    .tier-body{
-      margin-top: 10px;
-      color: rgba(220,235,240,0.74);
-      line-height: 1.85;
-    }
-
-    
-    .family-grid{
-      margin-top: 10px;
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-    /* third card spans full width to keep readable line-length */
-    #family-trace{ grid-column: 1 / -1; }
-.family{
-      padding: 18px;
-    }
-    .family-title{
-      font-size: 17px;
-      font-weight: 760;
-      color: rgba(240,252,255,0.92);
-      margin: 0;
-    }
-    .family-one{
-      margin: 8px 0 0;
+      background: rgba(10,22,26,0.10);
+      box-shadow: 0 10px 34px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 16px;
       color: rgba(220,235,240,0.80);
       line-height: 1.9;
     }
-    .tags{
-      margin-top: 10px;
-      display:flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .tag{
-      font-size: 11px;
-      color: rgba(220,235,240,0.62);
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.08);
-      background: rgba(10,22,26,0.04);
-    }
-    .kicker{
-      margin-top: 12px;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      color: rgba(220,235,240,0.52);
-      text-transform: none;
-    }
-    .family ul{
-      margin: 10px 0 0 1.2em;
-      padding: 0;
-      color: rgba(220,235,240,0.76);
-      line-height: 1.85;
-    }
-    .family li{ margin: 0 0 8px; }
+    .quote p{ margin: 0; }
+    .quote p + p{ margin-top: 10px; }
+    .quote-foot{ color: rgba(240,252,255,0.90); }
 
-    
-    #families{ margin-top: 6px; }
-    #redlines{ margin-top: 6px; }
-.quote{
-      margin: 14px 0 0;
-      padding: 14px 14px 14px 16px;
-      border-left: 3px solid rgba(220,235,240,0.44);
-      background: rgba(10,22,26,0.10);
-      border-radius: 14px;
-      color: rgba(240,252,255,0.92);
-      font-weight: 650;
-      font-size: 15px;
-      line-height: 1.85;
+    @media (max-width: 1100px){
+      .grid-4{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .grid-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
-
-    .btn.ghost{
-      box-shadow: none;
-      border-color: rgba(220,235,240,0.09);
-      background: rgba(10,22,26,0.06);
+    @media (max-width: 780px){
+      .grid-3{ grid-template-columns: 1fr; }
+      .grid-3 > article:nth-child(3){ grid-column: auto; width: auto; justify-self: stretch; }
     }
+    @media (max-width: 680px){
 
-    @media (max-width: 960px){
-      .tier-stepper{ grid-template-columns: 1fr; }
-      .family-grid{ grid-template-columns: 1fr; }
-      #family-trace{ grid-column: auto; }
-      .products-hero, .products-main{ max-width: unset; }
+      .grid-4{ grid-template-columns: 1fr; }
     }
   </style>
 </Base>

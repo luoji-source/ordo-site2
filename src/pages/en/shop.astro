@@ -1,240 +1,355 @@
 ---
-import Base from "@/layouts/Base.astro";
+import Base from '@/layouts/Base.astro';
 
-const orderEmail = "order@ordoinc.com";
-const productName = "Continuous Marker · Reading";
-const series = "Wind / Fire / Thunder / Lightning";
-const form = "Rail type · Carbon fiber";
-const version = "v1.1";
+const pageTitle = 'Shop';
+const pageDesc =
+  'Online shop: email ordering / confirmation. We don’t sell a “risk story” — we publish transparent milestones.';
 
-const orderHref = `mailto:${orderEmail}?subject=${encodeURIComponent(`ORDO Order / ${productName} ${version}`)}`;
-const contactHref = `mailto:${orderEmail}?subject=${encodeURIComponent("ORDO Inquiry / Shop")}`;
+const orderEmail = 'orders@ordoinc.com';
+
+const mailto = (to: string, subject: string, body: string) => {
+  const s = encodeURIComponent(subject);
+  const b = encodeURIComponent(body);
+  return `mailto:${to}?subject=${s}&body=${b}`;
+};
+
+const featured = {
+    name: 'Line Pointer',
+  series: 'Wind / Fire / Thunder / Electric',
+  subtitle: 'ORDO Mark v1.0 Standard Set',
+  blurb:
+    'An engineering‑grade reading marker you can slide. Not decoration: it compresses real structure, tactile feedback, and carbon‑fiber material into books and documents.',
+  uses: [
+    'Interrupted reading: next time you open, you’re back to the same spot — instantly',
+    'Revisiting long docs / notes: use the scale to mark “progress”',
+    'Study / training: turn the “current paragraph” into a reproducible position',
+  ],
+  images: [
+    // Keep image set consistent with /zh/shop
+    { src: '/images/home/reading-locator-hero.jpg', alt: 'Line Pointer — set' },
+    { src: '/images/home/slide-structure-960.png', alt: 'Mark core structure — slot + scale' },
+    { src: '/images/explain-reading-scene-960.png', alt: 'Reading scene — handoff and return' },
+  ],
+  orderCta: 'Order',
+  detailCta: 'Details',
+  orderHref: mailto(
+    orderEmail,
+    'Order | ORDO Mark v1.0 (Set of Four)',
+    'Hi ORDO,\n\nI’d like to order: ORDO Mark v1.0 (Wind / Fire / Thunder / Electric)\n\nName:\nRegion / Address:\nPhone (optional):\n\nNotes (optional):\n\nThanks.'
+  ),
+  detailHref: '/en/shop/reading-locator',
+};
+
+const previews = [
+  {
+    title: 'Marking Locator Ruler',
+    badge: 'Preview',
+    desc: 'I’ll never forget what size I measured last time.',
+    chips: ['Preview', 'Prototype', 'Subscribe'],
+    link: 'Subscribe →',
+    href: mailto(
+      orderEmail,
+      'Subscribe | Marking Locator Ruler',
+      'Hi ORDO,\n\nPlease add me to updates for: Marking Locator Ruler\n\nName:\nRegion:\n\nThanks.'
+    ),
+    hint: 'Price not listed',
+  },
+  {
+    title: 'Family Outing Board',
+    badge: 'Preview',
+    desc: 'Nothing keeps me worried when I leave home.',
+    chips: ['Preview', 'In design', 'Subscribe'],
+    link: 'Subscribe →',
+    href: mailto(
+      orderEmail,
+      'Subscribe | Family Outing Board',
+      'Hi ORDO,\n\nPlease add me to updates for: Family Outing Board\n\nName:\nRegion:\n\nThanks.'
+    ),
+    hint: 'Price not listed',
+  },
+];
 ---
 
-<Base lang="en" title="Shop · ORDO">
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow">ORDO · New Product</div>
-          <h1 class="h1 nowrap">{productName}</h1>
-
-          <div class="sub">A physical marker to locate your current position while reading.</div>
-          <div class="micro">Not decoration. No data collection. No reminders.</div>
-
-          <div class="spec">
-            <div class="spec-row"><span class="k">Series</span><span class="v">{series}</span></div>
-            <div class="spec-row"><span class="k">Form</span><span class="v">{form}</span></div>
-            <div class="spec-row"><span class="k">Version</span><span class="v">{version}</span></div>
-          </div>
-
-          <div class="cta-row">
-            <a class="btn primary" href={orderHref}>Order</a>
-            <a class="btn" href={contactHref}>Inquiry</a>
-          </div>
-
-          <div class="order-hint">Email your name / address / quantity (default: 1 set).</div>
-        </div>
-
-        <div class="hero-media">
-          <div class="ph-fit ruler" role="img" aria-label="Hero image placeholder">
-            <div class="ph-inner">
-              <div class="ph-top">
-                <span class="tag">Hero / 4 items</span>
-                <span class="dim">1100×825</span>
-              </div>
-              <div class="ph-mid">
-                <div class="ph-title">Hero placeholder</div>
-                <div class="ph-sub">{productName}</div>
-              </div>
-              <div class="ph-bottom">
-                <span class="muted">{version}</span>
-                <span class="muted">4:3</span>
-              </div>
-            </div>
-          </div>
-          <div class="media-note">Keep the hero aligned with the copy; 4:3 ratio.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="catalog">
-    <div class="container">
-      <div class="catalog-head">
-        <h2 class="h2b">All products</h2>
-        <div class="catalog-note">8 slots: 2 previews + 6 planned. We disclose boundaries and verification, not benchmarkable specs.</div>
+<Base title={pageTitle} desc={pageDesc} lang="en">
+  <main class="page">
+    <section class="section hero">
+      <div class="section__head">
+        <h2 class="h2">Featured</h2>
       </div>
 
-      <div class="grid">
-        <article class="card">
-          <div class="thumb">01</div>
-          <div class="card-top">
-            <h3 class="title">Preview product A</h3>
-            <span class="badge presale">Preview</span>
-          </div>
-          <p class="text">Node transparency. Public boundaries only.</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>Inquiry</a>
-            <a class="btn ghost" href={contactHref}>Register interest</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="thumb">02</div>
-          <div class="card-top">
-            <h3 class="title">Preview product B</h3>
-            <span class="badge presale">Preview</span>
-          </div>
-          <p class="text">No benchmarkable parameters on public pages.</p>
-          <div class="card-actions">
-            <a class="btn" href={contactHref}>Inquiry</a>
-            <a class="btn ghost" href={contactHref}>Register interest</a>
-          </div>
-        </article>
-
-        {Array.from({ length: 6 }).map((_, idx) => (
-          <article class="card">
-            <div class="thumb">{String(idx + 3).padStart(2, "0")}</div>
-            <div class="card-top">
-              <h3 class="title">Planned product {idx + 1}</h3>
-              <span class="badge plan">Planned</span>
+      <div class="featured">
+        <div class="featured__media" data-gallery="featured">
+          <div class="gallery">
+            <div class="galleryMain" role="button" tabindex="0" aria-label="Click to zoom. Move the mouse to pan.">
+              <img
+                id="featuredMainImg"
+                src={featured.images[0].src}
+                alt={featured.images[0].alt}
+                loading="eager"
+              />
             </div>
-            <p class="text">Problem, boundary, verification. No implementation details.</p>
-            <div class="card-actions">
-              <a class="btn" href={contactHref}>Inquiry</a>
-              <a class="btn ghost" href={contactHref}>Partnership</a>
+            <div class="thumbs" role="list" aria-label="Thumbnails">
+              {featured.images.map((img, i) => (
+                <button
+                  class={"thumb" + (i === 0 ? ' isActive' : '')}
+                  type="button"
+                  role="listitem"
+                  aria-label={`Thumbnail ${i + 1}`}
+                  data-src={img.src}
+                  data-alt={img.alt}
+                >
+                  <img src={img.src} alt={img.alt} loading="lazy" />
+                </button>
+              ))}
             </div>
-          </article>
+          </div>
+        </div>
+
+        <div class="featured__body">
+          <div class="titleBlock">
+            <div class="h3">
+              <span class="prodName">{featured.name}</span>
+              <span class="prodSeries"> · {featured.series}</span>
+            </div>
+            <div class="subtitle">{featured.subtitle}</div>
+          </div>
+
+          <p class="tagline">{featured.blurb} You’ll use it for:</p>
+          <ul class="points">
+            {featured.uses.map((t) => (
+              <li>{t}</li>
+            ))}
+          </ul>
+
+          <div class="cta">
+            <a class="btn" href={featured.orderHref}>
+              {featured.orderCta}
+            </a>
+            <a class="btn ghost" href={featured.detailHref}>
+              {featured.detailCta}
+            </a>
+          </div>
+            </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="subhead">
+        <div>
+          <div class="h3s">Preview items</div>
+
+        </div>
+      </div>
+
+      <div class="grid grid--pre">
+        {previews.map((p) => (
+          <div class="card shop-card">
+            <div class="card__top">
+              <div class="card__title">{p.title}</div>
+              <span class="status status--pre">{p.badge}</span>
+            </div>
+            <div class="card__desc">{p.desc}</div>
+            <div class="chips">
+              {p.chips.map((c) => (
+                <span class="chip">{c}</span>
+              ))}
+            </div>
+            <div class="card__footer">
+              <a class="link" href={p.href}>
+                {p.link}
+              </a>
+              <div class="hint">{p.hint}</div>
+            </div>
+          </div>
         ))}
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
+
+  <script is:inline>
+    (() => {
+      const root = document.querySelector('[data-gallery="featured"]');
+      if (!root) return;
+
+      const mainImg = root.querySelector('#featuredMainImg');
+      const thumbs = Array.from(root.querySelectorAll('.thumb'));
+      if (!mainImg || !thumbs.length) return;
+
+      const main = root.querySelector('.galleryMain');
+
+      const setZoomSrc = (src) => {
+        if (!main) return;
+        main.style.setProperty('--zoom-src', `url("${src}")`);
+      };
+
+      const zoomOn = () => {
+        if (!main) return;
+        main.classList.add('isZoomed');
+        main.style.backgroundImage = 'var(--zoom-src)';
+        main.style.backgroundPosition = '50% 50%';
+      };
+
+      const zoomOff = () => {
+        if (!main) return;
+        main.classList.remove('isZoomed');
+        main.style.backgroundImage = 'none';
+        main.style.backgroundPosition = '50% 50%';
+      };
+
+      const toggleZoom = () => {
+        if (!main) return;
+        if (main.classList.contains('isZoomed')) zoomOff();
+        else zoomOn();
+      };
+
+      const updateBgPos = (e) => {
+        if (!main) return;
+        const rect = main.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        const clamp = (v) => Math.max(0, Math.min(100, v));
+        main.style.backgroundPosition = `${clamp(x)}% ${clamp(y)}%`;
+      };
+
+      const setActive = (src) => {
+        thumbs.forEach((b) => {
+          b.classList.toggle('isActive', b.getAttribute('data-src') === src);
+        });
+      };
+
+      const setMain = (src, alt) => {
+        mainImg.src = src;
+        mainImg.alt = alt || '';
+        setActive(src);
+        setZoomSrc(src);
+        if (main && main.classList.contains('isZoomed')) {
+          main.style.backgroundImage = 'var(--zoom-src)';
+          main.style.backgroundPosition = '50% 50%';
+        }
+      };
+
+      thumbs.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const src = btn.getAttribute('data-src');
+          const alt = btn.getAttribute('data-alt') || '';
+          if (src) setMain(src, alt);
+        });
+      });
+
+
+
+      // Zoom interaction: click to toggle, move to pan
+      if (main) {
+        main.addEventListener('click', (e) => {
+          // Avoid accidental text selection
+          e.preventDefault();
+          toggleZoom();
+        });
+
+        main.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleZoom();
+          }
+        });
+
+        main.addEventListener('mousemove', (e) => {
+          if (!main.classList.contains('isZoomed')) return;
+          updateBgPos(e);
+        });
+
+        main.addEventListener('mouseleave', () => {
+          if (!main.classList.contains('isZoomed')) return;
+          main.style.backgroundPosition = '50% 50%';
+        });
+      }
+
+      setZoomSrc(mainImg.getAttribute('src') || '');
+      setActive(mainImg.getAttribute('src') || '');
+    })();
+  </script>
 
   <style>
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    .shop-card{ min-height:168px; display:flex; flex-direction:column; gap:10px; }
 
-    .hero { padding: 26px 0 18px; }
-    .hero-grid { display: grid; grid-template-columns: minmax(480px, 1fr) minmax(520px, 1fr);
-      gap: 24px; align-items: start; }
-    @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; } }
+    .k{font-size:12px;letter-spacing:.22em;opacity:.7;margin-bottom:10px;}
+    
+    .sub{max-width:920px;margin:0 0 18px;opacity:.9;font-size:16px;line-height:1.7;}
+    .pill{display:inline-flex;align-items:center;padding:7px 12px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(0,0,0,.18);font-size:13px;opacity:.9}
 
-    .eyebrow { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
-    .h1 { font-size: clamp(28px, 3.1vw, 42px); line-height: 1.14; margin: 12px 0 10px; letter-spacing: -0.02em; }
-    .nowrap { white-space: nowrap; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; scrollbar-width: thin; }
-    .sub { font-size: 15px; opacity: .88; line-height: 1.7; max-width: 70ch; }
-    .micro { margin-top: 10px; font-size: 13px; opacity: .72; line-height: 1.7; max-width: 70ch; }
+    .section{padding:26px 0;}
+    .section__head{max-width:1100px;margin:0 auto 16px;padding:0 28px;}
+    .h2{font-size:22px;margin:0 0 6px;}
+    .desc{margin:0;opacity:.82;line-height:1.7;max-width:980px;}
 
-    .spec { margin-top: 16px; border-radius: 18px; border: 1px solid rgba(220,235,240,.10); background: rgba(10,22,26,.12); overflow: hidden; }
-    .spec-row { display: grid; grid-template-columns: 84px 1fr; gap: 14px; padding: 11px 14px; border-top: 1px solid rgba(220,235,240,.08); }
-    .spec-row:first-child { border-top: none; }
-    .k { font-size: 12px; opacity: .65; letter-spacing: .08em; text-transform: uppercase; }
-    .v { font-size: 14px; opacity: .92; }
+    .featured{max-width:1100px;margin:0 auto;padding:18px;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));backdrop-filter: blur(10px);display:grid;grid-template-columns: .95fr 1.05fr;gap:18px;}
 
-    .cta-row { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 10px 14px; border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.14);
-      color: rgba(220,235,240,0.88);
-      text-decoration:none;
-      background: rgba(10,22,26,0.10);
-      transition: border-color .2s ease, background .2s ease;
-      white-space: nowrap;
-      cursor: pointer;
-      font-size: 14px;
+    .featured__media{min-width:0;}
+    .gallery{display:block;}
+    .galleryMain{aspect-ratio:16/10;max-height:340px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.10);background:rgba(0,0,0,.2);position:relative;--zoom-src:none;background-image:none;background-repeat:no-repeat;background-position:50% 50%;background-size:cover;cursor:zoom-in;}
+    .galleryMain img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .12s ease;}
+    .galleryMain.isZoomed{cursor:zoom-out;background-image:var(--zoom-src);background-size:200%;}
+    .galleryMain.isZoomed img{opacity:0;}
+    /* Thumbnails: up to 6. Keep them compact so 6 items visually align with the main image block. */
+    .thumbs{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-start;}
+    /* Each thumbnail takes 1/6 of the main image width so 6 items align cleanly. */
+    .thumb{flex:0 0 calc((100% - 5*8px)/6);max-width:calc((100% - 5*8px)/6);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.2);opacity:.82;cursor:pointer;padding:0;max-height:56px;}
+    .thumb:hover{opacity:1;}
+    .thumb.isActive{opacity:1;border-color:rgba(255,255,255,.28);}
+    .thumb img{width:100%;height:56px;aspect-ratio:16/10;object-fit:cover;display:block;}
+
+    .featured__body{padding:16px 14px 16px 8px;display:flex;flex-direction:column;gap:14px;justify-content:center;}
+    .badge{align-self:flex-start;font-size:12px;letter-spacing:.08em;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.22);opacity:.9}
+    .h3{margin:0;font-size:22px;line-height:1.15;display:flex;align-items:baseline;gap:12px;flex-wrap:nowrap;min-width:0;}
+    .titleBlock{display:flex;flex-direction:column;gap:6px;}
+    /* Make the product name more prominent than the series label (matches the site's typographic hierarchy). */
+    .titleBlock .prodName{font-size:28px;font-weight:820;letter-spacing:.02em;white-space:nowrap;}
+    .titleBlock .prodSeries{font-size:16px;opacity:.78;font-weight:680;letter-spacing:.02em;white-space:nowrap;}
+    .subtitle{margin:6px 0 0;font-size:15px;line-height:1.45;font-weight:650;letter-spacing:.06em;color:rgba(214,244,250,.86);opacity:.92;}
+    .subhead{max-width:1100px;margin:0 auto 10px;padding:0 28px;display:flex;align-items:baseline;justify-content:space-between;gap:14px;}
+    .h3s{margin:0;font-size:14px;letter-spacing:.08em;opacity:.92;}
+    .subdesc{font-size:12px;opacity:.72;line-height:1.6;}
+    .muted{opacity:.78;font-weight:500;}
+    .tagline{margin:0;opacity:.9;line-height:1.7;}
+    .points{margin:0;padding-left:18px;opacity:.86;line-height:1.7;}
+
+    .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;}
+    .btn:hover{background:rgba(255,255,255,.06)}
+    .btn.ghost{opacity:.85}
+    .fine{font-size:12px;opacity:.72;line-height:1.7;margin-top:2px;}
+
+    .grid{max-width:1100px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:14px;}
+    .grid--pre{grid-template-columns:repeat(2, minmax(0,1fr));}
+    .grid--plan{grid-template-columns:repeat(3, minmax(0,1fr));}
+    .card__top{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+    .card__title{font-size:16px;font-weight:700;}
+    .status{font-size:12px;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.14);opacity:.92;white-space:nowrap;}
+    .status--pre{background:rgba(255,255,255,.06)}
+    .status--plan{background:rgba(0,0,0,.18);opacity:.8}
+    .card__desc{opacity:.82;line-height:1.65;font-size:13px;}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;}
+    .chip{font-size:12px;opacity:.8;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(0,0,0,.14)}
+    .card__footer{display:flex;align-items:center;justify-content:space-between;margin-top:2px;}
+    .link{font-size:13px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.22);padding-bottom:2px;}
+    .hint{font-size:12px;opacity:.65;}
+
+    .bottomNote{max-width:1100px;margin:14px auto 0;padding:0 28px;font-size:12px;opacity:.7;}
+
+    @media (max-width: 980px){
+      .featured{grid-template-columns: 1fr;}
+      .grid{grid-template-columns:repeat(2, minmax(0,1fr));}
+      .grid--pre{grid-template-columns:repeat(2, minmax(0,1fr));}
+      .grid--plan{grid-template-columns:repeat(2, minmax(0,1fr));}
+      
     }
-    .btn:hover{ border-color: rgba(220,235,240,0.24); background: rgba(10,22,26,0.14); }
-    .btn.primary { background: rgba(120,210,210,.16); border-color: rgba(120,210,210,.45); }
-    .btn.ghost{ background: transparent; border-color: rgba(220,235,240,0.10); color: rgba(220,235,240,0.76); }
-
-    .order-hint { margin-top: 10px; font-size: 13px; opacity: .72; }
-
-    .ph-fit{
-      border-radius: 22px;
-      border: 1px solid rgba(220,235,240,0.12);
-      overflow: hidden;
-      background: rgba(10,22,26,0.10);
-      box-shadow: 0 18px 38px rgba(0,0,0,0.36), inset 0 1px 0 rgba(255,255,255,0.06);
-      min-height: 320px;
-    }
-    .ph-inner{ height: 100%; padding: 14px; display:flex; flex-direction: column; justify-content: space-between; }
-    .ph-top{ display:flex; justify-content: space-between; gap: 10px; align-items:center; }
-    .tag{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.12);
-      color: rgba(220,235,240,0.82);
-      background: rgba(10,22,26,0.06);
-      font-size: 12px;
-      width: fit-content;
-    }
-    .dim{ color: rgba(220,235,240,0.55); font-size: 12px; }
-    .ph-title{ color: rgba(220,235,240,0.90); font-weight: 800; letter-spacing: 0.02em; }
-    .ph-sub{ color: rgba(220,235,240,0.66); margin-top: 6px; }
-    .ph-bottom{ display:flex; justify-content: space-between; gap: 10px; }
-    .muted{ color: rgba(220,235,240,0.56); font-size: 12px; }
-    .media-note{ margin-top: 10px; color: rgba(220,235,240,0.56); font-size: 12px; line-height: 1.6; }
-
-    .catalog{ padding: 18px 0 44px; }
-    .catalog-head{ border-top: 1px solid rgba(220,235,240,0.08); padding-top: 18px; }
-    .h2b{ margin: 0; font-size: 18px; letter-spacing: 0.02em; color: rgba(220,235,240,0.92); }
-    .catalog-note{ margin-top: 8px; color: rgba(220,235,240,0.66); line-height: 1.7; max-width: 92ch; }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 12px;
-      margin-top: 14px;
-    }
-    .card{
-      border-radius: 18px;
-      border: 1px solid rgba(220,235,240,0.10);
-      background: radial-gradient(120% 120% at 20% 0%,
-        rgba(48, 92, 110, 0.22) 0%,
-        rgba(14, 26, 30, 0.55) 45%,
-        rgba(10, 16, 18, 0.34) 100%);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.06);
-      padding: 14px;
-      display:flex;
-      flex-direction: column;
-      min-height: 230px;
-    }
-    .thumb{
-      height: 96px;
-      border-radius: 14px;
-      border: 1px solid rgba(220,235,240,0.10);
-      background: linear-gradient(135deg, rgba(48,92,110,0.34), rgba(10,16,18,0.08));
-      display:flex; align-items:center; justify-content:center;
-      color: rgba(220,235,240,0.70);
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      margin-bottom: 12px;
-    }
-    .card-top{ display:flex; justify-content:space-between; gap: 10px; align-items:flex-start; }
-    .title{ margin: 0; font-size: 14px; color: rgba(220,235,240,0.92); line-height: 1.4; }
-    .badge{
-      font-size: 12px;
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(220,235,240,0.12);
-      background: rgba(10,22,26,0.06);
-      color: rgba(220,235,240,0.74);
-      white-space: nowrap;
-    }
-    .badge.presale{ border-color: rgba(255,210,120,0.22); }
-    .badge.plan{ border-color: rgba(220,235,240,0.12); opacity: .9; }
-    .text{ margin: 10px 0 0; color: rgba(220,235,240,0.66); line-height: 1.65; font-size: 13px; }
-    .card-actions{ display:flex; gap: 10px; margin-top: auto; flex-wrap: wrap; padding-top: 12px; }
-
-    @media (max-width: 1100px){
-      .grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .hero-grid{ grid-template-columns: 1fr; }
-      .hero-media{ margin-top: 18px; }
-    }
-    @media (max-width: 680px){
-      .grid{ grid-template-columns: 1fr; }
+    @media (max-width: 560px){
+      .grid{grid-template-columns:1fr;}
+      .grid--pre{grid-template-columns:1fr;}
+      .grid--plan{grid-template-columns:1fr;}
+      
+      .h3{flex-wrap:wrap;}
+      .titleBlock .prodName{white-space:normal;}
+      .titleBlock .prodSeries{white-space:normal;font-size:14px;}
     }
   </style>
 </Base>

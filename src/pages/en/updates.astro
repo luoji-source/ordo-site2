@@ -1,16 +1,19 @@
 ---
-import Base from "@/layouts/Base.astro";
+const to = "/en/releases";
 ---
 
-<Base lang="en" title="ORDO · Updates">
-  <section class="page-shell">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Updates</div>
-        <h1 class="h1">Updates &amp; Release Facts</h1>
-        <p class="lead">Principles remain; structure evolves. Treat this page as the source of truth for version facts.</p>
-      </div>
-      <div class="muted">(Placeholder: updates list will be populated.)</div>
-    </div>
-  </section>
-</Base>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <link rel="canonical" href={to} />
+    <meta name="robots" content="noindex" />
+    <title>Moved · ORDO</title>
+    <script is:inline>
+      window.location.replace("/en/releases");
+    </script>
+  </head>
+  <body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; padding:24px;">
+    <p>This page has moved to: <a href={to}>/en/releases</a></p>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+本次覆盖包包含：导航栏调整 + Support 入口对齐 + Sitemap 更新。
+
+改动点：
+- 顶部导航：改为「首页 / 产品 / 关于 / 更新 / 证据 / 支持」（英文：Home / Products / About / Updates / Evidence / Support）
+- Support 路径统一为 /support（去掉末尾斜杠，避免路由重复与高亮不一致）
+- ORDO 公司页在导航中显示为“关于/About”，页面标题同步。
+- Sitemap 同步上述栏目顺序与链接。
+
+覆盖方式：
+- 将本 zip 内的文件按相同路径覆盖到你的项目根目录。
+- 然后按 DELETE_THESE_FILES.txt 手动删除多余页面文件。

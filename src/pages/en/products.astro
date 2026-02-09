@@ -2,15 +2,235 @@
 import Base from "@/layouts/Base.astro";
 ---
 
-<Base lang="en" title="ORDO · Products">
-  <section class="page-shell">
+<Base
+  lang="en"
+  title="Products · ORDO"
+  description="ORDO product system: instruments (hardware) and software organized by verifiable facts, boundaries, and re-entry across interruptions."
+  keywords={["ORDO", "products", "instruments", "hardware", "software", "RESPECTA", "re-entry"]}
+>
+  <section class="page">
     <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Products</div>
-        <h1 class="h1">Product Families</h1>
-        <p class="lead">Organized by families: Reading / Boundary / Responsibility.</p>
-      </div>
-      <div class="muted">(Placeholder page — to be filled with family catalog &amp; family pages.)</div>
+      <header class="hero" aria-label="Product system">
+        <h1 class="h1">Product system</h1>
+        <p class="lead">Organized by rule capability: boundary facts / responsibility facts / traceable facts.</p>
+        <p class="note">
+          ORDO instruments are not reminder systems, and they do not make decisions for you. They turn key rules into
+          <strong>checkable facts</strong>, so after interruptions and handoffs you can return to the same position of judgment.
+        </p>
+
+        <div class="hero-actions" aria-label="Related">
+          <a class="btn" href="/en/shop">Hardware store</a>
+          <a class="btn" href="/en/software">Software</a>
+          <a class="btn" href="/en/manufacturing">Manufacturing &amp; verification</a>
+          <a class="btn ghost" href="/en/releases">Releases</a>
+        </div>
+        <p class="jump">
+          Quick links:
+          <a class="inline" href="#tiers">System tiers</a> ·
+          <a class="inline" href="#families">Product families</a> ·
+          <a class="inline" href="#redlines">Paradigm redlines</a>
+        </p>
+      </header>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="section" id="tiers" aria-label="System tiers">
+        <div class="section-head">
+          <h2 class="h2">System tiers</h2>
+          <p class="sublead">Tiered by “rule capability”, not by feature stacking.</p>
+        </div>
+
+        <div class="grid-4" role="list" aria-label="System tiers">
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">01</div>
+            <div class="tier-head">
+              <div class="tier-cn">Facts layer</div>
+              <div class="tier-en">Facts</div>
+            </div>
+            <p class="p">Expose key states as facts: visible, returnable, checkable.</p>
+          </article>
+
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">02</div>
+            <div class="tier-head">
+              <div class="tier-cn">Scenes layer</div>
+              <div class="tier-en">Scenes</div>
+            </div>
+            <p class="p">Package facts into deployable scenes: reading, work, handoff, reproduction—without changing judgment.</p>
+          </article>
+
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">03</div>
+            <div class="tier-head">
+              <div class="tier-cn">Orgs layer</div>
+              <div class="tier-en">Orgs</div>
+            </div>
+            <p class="p">Stabilize scenes into a shared language: consistent boundaries and responsibility facts across people.</p>
+          </article>
+
+          <article class="card tier" role="listitem">
+            <div class="no" aria-hidden="true">04</div>
+            <div class="tier-head">
+              <div class="tier-cn">Standards layer</div>
+              <div class="tier-en">Standards</div>
+            </div>
+            <p class="p">Standards are for reading and checking; they are not automatic endorsements of any product.</p>
+          </article>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="section" id="families" aria-label="Product families">
+        <div class="section-head">
+          <h2 class="h2">Product families</h2>
+          <p class="sublead">Three typical scenes organized by checkable facts.</p>
+        </div>
+
+        <div class="grid-3" role="list" aria-label="Product families">
+          <article class="card" role="listitem">
+            <div class="card-head">
+              <div class="k">Boundary facts system</div>
+              <div class="mini">Stop point / next action / handed off</div>
+            </div>
+            <p class="p">Turn “stop point / next action / handed off” into anchors—so you can return to the same position of judgment.</p>
+            <div class="tags" aria-label="Use cases">
+              <span class="tag">Reading</span><span class="tag">Writing</span><span class="tag">Communication</span><span class="tag">Handoffs</span>
+            </div>
+            <ul class="list">
+              <li>Return fast after interruption</li>
+              <li>Switch tasks without rebuilding context</li>
+            </ul>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="card-head">
+              <div class="k">Responsibility facts system</div>
+              <div class="mini">Fulfilled / handed off / closed</div>
+            </div>
+            <p class="p">Make “fulfilled / handed off / closed” into facts—without reminders or blame.</p>
+            <div class="tags" aria-label="Use cases">
+              <span class="tag">Home duties</span><span class="tag">Care items</span><span class="tag">Maintenance</span><span class="tag">Team handoff</span>
+            </div>
+            <ul class="list">
+              <li>Put responsibilities in reality, not verbal promises</li>
+              <li>Clarify who did what, when, and how to verify</li>
+            </ul>
+          </article>
+
+          <article class="card" role="listitem">
+            <div class="card-head">
+              <div class="k">Traceable facts system</div>
+              <div class="mini">Last happened / last confirmed / reproduction basis</div>
+            </div>
+            <p class="p">Anchor “last happened / last confirmed / reproduction basis” as facts.</p>
+            <div class="tags" aria-label="Use cases">
+              <span class="tag">Creation</span><span class="tag">Pro work</span><span class="tag">Review</span><span class="tag">Reproduction</span>
+            </div>
+            <ul class="list">
+              <li>Keep key evidence in the real world, easy to return to</li>
+              <li>Reproduce decision background across time without memory reliance</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <section class="section" id="redlines" aria-label="Paradigm redlines">
+        <div class="section-head">
+          <h2 class="h2">Paradigm redlines</h2>
+          <p class="sublead">No monitoring, no scoring, no punishment, no forced reminders.</p>
+        </div>
+
+        <div class="quote" role="note">
+          <p>
+            ORDO products do not rely on monitoring, scoring, punishment, or forced reminders. Instruments do not drive your
+            decisions—only provide a stable reference when you ask.
+          </p>
+          <p class="quote-foot">Silent when you are away; accurate when you return.</p>
+        </div>
+      </section>
     </div>
   </section>
+
+  <style>
+    /* Align with Manufacturing page layout */
+
+    .hero{ padding-top: 10px; max-width: 104ch; }
+
+    .lead{ margin: 12px 0 0; color: rgba(220,235,240,.78); line-height: 1.85; max-width: 92ch; }
+
+    .hero-actions{ margin-top: 14px; display:flex; gap: 10px; flex-wrap: wrap; }
+.note{ margin: 12px 0 0; color: rgba(220,235,240,.60); font-size: 12px; line-height: 1.75; max-width: 104ch; }
+    .jump{ margin: 10px 0 0; color: rgba(220,235,240,.56); font-size: 12px; line-height: 1.75; }
+    .inline{ color: rgba(240,252,255,0.92); text-underline-offset: 2px; }
+
+    .section{ margin-top: 14px; }
+    .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap: 12px; flex-wrap: wrap; }
+
+    .sublead{ margin: 6px 0 0; color: rgba(220,235,240,0.66); line-height: 1.75; max-width: 110ch; }
+
+    .card-head{ display:flex; justify-content:space-between; align-items:flex-end; gap: 12px; flex-wrap: wrap; }
+    .k{ font-weight: 800; color: rgba(240,252,255,0.92); letter-spacing: 0.08em; font-size: 12px; }
+    .mini{ margin-top: 6px; font-size: 12px; color: rgba(220,235,240,.60); }
+    .p{ margin: 10px 0 0; color: rgba(220,235,240,.74); line-height: 1.85; }
+
+    /* Desktop layout: 2 columns per row */
+    .grid-3{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 12px; }
+    .grid-3 > article:nth-child(3){ grid-column: 1 / -1; max-width: 560px; justify-self: center; }
+
+    .grid-4{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-top: 12px; }
+
+    .tier .no{
+      position:absolute;
+      top: 12px;
+      right: 14px;
+      font-size: 12px;
+      color: rgba(220,235,240,0.24);
+      letter-spacing: 0.18em;
+    }
+    .tier-head{ display:flex; gap: 10px; align-items: baseline; margin-top: 2px; }
+    .tier-cn{ font-weight: 780; color: rgba(240,252,255,0.92); }
+    .tier-en{ font-size: 12px; letter-spacing: 0.12em; color: rgba(220,235,240,0.52); }
+
+    .tags{ margin-top: 10px; display:flex; gap: 6px; flex-wrap: wrap; }
+    .tag{
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(220,235,240,0.10);
+      background: rgba(10,22,26,0.10);
+      color: rgba(220,235,240,0.70);
+      font-size: 12px;
+    }
+
+    .list{ margin: 12px 0 0; padding-left: 18px; color: rgba(220,235,240,.70); line-height: 1.75; }
+    .list li{ margin: 6px 0; }
+
+    .quote{
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(220,235,240,0.10);
+      background: rgba(10,22,26,0.10);
+      box-shadow: 0 10px 34px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: 16px;
+      color: rgba(220,235,240,0.80);
+      line-height: 1.9;
+    }
+    .quote p{ margin: 0; }
+    .quote p + p{ margin-top: 10px; }
+    .quote-foot{ color: rgba(240,252,255,0.90); }
+
+    @media (max-width: 1100px){
+      .grid-4{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .grid-3{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 780px){
+      .grid-3{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px){
+
+      .grid-4{ grid-template-columns: 1fr; }
+    }
+  </style>
 </Base>
