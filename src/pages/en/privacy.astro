@@ -6,44 +6,233 @@ import Base from "../../layouts/Base.astro";
   <section class="page-shell">
     <div class="container">
       <h1 class="h1">Privacy Policy</h1>
-      <p class="intro">ORDO treats “verifiable facts” as the boundary—rather than monitoring people. This policy explains the minimal information we may process when you use this site, contact Support, or discuss orders.</p>
+      <p class="intro">
+        This page is the public privacy page for the ORDO website and the unified privacy entry for ORDO software we publish.
+        Unless a product page or in-product privacy page provides a more specific supplement, the software privacy principles on this page apply to all published ORDO software.
+        Product-specific supplements add detail about permissions, data items, and export/delete controls; they do not narrow the commitments stated here.
+      </p>
       <div class="divider"></div>
 
-      <div class="card">
+      <div class="card section-card">
         <div class="prose">
-          <h2 class="h2">1. What we don’t do</h2>
+          <span class="section-kicker">Scope</span>
+          <h2 class="h2">One page, three layers</h2>
+          <ol>
+            <li><strong>Unified software privacy principles</strong>: these apply to all published ORDO software.</li>
+            <li><strong>Product-specific supplements</strong>: these describe the exact data, permissions, and controls for a specific product. The current <strong>ORDO Return · Notion</strong> privacy policy is included below and kept aligned with the in-product page.</li>
+            <li><strong>Website / support / order communications</strong>: this explains the minimum information we may process when you use the website, request support, or discuss orders.</li>
+          </ol>
+          <p>
+            If a published product later receives its own public privacy page, that page will operate as a product supplement to this one.
+          </p>
+        </div>
+      </div>
+
+      <div class="card section-card">
+        <div class="prose">
+          <span class="section-kicker">Applies to all published software</span>
+          <h2 class="h2">Unified software privacy principles</h2>
+          <ul>
+            <li><strong>No monitoring, no scoring, no rankings</strong>: ORDO software is built to help you return to work and return to judgment, not to create continuous surveillance of people.</li>
+            <li><strong>Minimum processing, local first where possible</strong>: we process the minimum information needed to make the product work; when something can remain local by default, we keep it local.</li>
+            <li><strong>No cross-site tracking and no sale of personal data</strong>: we do not process your information for ad profiling, cross-site tracking, or behavioral intervention, and we do not sell personal data.</li>
+            <li><strong>You stay in control</strong>: published software should provide checkable permission explanations and a way to export, delete, or clear local data whenever the product design allows it.</li>
+          </ul>
+          <p>
+            Exact data fields, permission names, and interaction surfaces may differ by product, so the matching product supplement should still be read together with these shared principles.
+          </p>
+        </div>
+      </div>
+
+      <div class="card section-card accent-card">
+        <div class="prose">
+          <span class="section-kicker">Product-specific supplement</span>
+          <h2 class="h2">ORDO Return · Notion</h2>
+          <p>
+            The text below matches the product’s current built-in privacy policy so the public website and the software stay aligned on the same commitments.
+          </p>
+
+          <h3>Principles</h3>
+          <p><strong>No monitoring, no scoring, no rankings</strong></p>
+          <p>
+            ORDO Return helps you resume work with a stop point, a next action, and a small materials box. We do not scan Notion content in the background, do not listen to keystrokes, and do not push disruptive reminders.
+          </p>
+          <ul>
+            <li>Project cards are written only when you click “Pause” or “Resume”.</li>
+            <li>Crash-safe stores a minimal local checkpoint only for explainable recovery. No page body is collected or uploaded.</li>
+            <li>You can export or delete local data at any time.</li>
+          </ul>
+
+          <h3>What we store</h3>
+          <p><strong>Minimum information required to resume (local-only)</strong></p>
+          <dl class="kvs">
+            <div class="kvs-row">
+              <dt>Project card</dt>
+              <dd>Title, next action, stop-point link (Notion URL), and up to 2 material links per card</dd>
+            </div>
+            <div class="kvs-row">
+              <dt>Crash-safe checkpoint</dt>
+              <dd>Stop-point metadata + timestamps + clean-shutdown marker (used for recovery prompts)</dd>
+            </div>
+            <div class="kvs-row">
+              <dt>Optional local metrics</dt>
+              <dd>Minimal counters/durations (no content, no URLs, no titles; never uploaded)</dd>
+            </div>
+          </dl>
+
+          <h3>What we do not do</h3>
+          <p><strong>No Notion body access, no background tracking</strong></p>
+          <ul>
+            <li>We do not collect Notion page body, block content, or database fields.</li>
+            <li>We do not build profiles or track you across websites.</li>
+            <li>We do not sell or share your data with third parties.</li>
+          </ul>
+
+          <h3>Permissions</h3>
+          <p><strong>Why the extension requests permissions</strong></p>
+          <dl class="kvs code-kvs">
+            <div class="kvs-row">
+              <dt><code>activeTab</code></dt>
+              <dd>Reads the current tab URL/title only when you click “Pause/Resume/Open panel” to write a stop point.</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>storage</code></dt>
+              <dd>Stores project cards and settings locally.</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>scripting</code></dt>
+              <dd>Injects a small locator script on Notion to highlight the stop point and extract material links (no page body).</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>alarms</code></dt>
+              <dd>Used for Crash-safe heartbeat and throttled writes (no notification reminders).</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>sidePanel</code></dt>
+              <dd>Displays the side panel UI.</dd>
+            </div>
+          </dl>
+
+          <h3>Export & Delete</h3>
+          <p><strong>You stay in control</strong></p>
+          <ul>
+            <li>Export: JSON / CSV for backup or migration.</li>
+            <li>Delete: one-click deletion of local data (cards, settings, checkpoints).</li>
+            <li>If you request support, you can choose to export diagnostics as a local file.</li>
+          </ul>
+          <p class="fineprint">Product effective date: 2026-03-08 · Contact: <a href="mailto:support@ordoinc.com">support@ordoinc.com</a></p>
+        </div>
+      </div>
+
+      <div class="card section-card">
+        <div class="prose">
+          <span class="section-kicker">Website / support / order communications</span>
+          <h2 class="h2">ORDO website and communication channels</h2>
+          <p>
+            ORDO treats “verifiable facts” as the boundary—rather than monitoring people. This section explains the minimal information we may process when you use this site, contact Support, or discuss orders.
+          </p>
+
+          <h3>1. What we don’t do</h3>
           <ul>
             <li>No ad profiling. We don’t sell personal data.</li>
             <li>No cross-site tracking. No default collection for scoring/ranking/behavioral intervention.</li>
           </ul>
 
-          <h2 class="h2">2. Information we may collect</h2>
+          <h3>2. Information we may collect</h3>
           <ul>
             <li><strong>Information you submit</strong>: when you contact us via forms or email, we receive what you provide (name, email, message) and any factual materials you choose to include (e.g., screenshots, order details).</li>
             <li><strong>Order communications</strong>: when you email <a href="mailto:orders@ordoinc.com">orders@ordoinc.com</a>, we process the minimum information needed to fulfill the order and related communications.</li>
             <li><strong>Basic logs</strong>: hosting/CDN providers may log requests (IP, user-agent, timestamps, paths) for security and debugging.</li>
           </ul>
 
-          <h2 class="h2">3. How we use it</h2>
+          <h3>3. How we use it</h3>
           <ul>
             <li>To respond to support and after-sales requests, and to improve the accuracy of public information.</li>
             <li>To communicate about orders, delivery, and necessary reconciliation.</li>
             <li>To maintain site security, prevent abuse, and troubleshoot.</li>
           </ul>
 
-          <h2 class="h2">4. Sharing & processors</h2>
+          <h3>4. Sharing & processors</h3>
           <p>We only share information with service providers when necessary to operate the site, communications, or delivery (e.g., hosting/CDN, email, logistics). We do not sell personal data.</p>
 
-          <h2 class="h2">5. Retention</h2>
+          <h3>5. Retention</h3>
           <p>We keep information only for the minimum period needed for the purposes above, then delete or anonymize where applicable.</p>
 
-          <h2 class="h2">6. Your choices</h2>
+          <h3>6. Your choices</h3>
           <p>You may request access, correction, or deletion of information you provided to us. Use the Support page and include enough verifiable details for us to locate the record.</p>
 
-          <h2 class="h2">7. Updates</h2>
+          <h3>7. Updates</h3>
           <p>We will publish updates on this page. We prefer changes that remain checkable (what changed, what it affects, and how to verify).</p>
         </div>
       </div>
     </div>
   </section>
 </Base>
+
+<style>
+  .section-card{ margin-bottom: 14px; }
+  .section-card:last-child{ margin-bottom: 0; }
+  .section-kicker{
+    display:inline-flex;
+    align-items:center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.04);
+    color: rgba(240,248,255,.72);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .accent-card{
+    border-color: rgba(255,255,255,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  }
+  .prose h3{
+    margin: 22px 0 10px;
+    font-size: 16px;
+    color: rgba(248,252,255,.96);
+  }
+  .prose ol{ margin: 0 0 14px 1.2em; padding: 0; }
+  .prose li{ margin-bottom: 8px; }
+  .kvs{
+    margin: 12px 0 0;
+    display: grid;
+    gap: 10px;
+  }
+  .kvs-row{
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 10px 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .kvs-row:first-child{ padding-top: 0; border-top: 0; }
+  .kvs dt{
+    margin: 0;
+    color: rgba(240,248,255,.64);
+    font-weight: 600;
+  }
+  .kvs dd{
+    margin: 0;
+    color: rgba(240,248,255,.8);
+    line-height: 1.8;
+  }
+  code{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.10);
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  .fineprint{
+    margin-top: 12px;
+    color: rgba(240,248,255,.64);
+    font-size: 13px;
+  }
+  @media (max-width: 760px){
+    .kvs-row{ grid-template-columns: 1fr; }
+  }
+</style>

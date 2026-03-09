@@ -6,44 +6,232 @@ import Base from "../../layouts/Base.astro";
   <section class="page-shell">
     <div class="container">
       <h1 class="h1">隐私政策</h1>
-      <p class="intro">ORDO 以“可核对的事实”而非“对人的监控”作为产品与服务的边界。本政策说明我们在网站、支持与订单沟通中可能收集与使用的最少信息。</p>
+      <p class="intro">
+        本页是 ORDO 官网公开隐私页，也作为 ORDO 已发布软件的统一隐私入口。除非某个产品页或应用内隐私页另有更具体说明，
+        本页中的软件隐私原则适用于 ORDO 所有已发布软件；产品专属条款用于补充该软件的权限、数据项与导出/删除方式，不缩减本页承诺。
+      </p>
       <div class="divider"></div>
 
-      <div class="card">
+      <div class="card section-card">
         <div class="prose">
-          <h2 class="h2">1. 我们不做什么</h2>
+          <span class="section-kicker">适用范围</span>
+          <h2 class="h2">一页说明三层内容</h2>
+          <ol>
+            <li><strong>统一软件隐私原则</strong>：适用于 ORDO 所有已发布软件。</li>
+            <li><strong>产品专属补充</strong>：针对某一软件写明更具体的数据、权限与控制方式。下面已纳入 <strong>ORDO Return · Notion</strong> 的现有隐私政策内容，口径与软件内页面保持一致。</li>
+            <li><strong>官网 / 支持 / 订单沟通</strong>：说明你访问官网、提交支持请求或沟通订单时，我们可能处理的最少信息。</li>
+          </ol>
+          <p>
+            若某一发布软件未来增加独立公开隐私页，该页将作为本页的产品补充，与本页一并适用。
+          </p>
+        </div>
+      </div>
+
+      <div class="card section-card">
+        <div class="prose">
+          <span class="section-kicker">适用于所有已发布软件</span>
+          <h2 class="h2">软件隐私的统一原则</h2>
+          <ul>
+            <li><strong>不监控、不评分、不排名</strong>：ORDO 的软件用于帮助你回到工作、回到判断，而不是建立对人的持续监控。</li>
+            <li><strong>最少处理、优先本地</strong>：只处理实现功能所必需的最少信息；能本地完成的，不默认上传。</li>
+            <li><strong>不做跨站跟踪，不出售个人信息</strong>：我们不以广告画像、跨站追踪或行为干预为目的处理你的信息，也不向第三方出售个人信息。</li>
+            <li><strong>用户保有控制权</strong>：发布软件应尽可能提供可核对的权限说明，以及导出、删除或清空本地数据的方式。</li>
+          </ul>
+          <p>
+            具体到每个软件，实际处理的数据项、权限名和交互位置可能不同，因此仍需结合对应产品补充条款阅读。
+          </p>
+        </div>
+      </div>
+
+      <div class="card section-card accent-card">
+        <div class="prose">
+          <span class="section-kicker">产品专属补充</span>
+          <h2 class="h2">ORDO Return · Notion</h2>
+          <p>
+            以下内容与软件当前内置隐私政策保持一致，用于明确说明 <strong>ORDO Return · Notion</strong> 的本地数据、权限与用户控制方式。
+          </p>
+
+          <h3>核心原则</h3>
+          <p><strong>不监控、不评分、不排名</strong></p>
+          <p>
+            ORDO Return 是“回到这里”的器具：停止位 + 下一步 + 材料盒。我们不在后台扫描 Notion 内容，不监听键盘输入，不做强提醒。
+          </p>
+          <ul>
+            <li>项目卡只在你点击“暂停 / 回到这里”时写入。</li>
+            <li>异常退出保护（Crash-safe）只保存最小检查点，用于解释性恢复；不抓正文、不上传。</li>
+            <li>可随时导出与删除本地数据。</li>
+          </ul>
+
+          <h3>我们保存什么</h3>
+          <p><strong>仅保存恢复所需的最小信息（本地）</strong></p>
+          <dl class="kvs">
+            <div class="kvs-row">
+              <dt>项目卡</dt>
+              <dd>标题、下一步、停止位链接（Notion URL）、材料链接（最多 2 条 / 卡）</dd>
+            </div>
+            <div class="kvs-row">
+              <dt>Crash-safe 检查点</dt>
+              <dd>停止位元信息 + 时间戳 + 是否正常退出标记（用于异常恢复提示）</dd>
+            </div>
+            <div class="kvs-row">
+              <dt>可选本地指标</dt>
+              <dd>最小计数/时长（不含内容、不含 URL、不含标题；不上传）</dd>
+            </div>
+          </dl>
+
+          <h3>我们不做什么</h3>
+          <p><strong>不读取 Notion 正文，不做后台跟踪</strong></p>
+          <ul>
+            <li>不采集 Notion 页面正文、块内容或数据库字段。</li>
+            <li>不做跨站跟踪、用户画像或行为评分。</li>
+            <li>不向第三方出售或共享你的数据。</li>
+          </ul>
+
+          <h3>权限说明</h3>
+          <p><strong>为什么需要这些权限</strong></p>
+          <dl class="kvs code-kvs">
+            <div class="kvs-row">
+              <dt><code>activeTab</code></dt>
+              <dd>仅在你点击“暂停/回到这里/打开侧栏”时读取当前页 URL/标题，用于写停止位。</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>storage</code></dt>
+              <dd>保存项目卡与设置（本地）。</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>scripting</code></dt>
+              <dd>在 Notion 页面注入定位脚本，用于高亮停止位与材料提取（不抓正文）。</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>alarms</code></dt>
+              <dd>用于 Crash-safe 的心跳与节流写入（不做提醒通知）。</dd>
+            </div>
+            <div class="kvs-row">
+              <dt><code>sidePanel</code></dt>
+              <dd>展示侧边栏 UI。</dd>
+            </div>
+          </dl>
+
+          <h3>导出与删除</h3>
+          <p><strong>你随时拥有控制权</strong></p>
+          <ul>
+            <li>可导出：JSON / CSV（用于备份或迁移）。</li>
+            <li>可删除：一键清空本地数据（项目卡、设置、检查点）。</li>
+            <li>如需协助排查问题，可在你授权后导出诊断信息（仍为本地文件）。</li>
+          </ul>
+          <p class="fineprint">产品生效日期：2026-03-08 · 联系方式：<a href="mailto:support@ordoinc.com">support@ordoinc.com</a></p>
+        </div>
+      </div>
+
+      <div class="card section-card">
+        <div class="prose">
+          <span class="section-kicker">官网 / 支持 / 订单沟通</span>
+          <h2 class="h2">ORDO 官网与沟通场景</h2>
+          <p>
+            ORDO 以“可核对的事实”而非“对人的监控”作为产品与服务的边界。本部分说明我们在网站、支持与订单沟通中可能收集与使用的最少信息。
+          </p>
+
+          <h3>1. 我们不做什么</h3>
           <ul>
             <li>不做广告画像，不出售个人信息。</li>
             <li>不进行跨站追踪；不以“评分/排名/行为干预”为目的收集数据。</li>
           </ul>
 
-          <h2 class="h2">2. 我们可能收集的信息</h2>
+          <h3>2. 我们可能收集的信息</h3>
           <ul>
             <li><strong>你主动提交的信息</strong>：当你通过支持表单或邮件联系时，我们会收到你提供的姓名/称呼、邮箱、正文内容及你选择附带的事实材料（如截图、订单信息）。</li>
             <li><strong>订单沟通信息</strong>：当你与 <a href="mailto:orders@ordoinc.com">orders@ordoinc.com</a> 往来时，我们会处理为完成订单所必需的信息（例如收件信息、开票/支付沟通）。</li>
             <li><strong>基础日志</strong>：托管与 CDN 可能记录访问日志（如 IP、User-Agent、访问时间、请求路径）用于安全与故障排查。</li>
           </ul>
 
-          <h2 class="h2">3. 我们如何使用</h2>
+          <h3>3. 我们如何使用</h3>
           <ul>
             <li>回复你的咨询、支持与售后请求，并改进公开页面的准确性。</li>
             <li>处理订单沟通、交付与必要的对账。</li>
             <li>保障站点安全、预防滥用，并进行必要的故障排查。</li>
           </ul>
 
-          <h2 class="h2">4. 信息共享与委托处理</h2>
+          <h3>4. 信息共享与委托处理</h3>
           <p>我们仅在完成服务所必需的范围内，与提供托管/CDN、邮件或物流等服务的供应商共享信息。我们不会向第三方出售你的个人信息。</p>
 
-          <h2 class="h2">5. 保存期限</h2>
+          <h3>5. 保存期限</h3>
           <p>我们只在实现本政策所述目的所需的最短期限内保留信息；超出期限将删除或匿名化（如适用）。</p>
 
-          <h2 class="h2">6. 你的权利</h2>
+          <h3>6. 你的权利</h3>
           <p>你可以请求访问、更正或删除你提供给我们的信息。请通过支持与联系页面提交请求，并说明可核对的必要信息以便我们定位记录。</p>
 
-          <h2 class="h2">7. 更新</h2>
+          <h3>7. 更新</h3>
           <p>若政策更新，我们会在本页面公开发布。我们倾向于让变更本身也可核对（例如明确“变更了什么、影响什么”）。</p>
         </div>
       </div>
     </div>
   </section>
 </Base>
+
+<style>
+  .section-card{ margin-bottom: 14px; }
+  .section-card:last-child{ margin-bottom: 0; }
+  .section-kicker{
+    display:inline-flex;
+    align-items:center;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.10);
+    background: rgba(255,255,255,.04);
+    color: rgba(240,248,255,.72);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .accent-card{
+    border-color: rgba(255,255,255,.14);
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.025));
+  }
+  .prose h3{
+    margin: 22px 0 10px;
+    font-size: 16px;
+    color: rgba(248,252,255,.96);
+  }
+  .prose ol{ margin: 0 0 14px 1.2em; padding: 0; }
+  .prose li{ margin-bottom: 8px; }
+  .kvs{
+    margin: 12px 0 0;
+    display: grid;
+    gap: 10px;
+  }
+  .kvs-row{
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 10px 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,.06);
+  }
+  .kvs-row:first-child{ padding-top: 0; border-top: 0; }
+  .kvs dt{
+    margin: 0;
+    color: rgba(240,248,255,.64);
+    font-weight: 600;
+  }
+  .kvs dd{
+    margin: 0;
+    color: rgba(240,248,255,.8);
+    line-height: 1.8;
+  }
+  code{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.10);
+    padding: 1px 6px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  .fineprint{
+    margin-top: 12px;
+    color: rgba(240,248,255,.64);
+    font-size: 13px;
+  }
+  @media (max-width: 760px){
+    .kvs-row{ grid-template-columns: 1fr; }
+  }
+</style>
